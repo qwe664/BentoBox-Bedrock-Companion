@@ -1,6 +1,6 @@
 # BentoBox Bedrock Companion
 
-A Paper plugin that enhances the BentoBox experience for Bedrock Edition players by providing native Bedrock Forms while preserving the original Java Edition experience.
+Bedrock players should enjoy BentoBox just as naturally as Java players.
 
 ## Goals
 

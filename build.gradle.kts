@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:26.2-R0.1-SNAPSHOT")
+    compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
 }
 
 java {

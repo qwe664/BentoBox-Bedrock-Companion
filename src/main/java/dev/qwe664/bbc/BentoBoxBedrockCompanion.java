@@ -6,11 +6,11 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getLogger().info("BentoBox Bedrock Companion enabled.");
+        getLogger().info("BentoBox Bedrock Companion has been enabled!");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("BentoBox Bedrock Companion disabled.");
+        getLogger().info("BentoBox Bedrock Companion has been disabled!");
     }
 }

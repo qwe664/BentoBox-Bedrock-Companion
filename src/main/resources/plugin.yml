@@ -1,13 +1,11 @@
 name: BentoBoxBedrockCompanion
-version: 0.1.0-SNAPSHOT
+version: ${version}
 main: dev.qwe664.bbc.BentoBoxBedrockCompanion
-
 api-version: "1.21"
 
 author: qwe664
-
-description: Native Bedrock Forms for BentoBox
+description: Companion plugin for BentoBox to improve the Bedrock player experience.
 
 depend:
   - BentoBox
-  - Floodgate
+  - floodgate

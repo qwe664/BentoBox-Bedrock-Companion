@@ -10,6 +10,12 @@ repositories {
 
     // Paper / Purpur
     maven("https://repo.papermc.io/repository/maven-public/")
+
+    // Geyser / Floodgate
+    maven("https://repo.opencollab.dev/main/")
+
+    // CodeMC
+    maven("https://repo.codemc.io/repository/maven-public/")
 }
 
 dependencies {

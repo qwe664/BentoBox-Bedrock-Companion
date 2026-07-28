@@ -2,8 +2,8 @@ plugins {
     java
 }
 
-group = project.property("group")
-version = project.property("version")
+group = project.property("group") as String
+version = project.property("version") as String
 
 repositories {
     mavenCentral()

@@ -4,6 +4,7 @@ import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.cumulus.form.SimpleForm;
+import java.lang.reflect.Method;
 
 public class MainMenuForm extends BaseForm {
 
@@ -29,9 +30,11 @@ public class MainMenuForm extends BaseForm {
         builder
              .title("BentoBox")
              .content("歡迎使用 BentoBox Bedrock Companion");
-             for (var method : builder.getClass().getMethods()) {
-        player.sendMessage(method.getName());
-             }
+              for (Method method : builder.getClass().getMethods()) {
+                if (method.getName().equals("button")) {
+                player.sendMessage(method.toGenericString());
+           }
+       }
               
         player.sendMessage("§aSimpleForm Builder 建立成功！");
     }

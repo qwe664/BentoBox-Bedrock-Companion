@@ -1,6 +1,7 @@
 package dev.qwe664.bbc;
 
 import dev.qwe664.bbc.hook.FloodgateHook;
+import dev.qwe664.bbc.listener.PlayerJoinListener;
 import dev.qwe664.bbc.manager.FormManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -10,12 +11,17 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
     private FormManager formManager;
 
     @Override
-    public void onEnable() {
-        floodgateHook = new FloodgateHook();
-        formManager = new FormManager();
+public void onEnable() {
+    floodgateHook = new FloodgateHook();
+    formManager = new FormManager();
 
-        getLogger().info("BentoBox Bedrock Companion has been enabled!");
-    }
+    getServer().getPluginManager().registerEvents(
+            new PlayerJoinListener(this),
+            this
+    );
+
+    getLogger().info("BentoBox Bedrock Companion has been enabled!");
+}
 
     @Override
     public void onDisable() {

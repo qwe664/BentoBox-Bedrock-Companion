@@ -29,7 +29,7 @@ public class MainMenuForm extends BaseForm {
         builder
              .title("BentoBox")
              .content("歡迎使用 BentoBox Bedrock Companion");
-              button("🏝 我的島嶼");
+              
         player.sendMessage("§aSimpleForm Builder 建立成功！");
     }
 }

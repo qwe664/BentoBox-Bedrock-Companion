@@ -1,7 +1,11 @@
 # Libraries
 
-This directory stores local development libraries.
+This directory contains local libraries required for developing BentoBox Bedrock Companion.
 
-Place BentoBox.jar here for local development.
+Current library:
 
-This JAR is not tracked by Git.
+- BentoBox 3.20.0 (`BentoBox-3.20.0.jar`)
+
+This library is used as a temporary development dependency while the official Maven dependency is being confirmed.
+
+Once an official Maven repository becomes available, this local library may be removed.

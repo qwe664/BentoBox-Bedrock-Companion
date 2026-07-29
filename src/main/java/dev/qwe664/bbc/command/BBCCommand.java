@@ -22,11 +22,7 @@ public class BBCCommand implements CommandExecutor {
             return true;
         }
 
-        // 目前先測試
-        player.sendMessage("§aBentoBox Bedrock Companion 測試成功！");
-
-        // 下一步會改成：
-        // plugin.getFormManager().showMainMenu(player);
+        plugin.getFormManager().showMainMenu(player);
 
         return true;
     }

@@ -1,5 +1,8 @@
 package dev.qwe664.bbc.form;
+import dev.qwe664.bbc.menu.MenuButton;
 
+import java.util.ArrayList;
+import java.util.List;
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
@@ -27,31 +30,39 @@ public class MainMenuForm extends BaseForm {
         }
 
         var builder = SimpleForm.builder();
+        List<MenuButton> visibleButtons = new ArrayList<>();
+         builder
+        .title("BentoBox")
+        .content("歡迎使用 BentoBox Bedrock Companion");
 
-        builder
-                .title("BentoBox")
-                .content("歡迎使用 BentoBox Bedrock Companion")
-                .button("🏝 我的島嶼");
+for (MenuButton button : plugin.getMenuRegistry().getButtons()) {
 
-        if (plugin.getPermissionService().hasDebugMenuPermission(player)) {
-           builder.button("🛠 開發工具");
-              }
+    if (button.getPermission() == null
+            || plugin.getPermissionService().hasPermission(player, button.getPermission())) {
+
+        visibleButtons.add(button);
+        builder.button(button.getTitle());
+    }
+}
 
         builder.validResultHandler(response -> {
 
-            switch (response.clickedButtonId()) {
+            MenuButton clicked = visibleButtons.get(response.clickedButtonId());
 
-                case 0 -> plugin.getFormManager().openIslandMenu(player);
+             switch (clicked.getId()) {
 
-                case 1 -> {
-                    if (plugin.getPermissionService().hasDebugMenuPermission(player)) {
-                    plugin.getFormManager().openDebugMenu(player);
-                    }
-                }
+    case "island" ->
+            plugin.getFormManager().openIslandMenu(player);
 
-                default -> {
-                }
-            }
+    case "debug" -> {
+    if (plugin.getPermissionService().hasDebugMenuPermission(player)) {
+        plugin.getFormManager().openDebugMenu(player);
+    }
+}
+
+    default -> {
+    }
+}
 
         });
 

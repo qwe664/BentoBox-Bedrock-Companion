@@ -1,12 +1,13 @@
 package dev.qwe664.bbc.form;
-import dev.qwe664.bbc.menu.MenuButton;
 
-import java.util.ArrayList;
-import java.util.List;
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import dev.qwe664.bbc.menu.MenuButton;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainMenuForm extends BaseForm {
 
@@ -31,42 +32,42 @@ public class MainMenuForm extends BaseForm {
 
         var builder = SimpleForm.builder();
         List<MenuButton> visibleButtons = new ArrayList<>();
-         builder
-        .title("BentoBox")
-        .content("歡迎使用 BentoBox Bedrock Companion");
 
-for (MenuButton button : plugin.getMenuRegistry().getButtons()) {
+        builder
+                .title("BentoBox")
+                .content("歡迎使用 BentoBox Bedrock Companion");
 
-    if (button.getPermission() == null
-            || plugin.getPermissionService().hasPermission(player, button.getPermission())) {
+        for (MenuButton button : plugin.getMenuRegistry().getButtons()) {
 
-        visibleButtons.add(button);
-        builder.button(button.getTitle());
-    }
-}
+            if (button.getPermission() == null
+                    || plugin.getPermissionService().hasPermission(player, button.getPermission())) {
+
+                visibleButtons.add(button);
+                builder.button(button.getTitle());
+            }
+        }
 
         builder.validResultHandler(response -> {
 
             MenuButton clicked = visibleButtons.get(response.clickedButtonId());
 
-             switch (clicked.getId()) {
+            switch (clicked.getId()) {
 
-    case "island" ->
-            plugin.getFormManager().openIslandMenu(player);
+                case "island" ->
+                        plugin.getFormManager().openIslandMenu(player);
 
-    case "admin" ->
-            plugin.getFormManager().openAdminMenu(player);
+                case "admin" ->
+                        plugin.getFormManager().openAdminMenu(player);
 
-    case "debug" -> {
-        if (plugin.getPermissionService().hasDebugMenuPermission(player)) {
-            plugin.getFormManager().openDebugMenu(player);
-        }
-    }
+                case "debug" -> {
+                    if (plugin.getPermissionService().hasDebugMenuPermission(player)) {
+                        plugin.getFormManager().openDebugMenu(player);
+                    }
+                }
 
-    default -> {
-    }
-}
-
+                default -> {
+                }
+            }
         });
 
         api.sendForm(player.getUniqueId(), builder);

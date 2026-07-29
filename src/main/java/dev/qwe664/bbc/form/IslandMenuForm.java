@@ -38,8 +38,8 @@ public class IslandMenuForm extends BaseForm {
                 }
 
                 case 2 -> {
-                    // TODO 島嶼設定
-                }
+                plugin.getCommandService().executeLater(player, "is settings", 3);
+                 }
 
                 case 3 -> {
                     // TODO 島嶼資訊

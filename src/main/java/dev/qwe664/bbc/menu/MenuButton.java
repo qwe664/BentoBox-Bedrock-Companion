@@ -11,8 +11,7 @@ public class MenuButton {
             String id,
             String title,
             MenuCategory category,
-            String permission,
-            MenuAction action
+            String permission
     ) {
         this.id = id;
         this.title = title;

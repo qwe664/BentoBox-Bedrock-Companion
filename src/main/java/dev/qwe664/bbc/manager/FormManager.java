@@ -29,4 +29,5 @@ public class FormManager {
     public void openDebugMenu(Player player) {
         debugMenuForm.open(player);
     }
+    public void openAdminMenu(Player player)
 }

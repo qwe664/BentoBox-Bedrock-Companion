@@ -54,11 +54,14 @@ for (MenuButton button : plugin.getMenuRegistry().getButtons()) {
     case "island" ->
             plugin.getFormManager().openIslandMenu(player);
 
+    case "admin" ->
+            plugin.getFormManager().openAdminMenu(player);
+
     case "debug" -> {
-    if (plugin.getPermissionService().hasDebugMenuPermission(player)) {
-        plugin.getFormManager().openDebugMenu(player);
+        if (plugin.getPermissionService().hasDebugMenuPermission(player)) {
+            plugin.getFormManager().openDebugMenu(player);
+        }
     }
-}
 
     default -> {
     }

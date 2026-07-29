@@ -6,17 +6,20 @@ public class MenuButton {
     private final String title;
     private final MenuCategory category;
     private final String permission;
+    private final MenuAction action;
 
     public MenuButton(
             String id,
             String title,
             MenuCategory category,
-            String permission
+            String permission,
+            MenuAction action
     ) {
         this.id = id;
         this.title = title;
         this.category = category;
         this.permission = permission;
+        this.action = action;
     }
 
     public String getId() {
@@ -33,5 +36,9 @@ public class MenuButton {
 
     public String getPermission() {
         return permission;
+    }
+
+    public MenuAction getAction() {
+        return action;
     }
 }

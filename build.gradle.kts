@@ -19,9 +19,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:26.2-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:26.2.build.+")
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
-    compileOnly("world.bentobox:bentobox:3.20.0")
+    compileOnly(files("libs/BentoBox-3.20.0.jar"))
 }
 
 java {

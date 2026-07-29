@@ -38,7 +38,4 @@ public class MenuButton {
         return permission;
     }
 
-    public MenuAction getAction() {
-        return action;
-    }
 }

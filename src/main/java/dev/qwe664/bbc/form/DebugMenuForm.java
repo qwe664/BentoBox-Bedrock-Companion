@@ -4,6 +4,7 @@ import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
+import dev.qwe664.bbc.debug.EnvironmentPrinter;
 
 public class DebugMenuForm extends BaseForm {
 
@@ -29,9 +30,14 @@ public class DebugMenuForm extends BaseForm {
 
             switch (response.clickedButtonId()) {
 
-                case 0, 1, 2, 3 -> {
-                    player.sendMessage("§e🚧 此功能開發中...");
-                }
+                case 0 -> {
+                       EnvironmentPrinter.print(plugin);
+                       player.sendMessage("§a✔ 已輸出至伺服器 Console（DiscordSRV 將同步至 Discord）。");
+                      }
+
+                case 1, 2, 3 -> {
+                      player.sendMessage("§e🚧 此功能開發中...");
+                      }
 
                 case 4 -> plugin.getFormManager().openMainMenu(player);
 

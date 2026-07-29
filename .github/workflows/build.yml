@@ -27,3 +27,9 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Upload plugin JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: BentoBox-Bedrock-Companion
+          path: build/libs/*.jar

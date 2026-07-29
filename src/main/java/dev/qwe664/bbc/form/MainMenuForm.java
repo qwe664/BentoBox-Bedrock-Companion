@@ -2,9 +2,8 @@ package dev.qwe664.bbc.form;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
-import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.cumulus.form.SimpleForm;
-import java.lang.reflect.Method;
+import org.geysermc.floodgate.api.FloodgateApi;
 
 public class MainMenuForm extends BaseForm {
 
@@ -12,6 +11,7 @@ public class MainMenuForm extends BaseForm {
         super(plugin);
     }
 
+    @Override
     public void open(Player player) {
 
         FloodgateApi api = FloodgateApi.getInstance();
@@ -26,15 +26,25 @@ public class MainMenuForm extends BaseForm {
             return;
         }
 
-var builder = SimpleForm.builder();
+        var builder = SimpleForm.builder();
 
-builder
-        .title("BentoBox")
-        .content("歡迎使用 BentoBox Bedrock Companion")
-        .button("🏝 我的島嶼");
+        builder
+                .title("BentoBox")
+                .content("歡迎使用 BentoBox Bedrock Companion")
+                .button("🏝 我的島嶼");
 
-api.sendForm(player.getUniqueId(), builder);
-              
-        player.sendMessage("§aSimpleForm Builder 建立成功！");
+        builder.validResultHandler(response -> {
+
+            switch (response.clickedButtonId()) {
+
+                case 0 -> new IslandMenuForm(plugin).open(player);
+
+                default -> {
+                }
+            }
+
+        });
+
+        api.sendForm(player.getUniqueId(), builder);
     }
 }

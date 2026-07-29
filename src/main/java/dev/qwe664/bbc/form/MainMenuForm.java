@@ -3,6 +3,7 @@ package dev.qwe664.bbc.form;
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
 import org.geysermc.floodgate.api.FloodgateApi;
+import org.geysermc.cumulus.form.SimpleForm;
 
 public class MainMenuForm extends BaseForm {
 
@@ -24,6 +25,8 @@ public class MainMenuForm extends BaseForm {
             return;
         }
 
-        player.sendMessage("§a偵測到基岩版玩家，準備開啟 Bedrock Form...");
+        SimpleForm.Builder builder = SimpleForm.builder();
+
+        player.sendMessage("§aSimpleForm Builder 建立成功！");
     }
 }

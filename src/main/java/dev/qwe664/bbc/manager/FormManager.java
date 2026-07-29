@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.manager;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import org.geysermc.cumulus.form.SimpleForm;
 
 public class FormManager {
 

@@ -10,4 +10,7 @@ public class FormManager {
     public FormManager(BentoBoxBedrockCompanion plugin) {
         this.plugin = plugin;
     }
+    public void test() {
+    SimpleForm.builder();
+    }
 }

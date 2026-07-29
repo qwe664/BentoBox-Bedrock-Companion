@@ -15,7 +15,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
     public void onEnable() {
 
         floodgateHook = new FloodgateHook();
-        formManager = new FormManager();
+        formManager = new FormManager(this);
 
         getServer().getPluginManager().registerEvents(
                 new PlayerJoinListener(this),

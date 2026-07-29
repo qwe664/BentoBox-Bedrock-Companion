@@ -11,6 +11,6 @@ public class FormManager {
         this.plugin = plugin;
     }
     public void test() {
-    SimpleForm.builder();
+    SimpleForm.builder()
     }
 }

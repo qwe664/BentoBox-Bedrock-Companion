@@ -26,15 +26,12 @@ public class MainMenuForm extends BaseForm {
             return;
         }
 
-        SimpleForm.Builder builder = SimpleForm.builder();
-        builder
-             .title("BentoBox")
-             .content("歡迎使用 BentoBox Bedrock Companion");
-              for (Method method : builder.getClass().getMethods()) {
-                if (method.getName().equals("button")) {
-                player.sendMessage(method.toGenericString());
-           }
-       }
+        var builder = SimpleForm.builder();
+
+builder
+    .title("BentoBox")
+    .content("歡迎使用 BentoBox Bedrock Companion")
+    .button("🏝 我的島嶼");
               
         player.sendMessage("§aSimpleForm Builder 建立成功！");
     }

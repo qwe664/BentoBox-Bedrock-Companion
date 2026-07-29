@@ -37,7 +37,7 @@ public class MainMenuForm extends BaseForm {
 
             switch (response.clickedButtonId()) {
 
-                case 0 -> new IslandMenuForm(plugin).open(player);
+                case 0 -> plugin.getFormManager().openIslandMenu(player);
 
                 default -> {
                 }

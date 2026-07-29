@@ -33,11 +33,21 @@ public class MainMenuForm extends BaseForm {
                 .content("歡迎使用 BentoBox Bedrock Companion")
                 .button("🏝 我的島嶼");
 
+        if (player.hasPermission("bbc.debug")) {
+            builder.button("🛠 開發工具");
+        }
+
         builder.validResultHandler(response -> {
 
             switch (response.clickedButtonId()) {
 
                 case 0 -> plugin.getFormManager().openIslandMenu(player);
+
+                case 1 -> {
+                    if (player.hasPermission("bbc.debug")) {
+                        plugin.getFormManager().openDebugMenu(player);
+                    }
+                }
 
                 default -> {
                 }

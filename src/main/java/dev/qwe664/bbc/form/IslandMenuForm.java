@@ -45,9 +45,7 @@ public class IslandMenuForm extends BaseForm {
                     // TODO 島嶼資訊
                 }
 
-                case 4 -> {
-                    new MainMenuForm(plugin).open(player);
-                }
+                case 4 -> plugin.getFormManager().openMainMenu(player);
 
                 default -> {
                 }

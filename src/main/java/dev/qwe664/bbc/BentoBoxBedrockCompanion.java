@@ -1,6 +1,7 @@
 package dev.qwe664.bbc;
 
 import dev.qwe664.bbc.command.BBCCommand;
+import dev.qwe664.bbc.service.CommandService;
 import dev.qwe664.bbc.hook.FloodgateHook;
 import dev.qwe664.bbc.listener.PlayerJoinListener;
 import dev.qwe664.bbc.manager.FormManager;
@@ -16,6 +17,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     private MenuRegistry menuRegistry;
     private PermissionService permissionService;
+    private CommandService commandService;
 
     @Override
     public void onEnable() {
@@ -24,6 +26,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
         menuRegistry = new MenuRegistry();
         permissionService = new PermissionService();
+        commandService = new CommandService();
         new MenuLoader(menuRegistry).load();
         formManager = new FormManager(this);
 
@@ -58,5 +61,9 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     public PermissionService getPermissionService() {
         return permissionService;
+    }
+
+    public CommandService getCommandService() {
+        return commandService;
     }
 }

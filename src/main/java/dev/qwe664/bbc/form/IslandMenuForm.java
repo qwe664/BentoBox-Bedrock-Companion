@@ -30,8 +30,8 @@ public class IslandMenuForm extends BaseForm {
             switch (response.clickedButtonId()) {
 
                 case 0 -> {
-                    // TODO 傳送到島嶼
-                }
+                plugin.getCommandService().execute(player, "is");
+                 }
 
                 case 1 -> {
                     // TODO 隊伍

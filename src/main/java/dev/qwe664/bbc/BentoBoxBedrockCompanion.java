@@ -4,6 +4,8 @@ import dev.qwe664.bbc.command.BBCCommand;
 import dev.qwe664.bbc.hook.FloodgateHook;
 import dev.qwe664.bbc.listener.PlayerJoinListener;
 import dev.qwe664.bbc.manager.FormManager;
+import dev.qwe664.bbc.menu.MenuRegistry;
+import dev.qwe664.bbc.service.PermissionService;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BentoBoxBedrockCompanion extends JavaPlugin {
@@ -11,10 +13,17 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
     private FloodgateHook floodgateHook;
     private FormManager formManager;
 
+    private MenuRegistry menuRegistry;
+    private PermissionService permissionService;
+
     @Override
     public void onEnable() {
 
         floodgateHook = new FloodgateHook();
+
+        menuRegistry = new MenuRegistry();
+        permissionService = new PermissionService();
+
         formManager = new FormManager(this);
 
         getServer().getPluginManager().registerEvents(
@@ -40,5 +49,13 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     public FormManager getFormManager() {
         return formManager;
+    }
+
+    public MenuRegistry getMenuRegistry() {
+        return menuRegistry;
+    }
+
+    public PermissionService getPermissionService() {
+        return permissionService;
     }
 }

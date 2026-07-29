@@ -38,7 +38,7 @@ public class IslandMenuForm extends BaseForm {
                 }
 
                 case 2 -> {
-                plugin.getCommandService().executeLater(player, "is settings", 3);
+                plugin.getCommandService().executeLater(player, "is settings", 20);
                  }
 
                 case 3 -> {

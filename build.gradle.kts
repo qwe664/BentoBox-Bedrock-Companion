@@ -2,23 +2,31 @@ plugins {
     java
 }
 
-group = project.property("group")
-version = project.property("version")
+group = project.property("group") as String
+version = project.property("version") as String
 
 repositories {
     mavenCentral()
 
     // Paper / Purpur
     maven("https://repo.papermc.io/repository/maven-public/")
+
+    // Geyser / Floodgate
+    maven("https://repo.opencollab.dev/main/")
+
+    // CodeMC
+    maven("https://repo.codemc.io/repository/maven-public/")
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:26.2-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:26.2.build.+")
+    compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
+    compileOnly(files("libs/BentoBox-3.20.0.jar"))
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 

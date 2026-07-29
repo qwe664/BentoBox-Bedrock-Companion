@@ -22,7 +22,7 @@ public class BBCCommand implements CommandExecutor {
             return true;
         }
 
-        plugin.getFormManager().showMainMenu(player);
+        plugin.getFormManager().openMainMenu(player);
 
         return true;
     }

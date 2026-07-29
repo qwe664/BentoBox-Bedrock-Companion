@@ -26,7 +26,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
         menuRegistry = new MenuRegistry();
         permissionService = new PermissionService();
-        commandService = new CommandService();
+        commandService = new CommandService(this);
         new MenuLoader(menuRegistry).load();
         formManager = new FormManager(this);
 

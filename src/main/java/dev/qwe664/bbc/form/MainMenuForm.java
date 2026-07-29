@@ -26,6 +26,9 @@ public class MainMenuForm extends BaseForm {
         }
 
         SimpleForm.Builder builder = SimpleForm.builder();
+        builder
+             .title("BentoBox")
+             .content("歡迎使用 BentoBox Bedrock Companion");
 
         player.sendMessage("§aSimpleForm Builder 建立成功！");
     }

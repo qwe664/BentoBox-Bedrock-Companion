@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.util;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -35,6 +36,7 @@ public final class ReflectionUtil {
         ConsoleLogger.reflection("========================================");
 
         try {
+
             Class<?> clazz = Class.forName(className);
 
             ConsoleLogger.reflection("類別：" + clazz.getName());
@@ -57,18 +59,39 @@ public final class ReflectionUtil {
 
             for (Method method : methods) {
 
+                // Object 方法
                 if (IGNORED_METHODS.contains(method.getName())) {
                     filtered++;
                     continue;
                 }
 
+                // Lambda 方法
+                if (method.getName().startsWith("lambda$")) {
+                    filtered++;
+                    continue;
+                }
+
+                // Compiler 產生的方法
+                if (method.isSynthetic() || method.isBridge()) {
+                    filtered++;
+                    continue;
+                }
+
+                // Declared 模式只保留 Public
+                if (declaredOnly
+                        && !Modifier.isPublic(method.getModifiers())) {
+                    filtered++;
+                    continue;
+                }
+
+                // Public 模式保險檢查
                 if (!declaredOnly
-                        && !java.lang.reflect.Modifier.isPublic(method.getModifiers())) {
+                        && !Modifier.isPublic(method.getModifiers())) {
+                    filtered++;
                     continue;
                 }
 
                 ConsoleLogger.reflection(buildMethodSignature(method));
-
                 shown++;
             }
 

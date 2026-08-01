@@ -9,3 +9,7 @@ description: Companion plugin for BentoBox to improve the Bedrock player experie
 depend:
   - BentoBox
   - floodgate
+commands:
+  bbc:
+    description: Open BentoBox Bedrock Companion menu
+    usage: /bbc

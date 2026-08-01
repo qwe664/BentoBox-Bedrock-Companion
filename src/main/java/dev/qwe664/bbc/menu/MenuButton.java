@@ -1,0 +1,38 @@
+package dev.qwe664.bbc.menu;
+
+public class MenuButton {
+
+    private final String id;
+    private final String title;
+    private final MenuCategory category;
+    private final String permission;
+
+    public MenuButton(
+            String id,
+            String title,
+            MenuCategory category,
+            String permission
+    ) {
+        this.id = id;
+        this.title = title;
+        this.category = category;
+        this.permission = permission;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public MenuCategory getCategory() {
+        return category;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+}

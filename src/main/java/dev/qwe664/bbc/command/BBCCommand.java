@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.command;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,8 +23,16 @@ public class BBCCommand implements CommandExecutor {
             return true;
         }
 
-        plugin.getFormManager().openMainMenu(player);
+        // /bbc debug
+        if (args.length > 0 && args[0].equalsIgnoreCase("debug")) {
+            player.sendMessage(ChatColor.GOLD + "===== BBC Debug =====");
+            player.sendMessage(ChatColor.GREEN + "Debug system is working.");
+            player.sendMessage(ChatColor.GOLD + "=====================");
+            return true;
+        }
 
+        // /bbc
+        plugin.getFormManager().openMainMenu(player);
         return true;
     }
 }

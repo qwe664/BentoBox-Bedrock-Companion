@@ -29,17 +29,26 @@ public class DebugCommand {
             return true;
         }
 
-        // /bbc debug methods <完整類別名稱>
+        // /bbc debug methods <alias|完整類別名稱>
         if (args[1].equalsIgnoreCase("methods")) {
 
             if (args.length < 3) {
                 player.sendMessage(ChatColor.RED + "用法：");
                 player.sendMessage(ChatColor.YELLOW
-                        + "/bbc debug methods <完整類別名稱>");
+                        + "/bbc debug methods <Alias 或完整類別名稱>");
+                player.sendMessage(ChatColor.GRAY + "例如：");
+                player.sendMessage(ChatColor.GRAY + "/bbc debug methods flag");
+                player.sendMessage(ChatColor.GRAY + "/bbc debug methods user");
                 return true;
             }
 
-            ReflectionUtil.printPublicMethods(args[2]);
+            String className = switch (args[2].toLowerCase()) {
+                case "flag" -> "world.bentobox.bentobox.api.flags.Flag";
+                case "user" -> "world.bentobox.bentobox.api.user.User";
+                default -> args[2];
+            };
+
+            ReflectionUtil.printPublicMethods(className);
 
             player.sendMessage(ChatColor.GREEN
                     + "[BBC] 已將反射資訊輸出至主控台。");
@@ -64,6 +73,7 @@ public class DebugCommand {
 
         player.sendMessage(ChatColor.GREEN + "/bbc debug methods");
         player.sendMessage(ChatColor.GRAY + "Reflection 方法探索");
+        player.sendMessage(ChatColor.GRAY + "Alias：flag、user");
         player.sendMessage("");
 
         player.sendMessage(ChatColor.GREEN + "/bbc debug api");

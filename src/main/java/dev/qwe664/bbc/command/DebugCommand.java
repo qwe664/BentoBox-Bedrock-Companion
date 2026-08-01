@@ -16,7 +16,51 @@ public class DebugCommand {
 
     public boolean execute(Player player, String[] args) {
 
+        // /bbc debug
+        if (args.length == 1) {
+            showCommandList(player);
+            return true;
+        }
+
+        // /bbc debug plugins
+        if (args[1].equalsIgnoreCase("plugins")) {
+            showPluginStatus(player);
+            return true;
+        }
+
+        // 尚未實作的子指令
+        player.sendMessage(ChatColor.YELLOW + "[BBC] 此 Debug 功能尚未實作。");
+        return true;
+    }
+
+    private void showCommandList(Player player) {
+
         player.sendMessage(ChatColor.GOLD + "===== BBC Debug =====");
+        player.sendMessage(ChatColor.YELLOW + "可用子指令：");
+        player.sendMessage("");
+        player.sendMessage(ChatColor.GREEN + "/bbc debug plugins");
+        player.sendMessage(ChatColor.GRAY + "查看插件載入狀態");
+        player.sendMessage("");
+        player.sendMessage(ChatColor.GREEN + "/bbc debug methods");
+        player.sendMessage(ChatColor.GRAY + "Reflection 方法探索（開發中）");
+        player.sendMessage("");
+        player.sendMessage(ChatColor.GREEN + "/bbc debug api");
+        player.sendMessage(ChatColor.GRAY + "Public API 探索（開發中）");
+        player.sendMessage("");
+        player.sendMessage(ChatColor.GREEN + "/bbc debug island");
+        player.sendMessage(ChatColor.GRAY + "Island API 探索（開發中）");
+        player.sendMessage("");
+        player.sendMessage(ChatColor.GREEN + "/bbc debug flags");
+        player.sendMessage(ChatColor.GRAY + "Protection Flag 探索（開發中）");
+        player.sendMessage("");
+        player.sendMessage(ChatColor.GREEN + "/bbc debug version");
+        player.sendMessage(ChatColor.GRAY + "BBC 版本資訊（開發中）");
+        player.sendMessage(ChatColor.GOLD + "=====================");
+    }
+
+    private void showPluginStatus(Player player) {
+
+        player.sendMessage(ChatColor.GOLD + "===== BBC Plugin Status =====");
 
         player.sendMessage(status("BBC", plugin));
 
@@ -32,9 +76,7 @@ public class DebugCommand {
         player.sendMessage(status("PlaceholderAPI",
                 Bukkit.getPluginManager().getPlugin("PlaceholderAPI")));
 
-        player.sendMessage(ChatColor.GOLD + "=====================");
-
-        return true;
+        player.sendMessage(ChatColor.GOLD + "=============================");
     }
 
     private String status(String name, Plugin plugin) {

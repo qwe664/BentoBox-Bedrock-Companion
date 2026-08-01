@@ -29,26 +29,53 @@ public class DebugCommand {
             return true;
         }
 
-        // /bbc debug methods <alias|完整類別名稱>
+        // /bbc debug methods
         if (args[1].equalsIgnoreCase("methods")) {
 
             if (args.length < 3) {
                 player.sendMessage(ChatColor.RED + "用法：");
                 player.sendMessage(ChatColor.YELLOW
                         + "/bbc debug methods <Alias 或完整類別名稱>");
+                player.sendMessage(ChatColor.YELLOW
+                        + "/bbc debug methods declared <Alias 或完整類別名稱>");
                 player.sendMessage(ChatColor.GRAY + "例如：");
                 player.sendMessage(ChatColor.GRAY + "/bbc debug methods flag");
+                player.sendMessage(ChatColor.GRAY + "/bbc debug methods declared flag");
                 player.sendMessage(ChatColor.GRAY + "/bbc debug methods user");
+                player.sendMessage(ChatColor.GRAY + "/bbc debug methods declared user");
                 return true;
             }
 
-            String className = switch (args[2].toLowerCase()) {
+            boolean declaredOnly = false;
+            String target;
+
+            if (args[2].equalsIgnoreCase("declared")) {
+
+                declaredOnly = true;
+
+                if (args.length < 4) {
+                    player.sendMessage(ChatColor.RED + "請輸入 Alias 或完整類別名稱。");
+                    return true;
+                }
+
+                target = args[3];
+
+            } else {
+
+                target = args[2];
+            }
+
+            String className = switch (target.toLowerCase()) {
                 case "flag" -> "world.bentobox.bentobox.api.flags.Flag";
                 case "user" -> "world.bentobox.bentobox.api.user.User";
-                default -> args[2];
+                default -> target;
             };
 
-            ReflectionUtil.printPublicMethods(className);
+            if (declaredOnly) {
+                ReflectionUtil.printDeclaredMethods(className);
+            } else {
+                ReflectionUtil.printPublicMethods(className);
+            }
 
             player.sendMessage(ChatColor.GREEN
                     + "[BBC] 已將反射資訊輸出至主控台。");
@@ -74,6 +101,10 @@ public class DebugCommand {
         player.sendMessage(ChatColor.GREEN + "/bbc debug methods");
         player.sendMessage(ChatColor.GRAY + "Reflection 方法探索");
         player.sendMessage(ChatColor.GRAY + "Alias：flag、user");
+        player.sendMessage("");
+
+        player.sendMessage(ChatColor.GREEN + "/bbc debug methods declared");
+        player.sendMessage(ChatColor.GRAY + "只顯示類別自行宣告的方法");
         player.sendMessage("");
 
         player.sendMessage(ChatColor.GREEN + "/bbc debug api");

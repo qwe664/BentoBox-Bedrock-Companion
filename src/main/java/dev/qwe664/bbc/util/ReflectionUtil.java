@@ -23,6 +23,14 @@ public final class ReflectionUtil {
     }
 
     public static void printPublicMethods(String className) {
+        printMethods(className, false);
+    }
+
+    public static void printDeclaredMethods(String className) {
+        printMethods(className, true);
+    }
+
+    private static void printMethods(String className, boolean declaredOnly) {
 
         ConsoleLogger.reflection("========================================");
 
@@ -32,11 +40,17 @@ public final class ReflectionUtil {
             ConsoleLogger.reflection("類別：" + clazz.getName());
             ConsoleLogger.reflection("");
 
-            Method[] methods = clazz.getMethods();
+            Method[] methods = declaredOnly
+                    ? clazz.getDeclaredMethods()
+                    : clazz.getMethods();
 
             Arrays.sort(methods, Comparator.comparing(Method::getName));
 
-            ConsoleLogger.reflection("Public API Methods：");
+            ConsoleLogger.reflection(
+                    declaredOnly
+                            ? "Declared Public Methods："
+                            : "Public API Methods："
+            );
 
             int shown = 0;
             int filtered = 0;
@@ -48,27 +62,12 @@ public final class ReflectionUtil {
                     continue;
                 }
 
-                StringBuilder builder = new StringBuilder();
-
-                builder.append(method.getReturnType().getSimpleName())
-                        .append(" ")
-                        .append(method.getName())
-                        .append("(");
-
-                Parameter[] parameters = method.getParameters();
-
-                for (int i = 0; i < parameters.length; i++) {
-
-                    builder.append(parameters[i].getType().getSimpleName());
-
-                    if (i < parameters.length - 1) {
-                        builder.append(", ");
-                    }
+                if (!declaredOnly
+                        && !java.lang.reflect.Modifier.isPublic(method.getModifiers())) {
+                    continue;
                 }
 
-                builder.append(")");
-
-                ConsoleLogger.reflection(builder.toString());
+                ConsoleLogger.reflection(buildMethodSignature(method));
 
                 shown++;
             }
@@ -88,5 +87,30 @@ public final class ReflectionUtil {
         }
 
         ConsoleLogger.reflection("========================================");
+    }
+
+    private static String buildMethodSignature(Method method) {
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(method.getReturnType().getSimpleName())
+                .append(" ")
+                .append(method.getName())
+                .append("(");
+
+        Parameter[] parameters = method.getParameters();
+
+        for (int i = 0; i < parameters.length; i++) {
+
+            builder.append(parameters[i].getType().getSimpleName());
+
+            if (i < parameters.length - 1) {
+                builder.append(", ");
+            }
+        }
+
+        builder.append(")");
+
+        return builder.toString();
     }
 }

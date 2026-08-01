@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
+import dev.qwe664.bbc.developer.reflection.ReflectionAliases;
 
 public class DebugCommand {
 
@@ -65,11 +66,7 @@ public class DebugCommand {
                 target = args[2];
             }
 
-            String className = switch (target.toLowerCase()) {
-                case "flag" -> "world.bentobox.bentobox.api.flags.Flag";
-                case "user" -> "world.bentobox.bentobox.api.user.User";
-                default -> target;
-            };
+            String className = ReflectionAliases.resolve(target);
 
             if (declaredOnly) {
                 ReflectionUtil.printDeclaredMethods(className);

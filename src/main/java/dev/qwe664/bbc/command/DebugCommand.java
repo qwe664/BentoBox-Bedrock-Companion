@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.command;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import dev.qwe664.bbc.util.ReflectionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -28,6 +29,24 @@ public class DebugCommand {
             return true;
         }
 
+        // /bbc debug methods <完整類別名稱>
+        if (args[1].equalsIgnoreCase("methods")) {
+
+            if (args.length < 3) {
+                player.sendMessage(ChatColor.RED + "用法：");
+                player.sendMessage(ChatColor.YELLOW
+                        + "/bbc debug methods <完整類別名稱>");
+                return true;
+            }
+
+            ReflectionUtil.printPublicMethods(args[2]);
+
+            player.sendMessage(ChatColor.GREEN
+                    + "[BBC] 已將反射資訊輸出至主控台。");
+
+            return true;
+        }
+
         // 尚未實作的子指令
         player.sendMessage(ChatColor.YELLOW + "[BBC] 此 Debug 功能尚未實作。");
         return true;
@@ -38,23 +57,30 @@ public class DebugCommand {
         player.sendMessage(ChatColor.GOLD + "===== BBC Debug =====");
         player.sendMessage(ChatColor.YELLOW + "可用子指令：");
         player.sendMessage("");
+
         player.sendMessage(ChatColor.GREEN + "/bbc debug plugins");
         player.sendMessage(ChatColor.GRAY + "查看插件載入狀態");
         player.sendMessage("");
+
         player.sendMessage(ChatColor.GREEN + "/bbc debug methods");
-        player.sendMessage(ChatColor.GRAY + "Reflection 方法探索（開發中）");
+        player.sendMessage(ChatColor.GRAY + "Reflection 方法探索");
         player.sendMessage("");
+
         player.sendMessage(ChatColor.GREEN + "/bbc debug api");
         player.sendMessage(ChatColor.GRAY + "Public API 探索（開發中）");
         player.sendMessage("");
+
         player.sendMessage(ChatColor.GREEN + "/bbc debug island");
         player.sendMessage(ChatColor.GRAY + "Island API 探索（開發中）");
         player.sendMessage("");
+
         player.sendMessage(ChatColor.GREEN + "/bbc debug flags");
         player.sendMessage(ChatColor.GRAY + "Protection Flag 探索（開發中）");
         player.sendMessage("");
+
         player.sendMessage(ChatColor.GREEN + "/bbc debug version");
         player.sendMessage(ChatColor.GRAY + "BBC 版本資訊（開發中）");
+
         player.sendMessage(ChatColor.GOLD + "=====================");
     }
 

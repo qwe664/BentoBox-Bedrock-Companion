@@ -4,7 +4,7 @@ import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import dev.qwe664.bbc.util.ReflectionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 public class DebugCommand {
@@ -15,17 +15,17 @@ public class DebugCommand {
         this.plugin = plugin;
     }
 
-    public boolean execute(Player player, String[] args) {
+    public boolean execute(CommandSender sender, String[] args) {
 
         // /bbc debug
         if (args.length == 1) {
-            showCommandList(player);
+            showCommandList(sender);
             return true;
         }
 
         // /bbc debug plugins
         if (args[1].equalsIgnoreCase("plugins")) {
-            showPluginStatus(player);
+            showPluginStatus(sender);
             return true;
         }
 
@@ -33,16 +33,16 @@ public class DebugCommand {
         if (args[1].equalsIgnoreCase("methods")) {
 
             if (args.length < 3) {
-                player.sendMessage(ChatColor.RED + "用法：");
-                player.sendMessage(ChatColor.YELLOW
+                sender.sendMessage(ChatColor.RED + "用法：");
+                sender.sendMessage(ChatColor.YELLOW
                         + "/bbc debug methods <Alias 或完整類別名稱>");
-                player.sendMessage(ChatColor.YELLOW
+                sender.sendMessage(ChatColor.YELLOW
                         + "/bbc debug methods declared <Alias 或完整類別名稱>");
-                player.sendMessage(ChatColor.GRAY + "例如：");
-                player.sendMessage(ChatColor.GRAY + "/bbc debug methods flag");
-                player.sendMessage(ChatColor.GRAY + "/bbc debug methods declared flag");
-                player.sendMessage(ChatColor.GRAY + "/bbc debug methods user");
-                player.sendMessage(ChatColor.GRAY + "/bbc debug methods declared user");
+                sender.sendMessage(ChatColor.GRAY + "例如：");
+                sender.sendMessage(ChatColor.GRAY + "/bbc debug methods flag");
+                sender.sendMessage(ChatColor.GRAY + "/bbc debug methods declared flag");
+                sender.sendMessage(ChatColor.GRAY + "/bbc debug methods user");
+                sender.sendMessage(ChatColor.GRAY + "/bbc debug methods declared user");
                 return true;
             }
 
@@ -54,7 +54,7 @@ public class DebugCommand {
                 declaredOnly = true;
 
                 if (args.length < 4) {
-                    player.sendMessage(ChatColor.RED + "請輸入 Alias 或完整類別名稱。");
+                    sender.sendMessage(ChatColor.RED + "請輸入 Alias 或完整類別名稱。");
                     return true;
                 }
 
@@ -77,73 +77,73 @@ public class DebugCommand {
                 ReflectionUtil.printPublicMethods(className);
             }
 
-            player.sendMessage(ChatColor.GREEN
+            sender.sendMessage(ChatColor.GREEN
                     + "[BBC] 已將反射資訊輸出至主控台。");
 
             return true;
         }
 
         // 尚未實作的子指令
-        player.sendMessage(ChatColor.YELLOW + "[BBC] 此 Debug 功能尚未實作。");
+        sender.sendMessage(ChatColor.YELLOW + "[BBC] 此 Debug 功能尚未實作。");
         return true;
     }
 
-    private void showCommandList(Player player) {
+    private void showCommandList(CommandSender sender) {
 
-        player.sendMessage(ChatColor.GOLD + "===== BBC Debug =====");
-        player.sendMessage(ChatColor.YELLOW + "可用子指令：");
-        player.sendMessage("");
+        sender.sendMessage(ChatColor.GOLD + "===== BBC Debug =====");
+        sender.sendMessage(ChatColor.YELLOW + "可用子指令：");
+        sender.sendMessage("");
 
-        player.sendMessage(ChatColor.GREEN + "/bbc debug plugins");
-        player.sendMessage(ChatColor.GRAY + "查看插件載入狀態");
-        player.sendMessage("");
+        sender.sendMessage(ChatColor.GREEN + "/bbc debug plugins");
+        sender.sendMessage(ChatColor.GRAY + "查看插件載入狀態");
+        sender.sendMessage("");
 
-        player.sendMessage(ChatColor.GREEN + "/bbc debug methods");
-        player.sendMessage(ChatColor.GRAY + "Reflection 方法探索");
-        player.sendMessage(ChatColor.GRAY + "Alias：flag、user");
-        player.sendMessage("");
+        sender.sendMessage(ChatColor.GREEN + "/bbc debug methods");
+        sender.sendMessage(ChatColor.GRAY + "Reflection 方法探索");
+        sender.sendMessage(ChatColor.GRAY + "Alias：flag、user");
+        sender.sendMessage("");
 
-        player.sendMessage(ChatColor.GREEN + "/bbc debug methods declared");
-        player.sendMessage(ChatColor.GRAY + "只顯示類別自行宣告的方法");
-        player.sendMessage("");
+        sender.sendMessage(ChatColor.GREEN + "/bbc debug methods declared");
+        sender.sendMessage(ChatColor.GRAY + "只顯示類別自行宣告的 Public 方法");
+        sender.sendMessage("");
 
-        player.sendMessage(ChatColor.GREEN + "/bbc debug api");
-        player.sendMessage(ChatColor.GRAY + "Public API 探索（開發中）");
-        player.sendMessage("");
+        sender.sendMessage(ChatColor.GREEN + "/bbc debug api");
+        sender.sendMessage(ChatColor.GRAY + "Public API 探索（開發中）");
+        sender.sendMessage("");
 
-        player.sendMessage(ChatColor.GREEN + "/bbc debug island");
-        player.sendMessage(ChatColor.GRAY + "Island API 探索（開發中）");
-        player.sendMessage("");
+        sender.sendMessage(ChatColor.GREEN + "/bbc debug island");
+        sender.sendMessage(ChatColor.GRAY + "Island API 探索（開發中）");
+        sender.sendMessage("");
 
-        player.sendMessage(ChatColor.GREEN + "/bbc debug flags");
-        player.sendMessage(ChatColor.GRAY + "Protection Flag 探索（開發中）");
-        player.sendMessage("");
+        sender.sendMessage(ChatColor.GREEN + "/bbc debug flags");
+        sender.sendMessage(ChatColor.GRAY + "Protection Flag 探索（開發中）");
+        sender.sendMessage("");
 
-        player.sendMessage(ChatColor.GREEN + "/bbc debug version");
-        player.sendMessage(ChatColor.GRAY + "BBC 版本資訊（開發中）");
+        sender.sendMessage(ChatColor.GREEN + "/bbc debug version");
+        sender.sendMessage(ChatColor.GRAY + "BBC 版本資訊（開發中）");
 
-        player.sendMessage(ChatColor.GOLD + "=====================");
+        sender.sendMessage(ChatColor.GOLD + "=====================");
     }
 
-    private void showPluginStatus(Player player) {
+    private void showPluginStatus(CommandSender sender) {
 
-        player.sendMessage(ChatColor.GOLD + "===== BBC Plugin Status =====");
+        sender.sendMessage(ChatColor.GOLD + "===== BBC Plugin Status =====");
 
-        player.sendMessage(status("BBC", plugin));
+        sender.sendMessage(status("BBC", plugin));
 
-        player.sendMessage(status("BentoBox",
+        sender.sendMessage(status("BentoBox",
                 Bukkit.getPluginManager().getPlugin("BentoBox")));
 
-        player.sendMessage(status("Floodgate",
+        sender.sendMessage(status("Floodgate",
                 Bukkit.getPluginManager().getPlugin("floodgate")));
 
-        player.sendMessage(status("Geyser",
+        sender.sendMessage(status("Geyser",
                 Bukkit.getPluginManager().getPlugin("Geyser-Spigot")));
 
-        player.sendMessage(status("PlaceholderAPI",
+        sender.sendMessage(status("PlaceholderAPI",
                 Bukkit.getPluginManager().getPlugin("PlaceholderAPI")));
 
-        player.sendMessage(ChatColor.GOLD + "=============================");
+        sender.sendMessage(ChatColor.GOLD + "=============================");
     }
 
     private String status(String name, Plugin plugin) {

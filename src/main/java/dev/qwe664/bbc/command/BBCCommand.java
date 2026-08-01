@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.command;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,17 +20,19 @@ public class BBCCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage("只有玩家可以使用此指令。");
-            return true;
-        }
-
         // /bbc debug
         if (args.length > 0 && args[0].equalsIgnoreCase("debug")) {
-            return debugCommand.execute(player, args);
+            return debugCommand.execute(sender, args);
         }
 
         // /bbc
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(ChatColor.YELLOW + "[BBC] 主選單僅限玩家使用。");
+            sender.sendMessage(ChatColor.GRAY + "可使用：");
+            sender.sendMessage(ChatColor.GRAY + "  /bbc debug");
+            return true;
+        }
+
         plugin.getFormManager().openMainMenu(player);
         return true;
     }

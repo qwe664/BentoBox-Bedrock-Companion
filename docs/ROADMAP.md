@@ -20,11 +20,11 @@ This roadmap outlines the planned development of BentoBox Bedrock Companion.
 
 ## Island Features
 
+- [ ] Island Information
 - [ ] Island Settings
 - [ ] Team Management
 - [ ] Island Warp
 - [ ] Island Visit
-- [ ] Island Information
 
 ---
 

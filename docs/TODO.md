@@ -2,10 +2,10 @@
 
 ## Phase 1
 
-- [ ] Create Gradle project
-- [ ] Load plugin
-- [ ] Floodgate detection
-- [ ] Test Form
+- [x] Create Gradle project
+- [x] Load plugin
+- [x] Floodgate detection
+- [x] Test Form
 
 ## Phase 2
 

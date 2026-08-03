@@ -8,12 +8,11 @@ This roadmap outlines the planned development of BentoBox Bedrock Companion.
 
 ## Project Foundation
 
-- [ ] Complete Gradle configuration
-- [ ] Add GitHub Actions
-- [ ] Integrate Floodgate API
+- [x] Complete Gradle configuration
+- [x] Add GitHub Actions
+- [x] Integrate Floodgate API
 - [ ] Integrate BentoBox API
-- [ ] Implement `/bbc test`
-- [ ] Create the first Bedrock Form
+- [x] Create the first Bedrock Form
 
 ---
 

@@ -22,6 +22,7 @@ public class IslandMenuForm extends BaseForm {
                 .button("🏠 傳送到島嶼")
                 .button("👥 隊伍")
                 .button("⚙ 島嶼設定")
+                .button("🛡 保護設定")
                 .button("📊 島嶼資訊")
                 .button("⬅ 返回主選單");
 
@@ -39,11 +40,13 @@ public class IslandMenuForm extends BaseForm {
 
                 case 2 -> plugin.getFormManager().openSettingsMenu(player);
 
-                case 3 -> {
+                case 3 -> plugin.getFormManager().openProtectionMenu(player);
+
+                case 4 -> {
                     // TODO 島嶼資訊
                 }
 
-                case 4 -> plugin.getFormManager().openMainMenu(player);
+                case 5 -> plugin.getFormManager().openMainMenu(player);
 
                 default -> {
                 }

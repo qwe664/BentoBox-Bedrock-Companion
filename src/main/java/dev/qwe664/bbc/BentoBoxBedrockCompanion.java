@@ -4,8 +4,10 @@ import dev.qwe664.bbc.command.BBCCommand;
 import dev.qwe664.bbc.service.CommandService;
 import dev.qwe664.bbc.hook.FloodgateHook;
 import dev.qwe664.bbc.listener.PlayerJoinListener;
+import dev.qwe664.bbc.listener.CommandListener; // <-- 1. 記得引入剛剛寫好的攔截器
 import dev.qwe664.bbc.manager.FormManager;
 import dev.qwe664.bbc.menu.MenuRegistry;
+import dev.qwe664.bbc.service.BentoBoxService;
 import dev.qwe664.bbc.service.PermissionService;
 import dev.qwe664.bbc.menu.MenuLoader;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +20,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
     private MenuRegistry menuRegistry;
     private PermissionService permissionService;
     private CommandService commandService;
+    private BentoBoxService bentoBoxService;
 
     @Override
     public void onEnable() {
@@ -27,11 +30,19 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
         menuRegistry = new MenuRegistry();
         permissionService = new PermissionService();
         commandService = new CommandService(this);
+        bentoBoxService = new BentoBoxService(this);
         new MenuLoader(menuRegistry).load();
         formManager = new FormManager(this);
 
+        // 註冊玩家加入監聽器
         getServer().getPluginManager().registerEvents(
                 new PlayerJoinListener(this),
+                this
+        );
+
+        // 2. 註冊我們的指令攔截監聽器，讓 /is settings 可以被攔截
+        getServer().getPluginManager().registerEvents(
+                new CommandListener(this),
                 this
         );
 
@@ -65,5 +76,9 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     public CommandService getCommandService() {
         return commandService;
+    }
+
+    public BentoBoxService getBentoBoxService() {
+        return bentoBoxService;
     }
 }

@@ -1,27 +1,26 @@
-# TODO
-
 ## Phase 1
 
-- [ ] Create Gradle project
-- [ ] Load plugin
-- [ ] Floodgate detection
-- [ ] Test Form
+- [x] Create Gradle project
+- [x] Load plugin
+- [x] Floodgate detection
+- [x] Test Form
 
 ## Phase 2
 
-- [ ] Intercept /is settings
-- [ ] Open Bedrock Form
 - [ ] Read BentoBox settings
+- [ ] Open Bedrock Form from /is
+- [ ] Intercept /is settings
 
 ## Phase 3
 
+- [ ] Island Information
+- [ ] Island Settings
 - [ ] Member Management
 - [ ] Island Flags
-- [ ] Island Settings
 
 ## Phase 4
 
-- [ ] Warps
+- [ ] Island Warp
 - [ ] Challenges
 - [ ] Admin Forms
 

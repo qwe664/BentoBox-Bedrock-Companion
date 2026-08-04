@@ -71,18 +71,25 @@ public class ProtectionCategoryForm {
 
         Flag[] flags = category.flags();
         String[] labels = category.labels();
+        String[] descriptions = category.descriptions();
 
         CustomForm.Builder builder = CustomForm.builder()
-                .title(category.title());
+                .title(category.title())
+                .label("排名由低到高：訪客 → 合作成員 → 信任成員 → 成員 → 副島主 → 島主。\n"
+                        + "每個項目選擇「該功能最低要什麼身份才能使用」，選越低代表越多人能用。");
+
+        // 因為最上面多加了一個 label 元件，後面的 dropdown 在整張表單裡的
+        // 元件索引都會往後移一位，所以要用這個位移量來對應 asDropdown() 的索引。
+        int fieldOffset = 1;
 
         for (int i = 0; i < flags.length; i++) {
 
             int currentRank = island.getFlag(flags[i]);
             String currentRankName = rankName(currentRank);
 
-            // 把目前的排名顯示在標籤文字裡，因為不確定這個 Cumulus 版本
-            // 是否支援下拉選單的「預設選項」參數，直接顯示在文字上最保險。
-            String labelWithCurrent = labels[i] + "（目前：" + currentRankName + "）";
+            // 標籤同時放名稱、簡短說明、目前排名，讓玩家不用猜這個旗標在做什麼。
+            String labelWithCurrent = labels[i] + "\n" + descriptions[i]
+                    + "\n（目前：" + currentRankName + "）";
 
             builder.dropdown(labelWithCurrent, RANK_NAMES);
         }
@@ -90,7 +97,7 @@ public class ProtectionCategoryForm {
         builder.validResultHandler(response -> {
 
             for (int i = 0; i < flags.length; i++) {
-                int selectedIndex = response.asDropdown(i);
+                int selectedIndex = response.asDropdown(i + fieldOffset);
                 island.setFlag(flags[i], RANK_VALUES[selectedIndex]);
             }
 

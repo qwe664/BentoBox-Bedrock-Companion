@@ -42,9 +42,7 @@ public class IslandMenuForm extends BaseForm {
 
                 case 3 -> plugin.getFormManager().openProtectionMenu(player);
 
-                case 4 -> {
-                    // TODO 島嶼資訊
-                }
+                case 4 -> plugin.getFormManager().openIslandInfo(player);
 
                 case 5 -> plugin.getFormManager().openMainMenu(player);
 

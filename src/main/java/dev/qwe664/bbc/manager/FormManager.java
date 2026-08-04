@@ -7,6 +7,7 @@ import dev.qwe664.bbc.form.IslandMenuForm;
 import dev.qwe664.bbc.form.MainMenuForm;
 import dev.qwe664.bbc.form.SettingsMenuForm;
 import dev.qwe664.bbc.form.ProtectionMenuForm;
+import dev.qwe664.bbc.form.IslandInfoForm;
 import org.bukkit.entity.Player;
 
 public class FormManager {
@@ -17,6 +18,7 @@ public class FormManager {
     private final AdminMenuForm adminMenuForm;
     private final SettingsMenuForm settingsMenuForm;
     private final ProtectionMenuForm protectionMenuForm;
+    private final IslandInfoForm islandInfoForm;
 
     public FormManager(BentoBoxBedrockCompanion plugin) {
         this.mainMenuForm = new MainMenuForm(plugin);
@@ -25,6 +27,7 @@ public class FormManager {
         this.adminMenuForm = new AdminMenuForm(plugin);
         this.settingsMenuForm = new SettingsMenuForm(plugin);
         this.protectionMenuForm = new ProtectionMenuForm(plugin);
+        this.islandInfoForm = new IslandInfoForm(plugin);
     }
 
     public void openMainMenu(Player player) {
@@ -49,5 +52,9 @@ public class FormManager {
 
     public void openProtectionMenu(Player player) {
         protectionMenuForm.open(player);
+    }
+
+    public void openIslandInfo(Player player) {
+        islandInfoForm.open(player);
     }
 }

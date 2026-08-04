@@ -34,7 +34,7 @@ public class SettingsMenuForm extends BaseForm {
 
     private static final String[] TOGGLE_LABELS = {
             "允許 PvP（主世界）",
-            "允許 PvP（下界）",
+            "允許 PvP（地獄）",
             "允許 PvP（終界）",
             "允許怪物生成",
             "允許動物生成",

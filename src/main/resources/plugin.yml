@@ -1,7 +1,7 @@
 name: BentoBoxBedrockCompanion
 version: ${version}
 main: dev.qwe664.bbc.BentoBoxBedrockCompanion
-api-version: "1.21"
+api-version: "26.2"
 
 author: qwe664
 description: Companion plugin for BentoBox to improve the Bedrock player experience.
@@ -13,3 +13,17 @@ commands:
   bbc:
     description: Open BentoBox Bedrock Companion menu
     usage: /bbc
+
+permissions:
+  bbc.menu.island:
+    description: Allows access to the island menu (Bedrock Form).
+    default: true
+  bbc.menu.admin:
+    description: Allows access to the admin tools menu.
+    default: op
+  bbc.menu.debug:
+    description: Allows access to the developer tools menu.
+    default: op
+  bbc.debug:
+    description: Allows use of /bbc debug commands.
+    default: op

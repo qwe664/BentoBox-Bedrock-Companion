@@ -37,9 +37,7 @@ public class IslandMenuForm extends BaseForm {
                     // TODO 隊伍
                 }
 
-                case 2 -> {
-                plugin.getCommandService().executeLater(player, "is settings", 20);
-                 }
+                case 2 -> plugin.getFormManager().openSettingsMenu(player);
 
                 case 3 -> {
                     // TODO 島嶼資訊

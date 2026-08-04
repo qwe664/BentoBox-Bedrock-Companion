@@ -3,50 +3,77 @@ package dev.qwe664.bbc.form;
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.CustomForm;
-import org.geysermc.geyser.api.GeyserApi;
-import world.bentobox.bentobox.BentoBox;
+import org.geysermc.floodgate.api.FloodgateApi;
+import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.database.objects.Island;
+import world.bentobox.bentobox.lists.Flags;
 
-public class SettingsMenuForm {
+/**
+ * 島嶼設定表單。
+ *
+ * 使用 BentoBox 的 {@link Flag} 物件讀寫島嶼保護旗標，
+ * 而不是用不存在的字串旗標名稱（原本的 "PVP" / "MONSTER_SPAWN" / "FIRE_SPREAD"
+ * 字串寫法在 BentoBox 3.20.0 API 裡完全不存在，無法編譯）。
+ */
+public class SettingsMenuForm extends BaseForm {
 
-    private final BentoBoxBedrockCompanion plugin;
+    // 表單上顯示的旗標與對應的中文標籤，索引順序即為 toggle 在表單上出現的順序。
+    private static final Flag[] TOGGLE_FLAGS = {
+            Flags.PVP_OVERWORLD,
+            Flags.MONSTER_SPAWN,
+            Flags.FIRE_SPREAD
+    };
+
+    private static final String[] TOGGLE_LABELS = {
+            "允許 PvP",
+            "允許怪物生成",
+            "允許火勢蔓延"
+    };
 
     public SettingsMenuForm(BentoBoxBedrockCompanion plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
+    @Override
     public void open(Player player) {
-        Island island = BentoBox.getInstance().getIslands().getIsland(player.getWorld(), player.getUniqueId());
-        if (island == null) {
-            player.sendMessage("§c妳目前沒有島嶼！");
+
+        FloodgateApi api = FloodgateApi.getInstance();
+
+        if (api == null) {
+            player.sendMessage("§cFloodgate API 尚未初始化。");
             return;
         }
 
-        // 使用 BentoBox 支援的字串旗標讀取狀態
-        boolean pvpState = island.isAllowed("PVP");
-        boolean monsterState = island.isAllowed("MONSTER_SPAWN");
-        boolean fireState = island.isAllowed("FIRE_SPREAD");
+        if (!api.isFloodgatePlayer(player.getUniqueId())) {
+            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            return;
+        }
+
+        Island island = plugin.getBentoBoxService().getIslandsManager()
+                .getIsland(player.getWorld(), player.getUniqueId());
+
+        if (island == null) {
+            player.sendMessage("§c你目前沒有島嶼！");
+            return;
+        }
 
         CustomForm.Builder builder = CustomForm.builder()
-                .title("島嶼設定管理")
-                .toggle("允許 PvP", pvpState)
-                .toggle("允許怪物生成", monsterState)
-                .toggle("允許火勢蔓延", fireState);
+                .title("島嶼設定管理");
 
-        builder.validResultHandler((form, response) -> {
-            boolean pvp = response.asToggle(0);
-            boolean monsterSpawn = response.asToggle(1);
-            boolean fireSpread = response.asToggle(2);
+        for (int i = 0; i < TOGGLE_FLAGS.length; i++) {
+            builder.toggle(TOGGLE_LABELS[i], island.isAllowed(TOGGLE_FLAGS[i]));
+        }
 
-            // 使用字串寫回設定
-            island.setFlag("PVP", pvp);
-            island.setFlag("MONSTER_SPAWN", monsterSpawn);
-            island.setFlag("FIRE_SPREAD", fireSpread);
+        builder.validResultHandler(response -> {
+
+            for (int i = 0; i < TOGGLE_FLAGS.length; i++) {
+                boolean value = response.asToggle(i);
+                island.setSettingsFlag(TOGGLE_FLAGS[i], value);
+            }
 
             player.sendMessage("§a島嶼設定已成功更新！");
         });
 
-        // 傳送表單給基岩版玩家
-        GeyserApi.api().connectionByUuid(player.getUniqueId()).sendForm(builder.build());
+        api.sendForm(player.getUniqueId(), builder);
     }
 }

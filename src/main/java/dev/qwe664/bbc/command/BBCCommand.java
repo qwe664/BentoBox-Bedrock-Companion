@@ -29,7 +29,11 @@ public class BBCCommand implements CommandExecutor {
 
         // /bbc debug
         if (args.length > 0 && args[0].equalsIgnoreCase("debug")) {
-            return debugCommand.execute(sender, args);
+            if (!(sender instanceof Player player) || plugin.getPermissionService().hasDeveloperPermission(player)) {
+                return debugCommand.execute(sender, args);
+            }
+            sender.sendMessage(ChatColor.RED + "[BBC] 你沒有權限使用這個指令。");
+            return true;
         }
 
         // /bbc

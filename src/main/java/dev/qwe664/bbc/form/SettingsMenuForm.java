@@ -20,14 +20,30 @@ public class SettingsMenuForm extends BaseForm {
     // 表單上顯示的旗標與對應的中文標籤，索引順序即為 toggle 在表單上出現的順序。
     private static final Flag[] TOGGLE_FLAGS = {
             Flags.PVP_OVERWORLD,
+            Flags.PVP_NETHER,
+            Flags.PVP_END,
             Flags.MONSTER_SPAWN,
-            Flags.FIRE_SPREAD
+            Flags.ANIMAL_SPAWN,
+            Flags.FIRE_SPREAD,
+            Flags.FIRE_BURNING,
+            Flags.FIRE_IGNITE,
+            Flags.LEAF_DECAY,
+            Flags.TNT_DAMAGE,
+            Flags.BLOCK_EXPLODE_DAMAGE
     };
 
     private static final String[] TOGGLE_LABELS = {
-            "允許 PvP",
+            "允許 PvP（主世界）",
+            "允許 PvP（下界）",
+            "允許 PvP（終界）",
             "允許怪物生成",
-            "允許火勢蔓延"
+            "允許動物生成",
+            "允許火勢蔓延",
+            "允許火焰燃燒方塊",
+            "允許非玩家方式點火",
+            "允許樹葉自然凋零",
+            "允許 TNT 破壞方塊/傷害",
+            "允許床/重生錨爆炸傷害方塊"
     };
 
     public SettingsMenuForm(BentoBoxBedrockCompanion plugin) {

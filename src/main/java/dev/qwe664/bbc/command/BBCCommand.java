@@ -45,7 +45,15 @@ public class BBCCommand implements CommandExecutor {
             return true;
         }
 
-        plugin.getFormManager().openMainMenu(player);
+        // 基岩版玩家開啟 BBC 的表單主選單；
+        // Java 版玩家不需要繞這一層，BentoBox 本身就是為 Java 版設計的，
+        // 直接轉發到 /is 即可（沒有島嶼時 BentoBox 會自動跳出建立島嶼的原生 GUI）。
+        if (plugin.getFloodgateHook().isBedrock(player)) {
+            plugin.getFormManager().openMainMenu(player);
+        } else {
+            plugin.getCommandService().execute(player, "is");
+        }
+
         return true;
     }
 }

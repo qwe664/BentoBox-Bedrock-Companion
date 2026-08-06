@@ -32,7 +32,6 @@ public class AdminMenuForm extends BaseForm {
                 .title("👮 管理工具")
                 .content("選擇要執行的管理操作")
                 .button("🔍 查詢／傳送到玩家島嶼")
-                .button("🛡 覆寫玩家島嶼保護設定")
                 .button("♻ 重載插件設定")
                 .button("⬅ 返回主選單");
 
@@ -42,11 +41,9 @@ public class AdminMenuForm extends BaseForm {
 
                 case 0 -> plugin.getFormManager().openAdminIslandTeleport(player);
 
-                case 1 -> plugin.getFormManager().openAdminOverrideProtection(player);
+                case 1 -> openReloadConfirm(player);
 
-                case 2 -> openReloadConfirm(player);
-
-                case 3 -> plugin.getFormManager().openMainMenu(player);
+                case 2 -> plugin.getFormManager().openMainMenu(player);
 
                 default -> {
                 }

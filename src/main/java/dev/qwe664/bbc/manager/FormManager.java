@@ -53,9 +53,6 @@ public class FormManager {
         adminIslandTeleportForm.open(player);
     }
 
-    public void openAdminOverrideProtection(Player player) {
-    }
-
     public void openSettingsMenu(Player player) {
         settingsMenuForm.open(player);
     }

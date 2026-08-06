@@ -8,6 +8,7 @@ import dev.qwe664.bbc.listener.CommandListener; // <-- 1. 記得引入剛剛寫�
 import dev.qwe664.bbc.manager.FormManager;
 import dev.qwe664.bbc.menu.MenuRegistry;
 import dev.qwe664.bbc.service.BentoBoxService;
+import dev.qwe664.bbc.service.LuckPermsService;
 import dev.qwe664.bbc.service.PermissionService;
 import dev.qwe664.bbc.menu.MenuLoader;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
     private PermissionService permissionService;
     private CommandService commandService;
     private BentoBoxService bentoBoxService;
+    private LuckPermsService luckPermsService;
 
     @Override
     public void onEnable() {
@@ -31,6 +33,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
         permissionService = new PermissionService();
         commandService = new CommandService(this);
         bentoBoxService = new BentoBoxService(this);
+        luckPermsService = new LuckPermsService();
         new MenuLoader(menuRegistry).load();
         formManager = new FormManager(this);
 
@@ -48,6 +51,12 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
         if (getCommand("bbc") != null) {
             getCommand("bbc").setExecutor(new BBCCommand(this));
+        }
+
+        if (luckPermsService.isEnabled()) {
+            getLogger().info("已偵測到 LuckPerms，權限組資訊功能已啟用。");
+        } else {
+            getLogger().info("未偵測到 LuckPerms，權限組資訊功能將不會顯示（不影響其他功能）。");
         }
 
         getLogger().info("BentoBox Bedrock Companion has been enabled!");
@@ -80,5 +89,9 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     public BentoBoxService getBentoBoxService() {
         return bentoBoxService;
+    }
+
+    public LuckPermsService getLuckPermsService() {
+        return luckPermsService;
     }
 }

@@ -22,6 +22,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:26.2.build.+")
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
     compileOnly(files("libs/BentoBox-3.20.0.jar"))
+    compileOnly("net.luckperms:api:5.4")
 }
 
 java {

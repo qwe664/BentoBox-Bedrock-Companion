@@ -35,16 +35,17 @@ public class IslandMenuForm extends BaseForm {
                  }
 
                 case 1 -> {
-                    // TODO 隊伍
+                    // BentoBox 本身有內建的隊伍管理指令（邀請/踢除/升降階），
+                    // 這裡直接轉發過去，讓玩家跳到 BentoBox 原生的隊伍介面，
+                    // 跟上面「傳送到島嶼」按鈕（case 0）用同一種做法，風格一致。
+                    plugin.getCommandService().execute(player, "is team");
                 }
 
                 case 2 -> plugin.getFormManager().openSettingsMenu(player);
 
                 case 3 -> plugin.getFormManager().openProtectionMenu(player);
 
-                case 4 -> {
-                    // TODO 島嶼資訊
-                }
+                case 4 -> plugin.getFormManager().openIslandInfo(player);
 
                 case 5 -> plugin.getFormManager().openMainMenu(player);
 

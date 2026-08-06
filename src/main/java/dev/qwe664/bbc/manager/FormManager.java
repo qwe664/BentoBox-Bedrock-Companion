@@ -2,6 +2,7 @@ package dev.qwe664.bbc.manager;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import dev.qwe664.bbc.form.AdminMenuForm;
+import dev.qwe664.bbc.form.AdminIslandTeleportForm;
 import dev.qwe664.bbc.form.DebugMenuForm;
 import dev.qwe664.bbc.form.IslandMenuForm;
 import dev.qwe664.bbc.form.MainMenuForm;
@@ -16,6 +17,7 @@ public class FormManager {
     private final IslandMenuForm islandMenuForm;
     private final DebugMenuForm debugMenuForm;
     private final AdminMenuForm adminMenuForm;
+    private final AdminIslandTeleportForm adminIslandTeleportForm;
     private final SettingsMenuForm settingsMenuForm;
     private final ProtectionMenuForm protectionMenuForm;
     private final IslandInfoForm islandInfoForm;
@@ -25,6 +27,7 @@ public class FormManager {
         this.islandMenuForm = new IslandMenuForm(plugin);
         this.debugMenuForm = new DebugMenuForm(plugin);
         this.adminMenuForm = new AdminMenuForm(plugin);
+        this.adminIslandTeleportForm = new AdminIslandTeleportForm(plugin);
         this.settingsMenuForm = new SettingsMenuForm(plugin);
         this.protectionMenuForm = new ProtectionMenuForm(plugin);
         this.islandInfoForm = new IslandInfoForm(plugin);
@@ -44,6 +47,13 @@ public class FormManager {
 
     public void openAdminMenu(Player player) {
         adminMenuForm.open(player);
+    }
+
+    public void openAdminIslandTeleport(Player player) {
+        adminIslandTeleportForm.open(player);
+    }
+
+    public void openAdminOverrideProtection(Player player) {
     }
 
     public void openSettingsMenu(Player player) {

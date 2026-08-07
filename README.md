@@ -13,19 +13,23 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - Floodgate detection
 - Geyser compatibility
 - Native Bedrock Form framework
+- Island Information (owner, members, size, creation date)
+- Island Settings (protection flags via native forms)
+- Team Management (delegates to BentoBox `/is team`)
+- Island Flags (91 protection flags, categorized menu)
+- Admin Tools (island lookup/teleport, config reload)
+- LuckPerms integration (displays player's primary group)
+- Developer/Debug tools (environment info, reflection explorer)
 
 ### Planned
 
-- Island Settings
-- Team Management
-- Island Flags
 - Warps
 - Challenges
 - Visit Menu
-- Admin Tools
 - PlaceholderAPI support
-- LuckPerms integration
 - Vault integration
+- Configuration file
+- Multi-language support
 
 ---
 
@@ -37,6 +41,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - Integrate through the BentoBox API whenever possible.
 - Replace inventory/chest GUIs with native Bedrock Forms.
 - Maintain compatibility with future BentoBox updates.
+- Prefer official APIs over reflection wherever possible.
 
 ---
 
@@ -46,9 +51,10 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 |-----------|---------|
 | Java | 21+ |
 | Paper / Purpur | Latest |
-| BentoBox | Required |
+| BentoBox | 3.20.0+ |
 | Floodgate | Required |
 | Geyser | Required |
+| LuckPerms | Optional |
 
 ---
 
@@ -57,31 +63,32 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 1. Install BentoBox.
 2. Install Geyser.
 3. Install Floodgate.
-4. Place the BentoBox Bedrock Companion plugin into the `plugins` folder.
-5. Restart the server.
+4. (Optional) Install LuckPerms for player group display.
+5. Place the BentoBox Bedrock Companion plugin into the `plugins` folder.
+6. Restart the server.
 
 ---
 
 ## Roadmap
 
-### v0.1
+### v0.1 ✅
 
-- [ ] Project initialization
-- [ ] Floodgate detection
-- [ ] Form framework
-- [ ] Test Form
+- [x] Project initialization
+- [x] Floodgate detection
+- [x] Form framework
+- [x] Test Form
 
-### v0.2
+### v0.2 ✅
 
-- [ ] Island Settings
+- [x] Island Settings
 
-### v0.3
+### v0.3 ✅
 
-- [ ] Team Management
+- [x] Team Management
 
-### v0.4
+### v0.4 ✅
 
-- [ ] Island Flags
+- [x] Island Flags
 
 ### v0.5
 
@@ -95,14 +102,14 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 - [ ] Visit Menu
 
-### v0.8
+### v0.8 ✅
 
-- [ ] Admin Forms
+- [x] Admin Forms
 
 ### v0.9
 
 - [ ] PlaceholderAPI support
-- [ ] LuckPerms integration
+- [x] LuckPerms integration
 - [ ] Vault integration
 
 ### v1.0
@@ -125,9 +132,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Early Development
-
-This project is currently under active development.
+🚧 Active Development — core island management features complete, Warps/Challenges/Visit menu pending.
 
 ---
 

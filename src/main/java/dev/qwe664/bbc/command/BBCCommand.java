@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.command;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import dev.qwe664.bbc.util.MenuItem;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,6 +34,18 @@ public class BBCCommand implements CommandExecutor {
                 return debugCommand.execute(sender, args);
             }
             sender.sendMessage(ChatColor.RED + "[BBC] 你沒有權限使用這個指令。");
+            return true;
+        }
+
+        // /bbc item — 補領選單物品，主要給更新前就已加入的舊玩家使用
+        // （PlayerJoinListener 只在「加入伺服器」那一刻補發，已經在線的人不會觸發）。
+        if (args.length > 0 && args[0].equalsIgnoreCase("item")) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(ChatColor.YELLOW + "[BBC] 這個指令僅限玩家使用。");
+                return true;
+            }
+            player.getInventory().addItem(MenuItem.create(plugin));
+            player.sendMessage(ChatColor.GREEN + "[BBC] 已給予選單物品。");
             return true;
         }
 

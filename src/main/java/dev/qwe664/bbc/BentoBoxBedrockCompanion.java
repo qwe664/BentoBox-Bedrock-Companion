@@ -5,6 +5,7 @@ import dev.qwe664.bbc.service.CommandService;
 import dev.qwe664.bbc.hook.FloodgateHook;
 import dev.qwe664.bbc.listener.PlayerJoinListener;
 import dev.qwe664.bbc.listener.CommandListener; // <-- 1. 記得引入剛剛寫好的攔截器
+import dev.qwe664.bbc.listener.MenuItemListener;
 import dev.qwe664.bbc.manager.FormManager;
 import dev.qwe664.bbc.menu.MenuRegistry;
 import dev.qwe664.bbc.service.BentoBoxService;
@@ -46,6 +47,12 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
         // 2. 註冊我們的指令攔截監聽器，讓 /is settings 可以被攔截
         getServer().getPluginManager().registerEvents(
                 new CommandListener(this),
+                this
+        );
+
+        // 3. 註冊選單物品的右鍵監聽器
+        getServer().getPluginManager().registerEvents(
+                new MenuItemListener(this),
                 this
         );
 

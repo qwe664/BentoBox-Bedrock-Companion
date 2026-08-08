@@ -43,6 +43,14 @@ public class LuckPermsService {
     /**
      * 取得玩家目前的主要權限組名稱（LuckPerms 內部的群組 ID，例如 "vip"、"default"）。
      * LuckPerms 未安裝、或查詢失敗時回傳 null。
+     *
+     * 注意：這裡刻意用 user.getCachedData().getMetaData().getPrimaryGroup()，
+     * 不是 user.getPrimaryGroup()。後者回傳的是「原始儲存值」，
+     * 用 /lp user <player> parent add <group> 把玩家加進某個群組時不會自動更新這個值，
+     * 只有明確下 /lp user <player> setgroup <group> 或 promote 才會改；
+     * 前者則是 LuckPerms 依照伺服器設定的 primary-group-calculation-method
+     * （常見設定是 parents-by-weight，依權重挑出實際生效的最高權限群組）算出來的結果，
+     * 才會正確反映「這位玩家實際上被加進了哪個權限組」。
      */
     public String getPrimaryGroup(Player player) {
 
@@ -52,7 +60,7 @@ public class LuckPermsService {
 
         User user = getApi().getUserManager().getUser(player.getUniqueId());
 
-        return user == null ? null : user.getPrimaryGroup();
+        return user == null ? null : user.getCachedData().getMetaData().getPrimaryGroup();
     }
 
     /**

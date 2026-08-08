@@ -92,7 +92,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ### v0.5
 
-- [ ] Warps
+- [x] Warps
 
 ### v0.6
 

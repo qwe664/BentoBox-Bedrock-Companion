@@ -33,9 +33,20 @@ public class MainMenuForm extends BaseForm {
         var builder = SimpleForm.builder();
         List<MenuButton> visibleButtons = new ArrayList<>();
 
+        String welcomeContent = "歡迎使用 BentoBox Bedrock Companion";
+
+        if (plugin.getLuckPermsService().isEnabled()) {
+
+            String group = plugin.getLuckPermsService().getPrimaryGroup(player);
+
+            if (group != null) {
+                welcomeContent += "\n§7身分組：§f" + group;
+            }
+        }
+
         builder
                 .title("BentoBox")
-                .content("歡迎使用 BentoBox Bedrock Companion");
+                .content(welcomeContent);
 
         for (MenuButton button : plugin.getMenuRegistry().getButtons()) {
 

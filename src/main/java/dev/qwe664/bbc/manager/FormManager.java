@@ -2,12 +2,16 @@ package dev.qwe664.bbc.manager;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import dev.qwe664.bbc.form.AdminMenuForm;
+import dev.qwe664.bbc.form.AdminIslandTeleportForm;
 import dev.qwe664.bbc.form.DebugMenuForm;
 import dev.qwe664.bbc.form.IslandMenuForm;
 import dev.qwe664.bbc.form.MainMenuForm;
 import dev.qwe664.bbc.form.SettingsMenuForm;
 import dev.qwe664.bbc.form.ProtectionMenuForm;
 import dev.qwe664.bbc.form.IslandInfoForm;
+import dev.qwe664.bbc.form.WarpMenuForm;
+import dev.qwe664.bbc.form.WarpBrowseForm;
+import dev.qwe664.bbc.form.WarpManageForm;
 import org.bukkit.entity.Player;
 
 public class FormManager {
@@ -16,18 +20,26 @@ public class FormManager {
     private final IslandMenuForm islandMenuForm;
     private final DebugMenuForm debugMenuForm;
     private final AdminMenuForm adminMenuForm;
+    private final AdminIslandTeleportForm adminIslandTeleportForm;
     private final SettingsMenuForm settingsMenuForm;
     private final ProtectionMenuForm protectionMenuForm;
     private final IslandInfoForm islandInfoForm;
+    private final WarpMenuForm warpMenuForm;
+    private final WarpBrowseForm warpBrowseForm;
+    private final WarpManageForm warpManageForm;
 
     public FormManager(BentoBoxBedrockCompanion plugin) {
         this.mainMenuForm = new MainMenuForm(plugin);
         this.islandMenuForm = new IslandMenuForm(plugin);
         this.debugMenuForm = new DebugMenuForm(plugin);
         this.adminMenuForm = new AdminMenuForm(plugin);
+        this.adminIslandTeleportForm = new AdminIslandTeleportForm(plugin);
         this.settingsMenuForm = new SettingsMenuForm(plugin);
         this.protectionMenuForm = new ProtectionMenuForm(plugin);
         this.islandInfoForm = new IslandInfoForm(plugin);
+        this.warpMenuForm = new WarpMenuForm(plugin);
+        this.warpBrowseForm = new WarpBrowseForm(plugin);
+        this.warpManageForm = new WarpManageForm(plugin);
     }
 
     public void openMainMenu(Player player) {
@@ -46,6 +58,10 @@ public class FormManager {
         adminMenuForm.open(player);
     }
 
+    public void openAdminIslandTeleport(Player player) {
+        adminIslandTeleportForm.open(player);
+    }
+
     public void openSettingsMenu(Player player) {
         settingsMenuForm.open(player);
     }
@@ -56,5 +72,17 @@ public class FormManager {
 
     public void openIslandInfo(Player player) {
         islandInfoForm.open(player);
+    }
+
+    public void openWarpMenu(Player player) {
+        warpMenuForm.open(player);
+    }
+
+    public void openWarpBrowse(Player player) {
+        warpBrowseForm.open(player);
+    }
+
+    public void openWarpManage(Player player) {
+        warpManageForm.open(player);
     }
 }

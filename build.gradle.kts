@@ -16,12 +16,17 @@ repositories {
 
     // CodeMC
     maven("https://repo.codemc.io/repository/maven-public/")
+
+    // BentoBox
+    maven("https://repo.codemc.org/repository/bentoboxworld/")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:26.2.build.+")
     compileOnly("org.geysermc.floodgate:api:2.2.5-SNAPSHOT")
-    compileOnly(files("libs/BentoBox-3.20.0.jar"))
+    compileOnly("world.bentobox:bentobox:3.20.0")
+    compileOnly("world.bentobox:warps:1.19.0-SNAPSHOT")
+    compileOnly("net.luckperms:api:5.4")
 }
 
 java {

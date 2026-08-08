@@ -30,15 +30,51 @@ public class AdminMenuForm extends BaseForm {
 
         builder
                 .title("👮 管理工具")
-                .content("🚧 功能開發中")
+                .content("選擇要執行的管理操作")
+                .button("🔍 查詢／傳送到玩家島嶼")
+                .button("♻ 重載插件設定")
                 .button("⬅ 返回主選單");
 
         builder.validResultHandler(response -> {
-            if (response.clickedButtonId() == 0) {
-                plugin.getFormManager().openMainMenu(player);
+
+            switch (response.clickedButtonId()) {
+
+                case 0 -> plugin.getFormManager().openAdminIslandTeleport(player);
+
+                case 1 -> openReloadConfirm(player);
+
+                case 2 -> plugin.getFormManager().openMainMenu(player);
+
+                default -> {
+                }
             }
         });
 
         api.sendForm(player.getUniqueId(), builder);
+    }
+
+    /**
+     * 重載會影響全伺服器所有島嶼的設定，執行前多一層確認，
+     * 避免手滑點到造成非預期的影響。
+     */
+    private void openReloadConfirm(Player player) {
+
+        var confirm = SimpleForm.builder()
+                .title("♻ 重載插件設定")
+                .content("即將執行 /bentobox reload，這會重新載入 BentoBox 的設定檔，\n影響範圍是整個伺服器。確定要執行嗎？")
+                .button("✅ 確認重載")
+                .button("❌ 取消");
+
+        confirm.validResultHandler(response -> {
+
+            if (response.clickedButtonId() == 0) {
+                plugin.getCommandService().execute(player, "bentobox reload");
+                player.sendMessage("§a已送出 /bentobox reload 指令。");
+            } else {
+                player.sendMessage("§7已取消。");
+            }
+        });
+
+        FloodgateApi.getInstance().sendForm(player.getUniqueId(), confirm);
     }
 }

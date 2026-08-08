@@ -34,6 +34,10 @@ public class HelpCommand implements BaseCommand {
         sender.sendMessage(ChatColor.GRAY + "顯示此說明");
         sender.sendMessage("");
 
+        sender.sendMessage(ChatColor.GREEN + "/bbc item");
+        sender.sendMessage(ChatColor.GRAY + "補領選單物品（右鍵可開啟主選單）");
+        sender.sendMessage("");
+
         // 只有具備開發者權限的人才看得到後面這段，
         // 一般玩家看到一堆 Debug 指令反而只會覺得困惑。
         if (sender instanceof Player player

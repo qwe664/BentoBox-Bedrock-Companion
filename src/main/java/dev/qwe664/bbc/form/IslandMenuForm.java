@@ -14,6 +14,8 @@ public class IslandMenuForm extends BaseForm {
     @Override
     public void open(Player player) {
 
+        boolean warpsAvailable = plugin.getWarpsHook().isAvailable();
+
         var builder = SimpleForm.builder();
 
         builder
@@ -23,12 +25,28 @@ public class IslandMenuForm extends BaseForm {
                 .button("👥 隊伍")
                 .button("⚙ 島嶼設定")
                 .button("🛡 保護設定")
-                .button("📊 島嶼資訊")
-                .button("⬅ 返回主選單");
+                .button("📊 島嶼資訊");
+
+        // Warps 是軟依賴，伺服器沒裝的話就不顯示這顆按鈕，
+        // 後面返回按鈕的編號要跟著往前遞補。
+        if (warpsAvailable) {
+            builder.button("🚩 傳送點");
+        }
+
+        builder.button("⬅ 返回主選單");
+
+        int backButtonId = warpsAvailable ? 6 : 5;
 
         builder.validResultHandler(response -> {
 
-            switch (response.clickedButtonId()) {
+            int clickedId = response.clickedButtonId();
+
+            if (clickedId == backButtonId) {
+                plugin.getFormManager().openMainMenu(player);
+                return;
+            }
+
+            switch (clickedId) {
 
                 case 0 -> {
                 plugin.getCommandService().execute(player, "is");
@@ -47,7 +65,11 @@ public class IslandMenuForm extends BaseForm {
 
                 case 4 -> plugin.getFormManager().openIslandInfo(player);
 
-                case 5 -> plugin.getFormManager().openMainMenu(player);
+                case 5 -> {
+                    if (warpsAvailable) {
+                        plugin.getFormManager().openWarpMenu(player);
+                    }
+                }
 
                 default -> {
                 }

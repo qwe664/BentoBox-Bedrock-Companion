@@ -96,7 +96,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ### v0.6
 
-- [ ] Challenges
+- [x] Challenges
 
 ### v0.7
 

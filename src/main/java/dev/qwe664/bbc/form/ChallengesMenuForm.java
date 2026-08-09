@@ -1,0 +1,114 @@
+package dev.qwe664.bbc.form;
+
+import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import dev.qwe664.bbc.util.ProgressBarUtil;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.geysermc.cumulus.form.SimpleForm;
+import org.geysermc.floodgate.api.FloodgateApi;
+import world.bentobox.bentobox.api.user.User;
+import world.bentobox.challenges.database.object.ChallengeLevel;
+import world.bentobox.challenges.managers.ChallengesManager;
+import world.bentobox.challenges.utils.LevelStatus;
+
+import java.util.List;
+
+/**
+ * 挑戰關卡（等級）清單。
+ *
+ * 每個等級一個按鈕，顯示解鎖狀態跟完成進度條。
+ * 資料來源是 ChallengesManager.getAllChallengeLevelStatus(User, World)，
+ * 這個方法一次回傳每個等級目前的解鎖/完成狀態，不用自己再逐一查詢。
+ */
+public class ChallengesMenuForm extends BaseForm {
+
+    public ChallengesMenuForm(BentoBoxBedrockCompanion plugin) {
+        super(plugin);
+    }
+
+    @Override
+    public void open(Player player) {
+
+        FloodgateApi api = FloodgateApi.getInstance();
+
+        if (api == null) {
+            player.sendMessage("§cFloodgate API 尚未初始化。");
+            return;
+        }
+
+        if (!api.isFloodgatePlayer(player.getUniqueId())) {
+            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            return;
+        }
+
+        if (!plugin.getChallengesHook().isAvailable()) {
+            player.sendMessage("§c挑戰功能目前無法使用（伺服器未安裝 Challenges 附加模組）。");
+            return;
+        }
+
+        ChallengesManager manager = plugin.getChallengesHook().getChallengesManager();
+        World world = player.getWorld();
+        User user = User.getInstance(player);
+
+        List<LevelStatus> statusList = manager.getAllChallengeLevelStatus(user, world);
+
+        var builder = SimpleForm.builder()
+                .title("🏆 挑戰關卡");
+
+        if (statusList == null || statusList.isEmpty()) {
+
+            builder.content("這個世界目前還沒有設置任何挑戰關卡。")
+                    .button("⬅ 返回島嶼選單");
+
+            builder.validResultHandler(response -> plugin.getFormManager().openIslandMenu(player));
+
+            api.sendForm(player.getUniqueId(), builder);
+            return;
+        }
+
+        builder.content("選擇一個關卡查看挑戰內容：");
+
+        for (LevelStatus status : statusList) {
+
+            ChallengeLevel level = status.getLevel();
+            int total = manager.getLevelChallenges(level).size();
+            int completed = total - status.getNumberOfChallengesStillToDo();
+
+            String lockState = status.isUnlocked() ? "" : "§c🔒 ";
+            String levelName = level.getFriendlyName() == null || level.getFriendlyName().isBlank()
+                    ? level.getUniqueId()
+                    : level.getFriendlyName();
+
+            String buttonText = lockState + "§f" + levelName
+                    + "\n" + ProgressBarUtil.build(completed, total);
+
+            builder.button(buttonText);
+        }
+
+        builder.button("⬅ 返回島嶼選單");
+
+        int backButtonId = statusList.size();
+
+        builder.validResultHandler(response -> {
+
+            int clickedId = response.clickedButtonId();
+
+            if (clickedId == backButtonId) {
+                plugin.getFormManager().openIslandMenu(player);
+                return;
+            }
+
+            LevelStatus clickedStatus = statusList.get(clickedId);
+
+            if (!clickedStatus.isUnlocked()) {
+                player.sendMessage("§c這個關卡尚未解鎖，請先完成前面的關卡。");
+                open(player);
+                return;
+            }
+
+            new ChallengeLevelForm(plugin, clickedStatus.getLevel()).open(player);
+        });
+
+        api.sendForm(player.getUniqueId(), builder);
+    }
+}

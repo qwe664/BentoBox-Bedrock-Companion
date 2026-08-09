@@ -90,11 +90,11 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 - [x] Island Flags
 
-### v0.5
+### v0.5✅
 
 - [x] Warps
 
-### v0.6
+### v0.6✅
 
 - [x] Challenges
 

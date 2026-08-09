@@ -33,7 +33,7 @@ public class MainMenuForm extends BaseForm {
         var builder = SimpleForm.builder();
         List<MenuButton> visibleButtons = new ArrayList<>();
 
-        String welcomeContent = "歡迎使用 BentoBox Bedrock Companion";
+        String welcomeContent = "歡迎使用 BentoBox 基岩版專屬選單";
 
         if (plugin.getLuckPermsService().isEnabled()) {
 

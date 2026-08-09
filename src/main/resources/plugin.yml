@@ -12,6 +12,7 @@ depend:
 softdepend:
   - LuckPerms
   - Warps
+  - BentoBox-Challenges
 commands:
   bbc:
     description: Open BentoBox Bedrock Companion menu

@@ -12,6 +12,7 @@ import dev.qwe664.bbc.form.IslandInfoForm;
 import dev.qwe664.bbc.form.WarpMenuForm;
 import dev.qwe664.bbc.form.WarpBrowseForm;
 import dev.qwe664.bbc.form.WarpManageForm;
+import dev.qwe664.bbc.form.ChallengesMenuForm;
 import org.bukkit.entity.Player;
 
 public class FormManager {
@@ -27,6 +28,7 @@ public class FormManager {
     private final WarpMenuForm warpMenuForm;
     private final WarpBrowseForm warpBrowseForm;
     private final WarpManageForm warpManageForm;
+    private final ChallengesMenuForm challengesMenuForm;
 
     public FormManager(BentoBoxBedrockCompanion plugin) {
         this.mainMenuForm = new MainMenuForm(plugin);
@@ -40,6 +42,7 @@ public class FormManager {
         this.warpMenuForm = new WarpMenuForm(plugin);
         this.warpBrowseForm = new WarpBrowseForm(plugin);
         this.warpManageForm = new WarpManageForm(plugin);
+        this.challengesMenuForm = new ChallengesMenuForm(plugin);
     }
 
     public void openMainMenu(Player player) {
@@ -84,5 +87,9 @@ public class FormManager {
 
     public void openWarpManage(Player player) {
         warpManageForm.open(player);
+    }
+
+    public void openChallengesMenu(Player player) {
+        challengesMenuForm.open(player);
     }
 }

@@ -5,7 +5,12 @@ import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class IslandMenuForm extends BaseForm {
+
+    private static final int FIXED_BUTTON_COUNT = 5;
 
     public IslandMenuForm(BentoBoxBedrockCompanion plugin) {
         super(plugin);
@@ -15,6 +20,7 @@ public class IslandMenuForm extends BaseForm {
     public void open(Player player) {
 
         boolean warpsAvailable = plugin.getWarpsHook().isAvailable();
+        boolean challengesAvailable = plugin.getChallengesHook().isAvailable();
 
         var builder = SimpleForm.builder();
 
@@ -27,15 +33,24 @@ public class IslandMenuForm extends BaseForm {
                 .button("🛡 保護設定")
                 .button("📊 島嶼資訊");
 
-        // Warps 是軟依賴，伺服器沒裝的話就不顯示這顆按鈕，
-        // 後面返回按鈕的編號要跟著往前遞補。
+        // Warps、Challenges 都是軟依賴，伺服器沒裝的話就不顯示對應按鈕，
+        // 用一份「動態按鈕」清單記錄實際被加進去的按鈕順序，
+        // 這樣不管兩者哪一個有裝、都有裝、都沒裝，編號永遠對得上。
+        List<Runnable> dynamicActions = new ArrayList<>();
+
         if (warpsAvailable) {
             builder.button("🚩 傳送點");
+            dynamicActions.add(() -> plugin.getFormManager().openWarpMenu(player));
+        }
+
+        if (challengesAvailable) {
+            builder.button("🏆 挑戰");
+            dynamicActions.add(() -> plugin.getFormManager().openChallengesMenu(player));
         }
 
         builder.button("⬅ 返回主選單");
 
-        int backButtonId = warpsAvailable ? 6 : 5;
+        int backButtonId = FIXED_BUTTON_COUNT + dynamicActions.size();
 
         builder.validResultHandler(response -> {
 
@@ -46,11 +61,14 @@ public class IslandMenuForm extends BaseForm {
                 return;
             }
 
+            if (clickedId >= FIXED_BUTTON_COUNT) {
+                dynamicActions.get(clickedId - FIXED_BUTTON_COUNT).run();
+                return;
+            }
+
             switch (clickedId) {
 
-                case 0 -> {
-                plugin.getCommandService().execute(player, "is");
-                 }
+                case 0 -> plugin.getCommandService().execute(player, "is");
 
                 case 1 -> {
                     // BentoBox 本身有內建的隊伍管理指令（邀請/踢除/升降階），
@@ -64,12 +82,6 @@ public class IslandMenuForm extends BaseForm {
                 case 3 -> plugin.getFormManager().openProtectionMenu(player);
 
                 case 4 -> plugin.getFormManager().openIslandInfo(player);
-
-                case 5 -> {
-                    if (warpsAvailable) {
-                        plugin.getFormManager().openWarpMenu(player);
-                    }
-                }
 
                 default -> {
                 }

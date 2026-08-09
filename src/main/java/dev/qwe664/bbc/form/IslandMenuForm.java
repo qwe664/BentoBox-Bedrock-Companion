@@ -68,13 +68,26 @@ public class IslandMenuForm extends BaseForm {
 
             switch (clickedId) {
 
-                case 0 -> plugin.getCommandService().execute(player, "is");
+                case 0 -> {
+                    // 找得到「玩家目前所在世界」對應的玩法就直接傳送；
+                    // 找不到（例如玩家站在主城，不屬於任何玩法的世界）
+                    // 就跳出選單讓玩家自己選要去哪個玩法，不再靜默失敗。
+                    plugin.getBentoBoxService().getPlayerCommandLabel(player)
+                            .ifPresentOrElse(
+                                    label -> plugin.getCommandService().execute(player, label),
+                                    () -> new GameModePickerForm(plugin, "").open(player)
+                            );
+                }
 
                 case 1 -> {
                     // BentoBox 本身有內建的隊伍管理指令（邀請/踢除/升降階），
                     // 這裡直接轉發過去，讓玩家跳到 BentoBox 原生的隊伍介面，
                     // 跟上面「傳送到島嶼」按鈕（case 0）用同一種做法，風格一致。
-                    plugin.getCommandService().execute(player, "is team");
+                    plugin.getBentoBoxService().getPlayerCommandLabel(player)
+                            .ifPresentOrElse(
+                                    label -> plugin.getCommandService().execute(player, label + " team"),
+                                    () -> new GameModePickerForm(plugin, " team").open(player)
+                            );
                 }
 
                 case 2 -> plugin.getFormManager().openSettingsMenu(player);

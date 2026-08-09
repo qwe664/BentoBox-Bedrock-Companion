@@ -20,6 +20,14 @@ public class MenuLoader {
                 "bbc.menu.island"
         ));
 
+        // 回大廳／出生點，不限身分組，所有玩家都能用
+        menuRegistry.register(new MenuButton(
+                "lobby",
+                "🚪 回大廳",
+                MenuCategory.PLAYER,
+                null
+        ));
+
         // 管理工具
         menuRegistry.register(new MenuButton(
                 "admin",

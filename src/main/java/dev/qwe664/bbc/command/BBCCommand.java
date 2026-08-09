@@ -60,11 +60,21 @@ public class BBCCommand implements CommandExecutor {
 
         // 基岩版玩家開啟 BBC 的表單主選單；
         // Java 版玩家不需要繞這一層，BentoBox 本身就是為 Java 版設計的，
-        // 直接轉發到 /is 即可（沒有島嶼時 BentoBox 會自動跳出建立島嶼的原生 GUI）。
+        // 直接轉發到該世界對應玩法的指令即可（動態查詢，不寫死 "is"，
+        // 沒有島嶼時 BentoBox 會自動跳出建立島嶼的原生 GUI）。
         if (plugin.getFloodgateHook().isBedrock(player)) {
             plugin.getFormManager().openMainMenu(player);
         } else {
-            plugin.getCommandService().execute(player, "is");
+            plugin.getBentoBoxService().getPlayerCommandLabel(player).ifPresentOrElse(
+                    gamemodeLabel -> plugin.getCommandService().execute(player, gamemodeLabel),
+                    () -> {
+                        // 站在主城這類不屬於任何玩法的世界，光看目前世界猜不出要去哪個玩法，
+                        // 基岩版表單只有 Floodgate 玩家能開，Java 玩家這裡改用聊天訊息列出選項。
+                        player.sendMessage(ChatColor.YELLOW + "[BBC] 你目前不在任何空島世界裡，請選擇要前往的玩法：");
+                        plugin.getBentoBoxService().getAvailableGameModes().forEach(choice ->
+                                player.sendMessage(ChatColor.GRAY + "  /" + choice.label() + " §7(" + choice.name() + ")"));
+                    }
+            );
         }
 
         return true;

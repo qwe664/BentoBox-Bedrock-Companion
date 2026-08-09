@@ -44,6 +44,12 @@ public class MainMenuForm extends BaseForm {
             }
         }
 
+        String gameModeName = plugin.getBentoBoxService()
+                .getCurrentGameModeName(player)
+                .orElse("大廳");
+
+        welcomeContent += "\n§7目前所在：§f" + gameModeName;
+
         builder
                 .title("BentoBox")
                 .content(welcomeContent);
@@ -66,6 +72,11 @@ public class MainMenuForm extends BaseForm {
 
                 case "island" ->
                         plugin.getFormManager().openIslandMenu(player);
+
+                case "lobby" ->
+                        // 用伺服器既有的 EssentialsX /spawn 指令回到大廳，
+                        // 不用自己重新實作傳送邏輯。
+                        plugin.getCommandService().execute(player, "spawn");
 
                 case "admin" ->
                         plugin.getFormManager().openAdminMenu(player);

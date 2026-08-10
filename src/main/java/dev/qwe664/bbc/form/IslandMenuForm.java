@@ -21,6 +21,7 @@ public class IslandMenuForm extends BaseForm {
 
         boolean warpsAvailable = plugin.getWarpsHook().isAvailable();
         boolean challengesAvailable = plugin.getChallengesHook().isAvailable();
+        boolean visitAvailable = plugin.getVisitHook().isAvailable();
 
         var builder = SimpleForm.builder();
 
@@ -46,6 +47,11 @@ public class IslandMenuForm extends BaseForm {
         if (challengesAvailable) {
             builder.button("🏆 挑戰");
             dynamicActions.add(() -> plugin.getFormManager().openChallengesMenu(player));
+        }
+
+        if (visitAvailable) {
+            builder.button("🧭 拜訪島嶼");
+            dynamicActions.add(() -> plugin.getFormManager().openVisitBrowse(player));
         }
 
         builder.button("⬅ 返回主選單");

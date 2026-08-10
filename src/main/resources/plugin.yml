@@ -13,6 +13,9 @@ softdepend:
   - LuckPerms
   - Warps
   - BentoBox-Challenges
+  - BentoBox-Bank
+  - BentoBox-Visit
+  - PlaceholderAPI
 commands:
   bbc:
     description: Open BentoBox Bedrock Companion menu

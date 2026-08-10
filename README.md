@@ -15,18 +15,19 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - Native Bedrock Form framework
 - Island Information (owner, members, size, creation date)
 - Island Settings (protection flags via native forms)
-- Team Management (delegates to BentoBox `/is team`)
+- Team Management (native form: invite/kick/promote/transfer ownership)
 - Island Flags (91 protection flags, categorized menu)
+- Warps (browse & manage island warp points)
+- Challenges support
+- Visit Menu (browse & visit other players' islands)
+- Bank integration (island balance display)
 - Admin Tools (island lookup/teleport, config reload)
 - LuckPerms integration (displays player's primary group)
+- PlaceholderAPI support (%bbc_*% variables)
 - Developer/Debug tools (environment info, reflection explorer)
 
 ### Planned
 
-- Warps
-- Challenges
-- Visit Menu
-- PlaceholderAPI support
 - Vault integration
 - Configuration file
 - Multi-language support
@@ -51,10 +52,15 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 |-----------|---------|
 | Java | 21+ |
 | Paper / Purpur | Latest |
-| BentoBox | 3.20.0+ |
+| BentoBox | 3.22.2+ |
 | Floodgate | Required |
 | Geyser | Required |
 | LuckPerms | Optional |
+| Warps | Optional |
+| Challenges | Optional |
+| Visit | Optional |
+| Bank | Optional |
+| PlaceholderAPI | Optional |
 
 ---
 
@@ -90,23 +96,23 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 - [x] Island Flags
 
-### v0.5✅
+### v0.5 ✅
 
 - [x] Warps
 
-### v0.6✅
+### v0.6 ✅
 
 - [x] Challenges
 
-### v0.7
+### v0.7 ✅
 
-- [ ] Visit Menu
+- [x] Visit Menu
 
 ### v0.8 ✅
 
 - [x] Admin Forms
 
-### v0.9
+### v0.9 ✅
 
 - [x] PlaceholderAPI support
 - [x] LuckPerms integration
@@ -132,7 +138,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — core island management features complete, Warps/Challenges/Visit menu pending.
+🚧 Active Development — core island management, Warps, Challenges, Visit menu, and PlaceholderAPI integration complete. Vault integration and multi-language support pending.
 
 ---
 

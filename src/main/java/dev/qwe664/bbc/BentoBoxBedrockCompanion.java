@@ -4,6 +4,7 @@ import dev.qwe664.bbc.command.BBCCommand;
 import dev.qwe664.bbc.service.CommandService;
 import dev.qwe664.bbc.hook.FloodgateHook;
 import dev.qwe664.bbc.hook.WarpsHook;
+import dev.qwe664.bbc.hook.VisitHook;
 import dev.qwe664.bbc.hook.ChallengesHook;
 import dev.qwe664.bbc.hook.BankHook;
 import dev.qwe664.bbc.placeholder.BBCExpansion;
@@ -22,6 +23,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     private FloodgateHook floodgateHook;
     private WarpsHook warpsHook;
+    private VisitHook visitHook;
     private ChallengesHook challengesHook;
     private BankHook bankHook;
     private FormManager formManager;
@@ -37,6 +39,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
         floodgateHook = new FloodgateHook();
         warpsHook = new WarpsHook();
+        visitHook = new VisitHook();
         challengesHook = new ChallengesHook();
         bankHook = new BankHook();
 
@@ -88,6 +91,12 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
             getLogger().info("未偵測到 Challenges 附加模組，挑戰功能將不會顯示（不影響其他功能）。");
         }
 
+        if (visitHook.isAvailable()) {
+            getLogger().info("已偵測到 Visit 附加模組，拜訪島嶼功能已啟用。");
+        } else {
+            getLogger().info("未偵測到 Visit 附加模組，拜訪島嶼功能將不會顯示（不影響其他功能）。");
+        }
+
         if (bankHook.isAvailable()) {
             getLogger().info("已偵測到 Bank 附加模組，島嶼餘額變數已啟用。");
         } else {
@@ -116,6 +125,10 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     public WarpsHook getWarpsHook() {
         return warpsHook;
+    }
+
+    public VisitHook getVisitHook() {
+        return visitHook;
     }
 
     public ChallengesHook getChallengesHook() {

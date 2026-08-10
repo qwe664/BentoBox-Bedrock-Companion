@@ -13,6 +13,7 @@ import dev.qwe664.bbc.form.WarpMenuForm;
 import dev.qwe664.bbc.form.WarpBrowseForm;
 import dev.qwe664.bbc.form.WarpManageForm;
 import dev.qwe664.bbc.form.ChallengesMenuForm;
+import dev.qwe664.bbc.form.TeamMenuForm;
 import org.bukkit.entity.Player;
 
 public class FormManager {
@@ -29,6 +30,7 @@ public class FormManager {
     private final WarpBrowseForm warpBrowseForm;
     private final WarpManageForm warpManageForm;
     private final ChallengesMenuForm challengesMenuForm;
+    private final TeamMenuForm teamMenuForm;
 
     public FormManager(BentoBoxBedrockCompanion plugin) {
         this.mainMenuForm = new MainMenuForm(plugin);
@@ -43,6 +45,7 @@ public class FormManager {
         this.warpBrowseForm = new WarpBrowseForm(plugin);
         this.warpManageForm = new WarpManageForm(plugin);
         this.challengesMenuForm = new ChallengesMenuForm(plugin);
+        this.teamMenuForm = new TeamMenuForm(plugin);
     }
 
     public void openMainMenu(Player player) {
@@ -91,5 +94,9 @@ public class FormManager {
 
     public void openChallengesMenu(Player player) {
         challengesMenuForm.open(player);
+    }
+
+    public void openTeamMenu(Player player) {
+        teamMenuForm.open(player);
     }
 }

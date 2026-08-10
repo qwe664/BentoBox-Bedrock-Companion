@@ -108,7 +108,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ### v0.9
 
-- [ ] PlaceholderAPI support
+- [x] PlaceholderAPI support
 - [x] LuckPerms integration
 - [ ] Vault integration
 

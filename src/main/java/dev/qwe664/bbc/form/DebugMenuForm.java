@@ -8,11 +8,15 @@ import org.geysermc.cumulus.form.CustomForm;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
 import dev.qwe664.bbc.debug.EnvironmentPrinter;
+import dev.qwe664.bbc.command.DebugCommand;
 
 public class DebugMenuForm extends BaseForm {
 
+    private final DebugCommand debugCommand;
+
     public DebugMenuForm(BentoBoxBedrockCompanion plugin) {
         super(plugin);
+        this.debugCommand = new DebugCommand(plugin);
     }
 
     @Override
@@ -38,9 +42,9 @@ public class DebugMenuForm extends BaseForm {
                        player.sendMessage("§a✔ 已輸出至伺服器 Console（DiscordSRV 將同步至 Discord）。");
                       }
 
-                case 1, 2 -> {
-                      player.sendMessage("§e🚧 此功能開發中...");
-                      }
+                case 1 -> debugCommand.showPluginStatus(player);
+
+                case 2 -> debugCommand.showApiInfo(player);
 
                 case 3 -> openReflectionInputForm(player);
 

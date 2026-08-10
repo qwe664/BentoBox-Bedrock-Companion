@@ -31,9 +31,10 @@ import java.util.Date;
  * （呼叫 IslandsManager.getIsland(player.getWorld(), uuid)），
  * 玩家站在不屬於任何玩法的中立世界（大廳）時，這些變數一律回傳「無」。
  *
- * island_rank 的職級中文對照直接複用 TeamMenuForm.rankLabel()，
- * 不重複寫一份對照表（數值來源同樣是反編譯 BentoBox 3.22.0 的
- * RanksManager 常數池確認過的，不是猜測）。
+ * island_rank 的顯示文字直接複用 TeamMenuForm.rankLabel()，該方法
+ * 改成呼叫 BentoBox 官方的 RanksManager + User.getTranslation()
+ * 從 BentoBox 自己的語言檔（ranks: 區塊）動態查出翻譯，不再自己
+ * 寫死一份中文對照表；查不到才 fallback 回寫死的中文。
  */
 public class BBCExpansion extends PlaceholderExpansion {
 
@@ -92,14 +93,18 @@ public class BBCExpansion extends PlaceholderExpansion {
 
             case "island_name" -> {
                 Island island = getIsland(player);
-                yield island == null ? "無" : island.getName();
+                if (island == null) {
+                    yield "無";
+                }
+                String name = island.getName();
+                yield (name == null || name.isEmpty()) ? "無" : name;
             }
 
             case "island_rank" -> {
                 Island island = getIsland(player);
                 yield island == null
                         ? "無"
-                        : TeamMenuForm.rankLabel(island.getRank(player.getUniqueId()));
+                        : TeamMenuForm.rankLabel(player, island.getRank(player.getUniqueId()));
             }
 
             case "island_money" -> {

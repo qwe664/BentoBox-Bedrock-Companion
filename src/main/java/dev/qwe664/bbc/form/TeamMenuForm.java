@@ -4,6 +4,7 @@ import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
+import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.managers.RanksManager;
 
@@ -81,7 +82,7 @@ public class TeamMenuForm extends BaseForm {
                 default -> "👤";
             };
 
-            String rankLabel = rankLabel(rank);
+            String rankLabel = rankLabel(player, rank);
             String selfTag = memberUuid.equals(player.getUniqueId()) ? "（你）" : "";
 
             builder.button(icon + " " + name + selfTag + "\n§7" + rankLabel);
@@ -153,9 +154,48 @@ public class TeamMenuForm extends BaseForm {
     }
 
     /**
-     * 職級數值轉成中文顯示文字。
+     * 職級數值轉成顯示文字。
+     *
+     * 不自己維護一份中文對照表，改成直接呼叫 BentoBox 官方翻譯系統：
+     * RanksManager.getRank(int) 回傳這個職級對應的語言檔參照鍵
+     * （例如 OWNER_RANK -> "ranks.owner"），再交給
+     * User.getTranslation(World, reference) 依照該玩家「目前所在世界」，
+     * 從 BentoBox 語言檔查出實際顯示文字。
+     *
+     * 特地帶入 World（而不是不帶 World 的 getTranslation(reference)），
+     * 是因為伺服器同時跑 AOneBlock、ChunkBlock 兩種玩法：反編譯確認
+     * User.translate() 的查詢邏輯是先試 "<addon名稱小寫>.ranks.owner"
+     * 這種玩法專屬覆寫，查不到才退回共用的 "ranks.owner"；不帶 World
+     * 的版本沒有世界可判斷玩家在哪個玩法裡，永遠只查得到共用版本，
+     * 之後如果想讓兩個玩法各自客製化職級稱呼（例如 ChunkBlock 想叫
+     * 「區長」而不是「隊長」）就會沒作用。
+     *
+     * 好處：伺服器管理員之後想改稱呼，或伺服器本身是多語言環境，
+     * 都不用改 BBC 的程式碼重新編譯，直接改 BentoBox 語言檔就會生效；
+     * 也不會跟 BentoBox 本身、其他也在讀這份語言檔的外掛
+     * （如原生 /ob team、/ch team 介面）顯示不一致。
+     *
+     * 反編譯 BentoBox 3.22.0（GitHub develop 分支原始碼確認，非猜測）
+     * RanksManager.java 第 24-41 行：ADMIN_RANK_REF="ranks.admin"、
+     * MOD_RANK_REF="ranks.mod"、OWNER_RANK_REF="ranks.owner"、
+     * SUB_OWNER_RANK_REF="ranks.sub-owner"、MEMBER_RANK_REF="ranks.member"、
+     * TRUSTED_RANK_REF="ranks.trusted"、COOP_RANK_REF="ranks.coop"、
+     * VISITOR_RANK_REF="ranks.visitor"、BANNED_RANK_REF="ranks.banned"；
+     * User.java 第 479 行 getTranslation(World, String, String...)、
+     * 第 612 行 translate() 內部查詢順序確認過，非猜測。
+     *
+     * 保留舊的寫死中文對照表當 fallback：萬一語言檔缺這個 key
+     * （reference 查不到回傳空字串，或翻譯結果剛好是空的），
+     * 才不會直接顯示原始的 "ranks.xxx" 字串給玩家看。
      */
-    public static String rankLabel(int rank) {
+    public static String rankLabel(Player viewer, int rank) {
+        String reference = RanksManager.getInstance().getRank(rank);
+        if (!reference.isEmpty()) {
+            String translated = User.getInstance(viewer).getTranslation(viewer.getWorld(), reference);
+            if (translated != null && !translated.isEmpty() && !translated.equals(reference)) {
+                return translated;
+            }
+        }
         return switch (rank) {
             case RanksManager.OWNER_RANK -> "隊長";
             case RanksManager.SUB_OWNER_RANK -> "副隊長";

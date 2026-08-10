@@ -155,7 +155,7 @@ public class TeamMenuForm extends BaseForm {
     /**
      * 職級數值轉成中文顯示文字。
      */
-    static String rankLabel(int rank) {
+    public static String rankLabel(int rank) {
         return switch (rank) {
             case RanksManager.OWNER_RANK -> "隊長";
             case RanksManager.SUB_OWNER_RANK -> "副隊長";

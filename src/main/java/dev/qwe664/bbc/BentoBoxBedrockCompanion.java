@@ -5,6 +5,8 @@ import dev.qwe664.bbc.service.CommandService;
 import dev.qwe664.bbc.hook.FloodgateHook;
 import dev.qwe664.bbc.hook.WarpsHook;
 import dev.qwe664.bbc.hook.ChallengesHook;
+import dev.qwe664.bbc.hook.BankHook;
+import dev.qwe664.bbc.placeholder.BBCExpansion;
 import dev.qwe664.bbc.listener.PlayerJoinListener;
 import dev.qwe664.bbc.listener.CommandListener; // <-- 1. 記得引入剛剛寫好的攔截器
 import dev.qwe664.bbc.listener.MenuItemListener;
@@ -21,6 +23,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
     private FloodgateHook floodgateHook;
     private WarpsHook warpsHook;
     private ChallengesHook challengesHook;
+    private BankHook bankHook;
     private FormManager formManager;
 
     private MenuRegistry menuRegistry;
@@ -35,6 +38,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
         floodgateHook = new FloodgateHook();
         warpsHook = new WarpsHook();
         challengesHook = new ChallengesHook();
+        bankHook = new BankHook();
 
         menuRegistry = new MenuRegistry();
         permissionService = new PermissionService();
@@ -84,6 +88,20 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
             getLogger().info("未偵測到 Challenges 附加模組，挑戰功能將不會顯示（不影響其他功能）。");
         }
 
+        if (bankHook.isAvailable()) {
+            getLogger().info("已偵測到 Bank 附加模組，島嶼餘額變數已啟用。");
+        } else {
+            getLogger().info("未偵測到 Bank 附加模組，%bbc_island_money% 變數固定回傳 0（不影響其他功能）。");
+        }
+
+        // PlaceholderAPI 是軟依賴，未安裝時完全跳過註冊，不影響其他功能。
+        if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new BBCExpansion(this).register();
+            getLogger().info("已偵測到 PlaceholderAPI，已註冊 %bbc_*% 變數。");
+        } else {
+            getLogger().info("未偵測到 PlaceholderAPI，%bbc_*% 變數將無法使用（不影響其他功能）。");
+        }
+
         getLogger().info("BentoBox Bedrock Companion has been enabled!");
     }
 
@@ -102,6 +120,10 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     public ChallengesHook getChallengesHook() {
         return challengesHook;
+    }
+
+    public BankHook getBankHook() {
+        return bankHook;
     }
 
     public FormManager getFormManager() {

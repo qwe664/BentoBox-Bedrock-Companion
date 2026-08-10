@@ -19,6 +19,9 @@ repositories {
 
     // BentoBox
     maven("https://repo.codemc.org/repository/bentoboxworld/")
+
+    // PlaceholderAPI
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 }
 
 dependencies {
@@ -27,7 +30,9 @@ dependencies {
     compileOnly("world.bentobox:bentobox:3.22.0")
     compileOnly("world.bentobox:warps:1.19.1-SNAPSHOT")
     compileOnly("world.bentobox:challenges:1.8.0-SNAPSHOT")
+    compileOnly("world.bentobox:bank:1.10.1-SNAPSHOT")
     compileOnly("net.luckperms:api:5.4")
+    compileOnly("me.clip:placeholderapi:2.12.3")
 }
 
 java {

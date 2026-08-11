@@ -24,12 +24,12 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - Admin Tools (island lookup/teleport, config reload)
 - LuckPerms integration (displays player's primary group)
 - PlaceholderAPI support (%bbc_*% variables)
+- Configuration file (customizable messages & feature toggles)
 - Developer/Debug tools (environment info, reflection explorer)
 
 ### Planned
 
 - Vault integration
-- Configuration file
 - Multi-language support
 
 ---
@@ -72,6 +72,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 4. (Optional) Install LuckPerms for player group display.
 5. Place the BentoBox Bedrock Companion plugin into the `plugins` folder.
 6. Restart the server.
+7. (Optional) Edit `plugins/BentoBoxBedrockCompanion/config.yml` to customize messages and toggle features, then use "Admin Tools → Reload plugin settings" in-game or restart to apply.
 
 ---
 
@@ -118,9 +119,13 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - [x] LuckPerms integration
 - [ ] Vault integration
 
+### v0.10 ✅
+
+- [x] Configuration file
+
 ### v1.0
 
-- [ ] Complete Bedrock Companion support
+- [ ] Multi-language support
 - [ ] Documentation
 - [ ] Stable release
 
@@ -138,7 +143,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — core island management, Warps, Challenges, Visit menu, and PlaceholderAPI integration complete. Vault integration and multi-language support pending.
+🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, and configuration file support complete. Vault integration and multi-language support pending.
 
 ---
 

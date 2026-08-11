@@ -89,7 +89,7 @@ public class BBCExpansion extends PlaceholderExpansion {
 
             case "gamemode" -> plugin.getBentoBoxService()
                     .getCurrentGameModeName(player)
-                    .orElse("大廳");
+                    .orElse(plugin.getConfigService().getMessage("lobby-name", "大廳"));
 
             case "island_name" -> {
                 Island island = getIsland(player);
@@ -104,7 +104,7 @@ public class BBCExpansion extends PlaceholderExpansion {
                 Island island = getIsland(player);
                 yield island == null
                         ? "無"
-                        : TeamMenuForm.rankLabel(player, island.getRank(player.getUniqueId()));
+                        : TeamMenuForm.rankLabel(plugin, player, island.getRank(player.getUniqueId()));
             }
 
             case "island_money" -> {

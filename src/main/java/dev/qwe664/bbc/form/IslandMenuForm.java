@@ -19,9 +19,12 @@ public class IslandMenuForm extends BaseForm {
     @Override
     public void open(Player player) {
 
-        boolean warpsAvailable = plugin.getWarpsHook().isAvailable();
-        boolean challengesAvailable = plugin.getChallengesHook().isAvailable();
-        boolean visitAvailable = plugin.getVisitHook().isAvailable();
+        boolean warpsAvailable = plugin.getWarpsHook().isAvailable()
+                && plugin.getConfigService().isFeatureEnabled("warps");
+        boolean challengesAvailable = plugin.getChallengesHook().isAvailable()
+                && plugin.getConfigService().isFeatureEnabled("challenges");
+        boolean visitAvailable = plugin.getVisitHook().isAvailable()
+                && plugin.getConfigService().isFeatureEnabled("visit");
 
         var builder = SimpleForm.builder();
 

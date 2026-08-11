@@ -1,0 +1,47 @@
+# BentoBox Bedrock Companion 設定檔
+#
+# 這個檔案讓伺服器管理員不用改程式碼、重新編譯，就能調整插件的
+# 部分文字內容跟功能顯示。改完存檔後，可以在插件內的
+# 「管理工具 → 重載插件設定」一併重新載入（跟 /bentobox reload 同時執行），
+# 不用重啟伺服器。
+
+# 文字訊息。留空或整行刪掉的話會 fallback 回插件內建的預設中文，
+# 不會讓玩家看到空白或錯誤訊息。
+messages:
+
+  # 打開主選單時的歡迎詞第一行。
+  welcome: "歡迎使用 BentoBox 基岩版專屬選單"
+
+  # 玩家不在任何玩法世界（例如站在主城/大廳）時，
+  # %bbc_gamemode% 這個 PlaceholderAPI 變數、以及主選單「目前所在」
+  # 那行要顯示的名稱。
+  lobby-name: "大廳"
+
+  # 職級顯示的備用文字。正常情況下職級名稱會直接讀取 BentoBox
+  # 自己的語言檔翻譯（例如 ranks.owner），只有在該語言檔缺少對應
+  # 翻譯時，才會退回使用這裡的文字。
+  ranks:
+    owner: "隊長"
+    sub-owner: "副隊長"
+    member: "成員"
+    trusted: "受信任"
+    coop: "合作"
+
+# 功能開關。只控制 BBC 表單裡對應按鈕/子選單要不要顯示，
+# 不影響底層附加模組（Warps、Challenges、Visit、Bank）本身是否安裝
+# 或正常運作——關閉某個開關，該附加模組還是照常運作，只是 BBC
+# 的原生表單不會提供對應入口。伺服器沒裝對應附加模組時，
+# 不管這裡怎麼設定，按鈕本來就不會顯示。
+features:
+
+  # 島嶼選單裡的「🚩 傳送點」按鈕（需要 Warps 附加模組）
+  warps: true
+
+  # 島嶼選單裡的「🏆 挑戰」按鈕（需要 Challenges 附加模組）
+  challenges: true
+
+  # 島嶼選單裡的「🧭 拜訪島嶼」按鈕（需要 Visit 附加模組）
+  visit: true
+
+  # 主選單歡迎詞裡是否顯示玩家的 LuckPerms 權限組（需要 LuckPerms）
+  luckperms: true

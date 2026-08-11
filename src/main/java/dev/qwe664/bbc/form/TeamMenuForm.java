@@ -82,7 +82,7 @@ public class TeamMenuForm extends BaseForm {
                 default -> "👤";
             };
 
-            String rankLabel = rankLabel(player, rank);
+            String rankLabel = rankLabel(plugin, player, rank);
             String selfTag = memberUuid.equals(player.getUniqueId()) ? "（你）" : "";
 
             builder.button(icon + " " + name + selfTag + "\n§7" + rankLabel);
@@ -188,7 +188,7 @@ public class TeamMenuForm extends BaseForm {
      * （reference 查不到回傳空字串，或翻譯結果剛好是空的），
      * 才不會直接顯示原始的 "ranks.xxx" 字串給玩家看。
      */
-    public static String rankLabel(Player viewer, int rank) {
+    public static String rankLabel(BentoBoxBedrockCompanion plugin, Player viewer, int rank) {
         String reference = RanksManager.getInstance().getRank(rank);
         if (!reference.isEmpty()) {
             String translated = User.getInstance(viewer).getTranslation(viewer.getWorld(), reference);
@@ -197,12 +197,12 @@ public class TeamMenuForm extends BaseForm {
             }
         }
         return switch (rank) {
-            case RanksManager.OWNER_RANK -> "隊長";
-            case RanksManager.SUB_OWNER_RANK -> "副隊長";
-            case RanksManager.MEMBER_RANK -> "成員";
-            case RanksManager.TRUSTED_RANK -> "受信任";
-            case RanksManager.COOP_RANK -> "合作";
-            default -> "成員";
+            case RanksManager.OWNER_RANK -> plugin.getConfigService().getMessage("ranks.owner", "隊長");
+            case RanksManager.SUB_OWNER_RANK -> plugin.getConfigService().getMessage("ranks.sub-owner", "副隊長");
+            case RanksManager.MEMBER_RANK -> plugin.getConfigService().getMessage("ranks.member", "成員");
+            case RanksManager.TRUSTED_RANK -> plugin.getConfigService().getMessage("ranks.trusted", "受信任");
+            case RanksManager.COOP_RANK -> plugin.getConfigService().getMessage("ranks.coop", "合作");
+            default -> plugin.getConfigService().getMessage("ranks.member", "成員");
         };
     }
 }

@@ -16,6 +16,7 @@ softdepend:
   - BentoBox-Bank
   - BentoBox-Visit
   - PlaceholderAPI
+  - Vault
 commands:
   bbc:
     description: Open BentoBox Bedrock Companion menu

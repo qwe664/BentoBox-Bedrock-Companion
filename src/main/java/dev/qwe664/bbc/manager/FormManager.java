@@ -13,6 +13,7 @@ import dev.qwe664.bbc.form.WarpMenuForm;
 import dev.qwe664.bbc.form.WarpBrowseForm;
 import dev.qwe664.bbc.form.WarpManageForm;
 import dev.qwe664.bbc.form.VisitBrowseForm;
+import dev.qwe664.bbc.form.WalletBankForm;
 import dev.qwe664.bbc.form.ChallengesMenuForm;
 import dev.qwe664.bbc.form.TeamMenuForm;
 import org.bukkit.entity.Player;
@@ -31,6 +32,7 @@ public class FormManager {
     private final WarpBrowseForm warpBrowseForm;
     private final WarpManageForm warpManageForm;
     private final VisitBrowseForm visitBrowseForm;
+    private final WalletBankForm walletBankForm;
     private final ChallengesMenuForm challengesMenuForm;
     private final TeamMenuForm teamMenuForm;
 
@@ -47,6 +49,7 @@ public class FormManager {
         this.warpBrowseForm = new WarpBrowseForm(plugin);
         this.warpManageForm = new WarpManageForm(plugin);
         this.visitBrowseForm = new VisitBrowseForm(plugin);
+        this.walletBankForm = new WalletBankForm(plugin);
         this.challengesMenuForm = new ChallengesMenuForm(plugin);
         this.teamMenuForm = new TeamMenuForm(plugin);
     }
@@ -97,6 +100,10 @@ public class FormManager {
 
     public void openVisitBrowse(Player player) {
         visitBrowseForm.open(player);
+    }
+
+    public void openWalletBank(Player player) {
+        walletBankForm.open(player);
     }
 
     public void openChallengesMenu(Player player) {

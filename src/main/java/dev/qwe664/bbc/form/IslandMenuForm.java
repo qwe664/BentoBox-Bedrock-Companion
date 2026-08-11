@@ -25,6 +25,9 @@ public class IslandMenuForm extends BaseForm {
                 && plugin.getConfigService().isFeatureEnabled("challenges");
         boolean visitAvailable = plugin.getVisitHook().isAvailable()
                 && plugin.getConfigService().isFeatureEnabled("visit");
+        boolean walletBankAvailable = plugin.getVaultHook().isAvailable()
+                && plugin.getBankHook().isAvailable()
+                && plugin.getConfigService().isFeatureEnabled("wallet-bank");
 
         var builder = SimpleForm.builder();
 
@@ -55,6 +58,11 @@ public class IslandMenuForm extends BaseForm {
         if (visitAvailable) {
             builder.button("🧭 拜訪島嶼");
             dynamicActions.add(() -> plugin.getFormManager().openVisitBrowse(player));
+        }
+
+        if (walletBankAvailable) {
+            builder.button("💰 存提款");
+            dynamicActions.add(() -> plugin.getFormManager().openWalletBank(player));
         }
 
         builder.button("⬅ 返回主選單");

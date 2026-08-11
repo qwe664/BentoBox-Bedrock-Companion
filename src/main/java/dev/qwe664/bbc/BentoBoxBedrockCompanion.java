@@ -7,6 +7,7 @@ import dev.qwe664.bbc.hook.WarpsHook;
 import dev.qwe664.bbc.hook.VisitHook;
 import dev.qwe664.bbc.hook.ChallengesHook;
 import dev.qwe664.bbc.hook.BankHook;
+import dev.qwe664.bbc.hook.VaultHook;
 import dev.qwe664.bbc.placeholder.BBCExpansion;
 import dev.qwe664.bbc.listener.PlayerJoinListener;
 import dev.qwe664.bbc.listener.CommandListener; // <-- 1. 記得引入剛剛寫好的攔截器
@@ -27,6 +28,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
     private VisitHook visitHook;
     private ChallengesHook challengesHook;
     private BankHook bankHook;
+    private VaultHook vaultHook;
     private FormManager formManager;
 
     private MenuRegistry menuRegistry;
@@ -47,6 +49,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
         visitHook = new VisitHook();
         challengesHook = new ChallengesHook();
         bankHook = new BankHook();
+        vaultHook = new VaultHook();
 
         menuRegistry = new MenuRegistry();
         permissionService = new PermissionService();
@@ -108,6 +111,13 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
             getLogger().info("未偵測到 Bank 附加模組，%bbc_island_money% 變數固定回傳 0（不影響其他功能）。");
         }
 
+        vaultHook.setup(getServer().getServicesManager());
+        if (vaultHook.isAvailable()) {
+            getLogger().info("已偵測到 Vault 經濟系統（" + vaultHook.getEconomyName() + "），玩家錢包功能已啟用。");
+        } else {
+            getLogger().info("未偵測到 Vault 經濟系統，%bbc_player_money% 變數固定回傳 0、存提款功能將不會顯示（不影響其他功能）。");
+        }
+
         // PlaceholderAPI 是軟依賴，未安裝時完全跳過註冊，不影響其他功能。
         if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new BBCExpansion(this).register();
@@ -142,6 +152,10 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     public BankHook getBankHook() {
         return bankHook;
+    }
+
+    public VaultHook getVaultHook() {
+        return vaultHook;
     }
 
     public FormManager getFormManager() {

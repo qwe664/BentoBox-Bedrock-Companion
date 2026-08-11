@@ -43,5 +43,9 @@ features:
   # 島嶼選單裡的「🧭 拜訪島嶼」按鈕（需要 Visit 附加模組）
   visit: true
 
+  # 島嶼選單裡的「💰 存提款」按鈕（需要 Vault + 任一經濟外掛，
+  # 同時也需要 Bank 附加模組——少一個都不會顯示這顆按鈕）
+  wallet-bank: true
+
   # 主選單歡迎詞裡是否顯示玩家的 LuckPerms 權限組（需要 LuckPerms）
   luckperms: true

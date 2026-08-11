@@ -26,6 +26,7 @@ import java.util.Date;
  *   %bbc_island_name%      玩家目前所在世界裡，自己島嶼的自訂名稱
  *   %bbc_island_rank%      玩家在自己島嶼裡的職級（隊長/副隊長/成員...）
  *   %bbc_island_money%     玩家目前所在世界裡，自己島嶼的銀行餘額（需要 Bank 附加模組，未安裝固定回傳 0）
+ *   %bbc_player_money%     玩家個人 Vault 錢包餘額（需要 Vault + 任一經濟外掛，未安裝固定回傳 0）
  *
  * 「島嶼」相關的四個變數都是以玩家「目前所在世界」對應的玩法為準
  * （呼叫 IslandsManager.getIsland(player.getWorld(), uuid)），
@@ -110,6 +111,11 @@ public class BBCExpansion extends PlaceholderExpansion {
             case "island_money" -> {
                 Island island = getIsland(player);
                 double balance = plugin.getBankHook().getIslandBalance(island);
+                yield String.format("%.2f", balance);
+            }
+
+            case "player_money" -> {
+                double balance = plugin.getVaultHook().getPlayerBalance(player);
                 yield String.format("%.2f", balance);
             }
 

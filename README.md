@@ -21,6 +21,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - Challenges support
 - Visit Menu (browse & visit other players' islands)
 - Bank integration (island balance display)
+- Vault integration (personal wallet display, wallet ↔ island bank transfer)
 - Admin Tools (island lookup/teleport, config reload)
 - LuckPerms integration (displays player's primary group)
 - PlaceholderAPI support (%bbc_*% variables)
@@ -29,7 +30,6 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ### Planned
 
-- Vault integration
 - Multi-language support
 
 ---
@@ -60,6 +60,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 | Challenges | Optional |
 | Visit | Optional |
 | Bank | Optional |
+| Vault | Optional |
 | PlaceholderAPI | Optional |
 
 ---
@@ -117,11 +118,14 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 - [x] PlaceholderAPI support
 - [x] LuckPerms integration
-- [ ] Vault integration
 
 ### v0.10 ✅
 
 - [x] Configuration file
+
+### v0.11 ✅
+
+- [x] Vault integration
 
 ### v1.0
 
@@ -143,7 +147,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, and configuration file support complete. Vault integration and multi-language support pending.
+🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, configuration file, and Vault integration complete. Multi-language support pending.
 
 ---
 

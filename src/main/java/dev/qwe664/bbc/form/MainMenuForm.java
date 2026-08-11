@@ -33,25 +33,27 @@ public class MainMenuForm extends BaseForm {
         var builder = SimpleForm.builder();
         List<MenuButton> visibleButtons = new ArrayList<>();
 
-        String welcomeContent = plugin.getConfigService().getMessage("welcome", "歡迎使用 BentoBox 基岩版專屬選單");
+        String welcomeContent = plugin.getLocaleService().get(player, "main_menu.welcome",
+                plugin.getConfigService().getMessage("welcome", "歡迎使用 BentoBox 基岩版專屬選單"));
 
         if (plugin.getConfigService().isFeatureEnabled("luckperms") && plugin.getLuckPermsService().isEnabled()) {
 
             String group = plugin.getLuckPermsService().getPrimaryGroup(player);
 
             if (group != null) {
-                welcomeContent += "\n§7身分組：§f" + group;
+                welcomeContent += "\n" + plugin.getLocaleService().get(player, "main_menu.group-label", "§7身分組：§f") + group;
             }
         }
 
         String gameModeName = plugin.getBentoBoxService()
                 .getCurrentGameModeName(player)
-                .orElse(plugin.getConfigService().getMessage("lobby-name", "大廳"));
+                .orElse(plugin.getLocaleService().get(player, "main_menu.lobby-name",
+                        plugin.getConfigService().getMessage("lobby-name", "大廳")));
 
-        welcomeContent += "\n§7目前所在：§f" + gameModeName;
+        welcomeContent += "\n" + plugin.getLocaleService().get(player, "main_menu.current-location-label", "§7目前所在：§f") + gameModeName;
 
         builder
-                .title("BentoBox")
+                .title(plugin.getLocaleService().get(player, "main_menu.title", "BentoBox"))
                 .content(welcomeContent);
 
         for (MenuButton button : plugin.getMenuRegistry().getButtons()) {
@@ -60,7 +62,7 @@ public class MainMenuForm extends BaseForm {
                     || plugin.getPermissionService().hasPermission(player, button.getPermission())) {
 
                 visibleButtons.add(button);
-                builder.button(button.getTitle());
+                builder.button(plugin.getLocaleService().get(player, "buttons." + button.getId(), button.getTitle()));
             }
         }
 

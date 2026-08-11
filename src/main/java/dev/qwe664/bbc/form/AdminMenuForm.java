@@ -69,8 +69,9 @@ public class AdminMenuForm extends BaseForm {
 
             if (response.clickedButtonId() == 0) {
                 plugin.getConfigService().reload();
+                plugin.getLocaleService().load();
                 plugin.getCommandService().execute(player, "bentobox reload");
-                player.sendMessage("§a已重新載入 BBC 設定檔，並送出 /bentobox reload 指令。");
+                player.sendMessage("§a已重新載入 BBC 設定檔與語言檔，並送出 /bentobox reload 指令。");
             } else {
                 player.sendMessage("§7已取消。");
             }

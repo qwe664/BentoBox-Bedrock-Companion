@@ -31,14 +31,16 @@ public class IslandMenuForm extends BaseForm {
 
         var builder = SimpleForm.builder();
 
+        var locale = plugin.getLocaleService();
+
         builder
-                .title("🏝 我的島嶼")
-                .content("請選擇功能")
-                .button("🏠 傳送到島嶼")
-                .button("👥 隊伍")
-                .button("⚙ 島嶼設定")
-                .button("🛡 保護設定")
-                .button("📊 島嶼資訊");
+                .title(locale.get(player, "island_menu.title", "🏝 我的島嶼"))
+                .content(locale.get(player, "island_menu.content", "請選擇功能"))
+                .button(locale.get(player, "island_menu.go-home", "🏠 傳送到島嶼"))
+                .button(locale.get(player, "island_menu.team", "👥 隊伍"))
+                .button(locale.get(player, "island_menu.settings", "⚙ 島嶼設定"))
+                .button(locale.get(player, "island_menu.protection", "🛡 保護設定"))
+                .button(locale.get(player, "island_menu.info", "📊 島嶼資訊"));
 
         // Warps、Challenges 都是軟依賴，伺服器沒裝的話就不顯示對應按鈕，
         // 用一份「動態按鈕」清單記錄實際被加進去的按鈕順序，
@@ -46,26 +48,26 @@ public class IslandMenuForm extends BaseForm {
         List<Runnable> dynamicActions = new ArrayList<>();
 
         if (warpsAvailable) {
-            builder.button("🚩 傳送點");
+            builder.button(locale.get(player, "island_menu.warps", "🚩 傳送點"));
             dynamicActions.add(() -> plugin.getFormManager().openWarpMenu(player));
         }
 
         if (challengesAvailable) {
-            builder.button("🏆 挑戰");
+            builder.button(locale.get(player, "island_menu.challenges", "🏆 挑戰"));
             dynamicActions.add(() -> plugin.getFormManager().openChallengesMenu(player));
         }
 
         if (visitAvailable) {
-            builder.button("🧭 拜訪島嶼");
+            builder.button(locale.get(player, "island_menu.visit", "🧭 拜訪島嶼"));
             dynamicActions.add(() -> plugin.getFormManager().openVisitBrowse(player));
         }
 
         if (walletBankAvailable) {
-            builder.button("💰 存提款");
+            builder.button(locale.get(player, "island_menu.wallet-bank", "💰 存提款"));
             dynamicActions.add(() -> plugin.getFormManager().openWalletBank(player));
         }
 
-        builder.button("⬅ 返回主選單");
+        builder.button(locale.get(player, "island_menu.back-to-main", "⬅ 返回主選單"));
 
         int backButtonId = FIXED_BUTTON_COUNT + dynamicActions.size();
 

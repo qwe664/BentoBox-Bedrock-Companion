@@ -1,0 +1,36 @@
+# BentoBox Bedrock Companion 語言檔（繁體中文，預設語言）
+#
+# 這份語言檔永遠是最終備援：任何 key 在其他語言檔缺翻譯時，
+# LocaleService 都會退回這裡的內容，所以這份必須保持完整，
+# 不要留空值。
+#
+# 玩家看到哪個語言檔，取決於他們自己在 BentoBox 設定的語言
+# （/ob language、/ch language 等），不是另外做一套語言選單。
+
+buttons:
+  island: 🏝 我的島嶼
+  lobby: 🚪 回大廳
+  admin: 👮 管理工具
+  debug: 🛠 開發工具
+
+main_menu:
+  title: BentoBox
+  welcome: 歡迎使用 BentoBox 基岩版專屬選單
+  # 換行符號由程式碼自動加在前面，這裡的值不用（也不要）自己包含 \n
+  group-label: '§7身分組：§f'
+  current-location-label: '§7目前所在：§f'
+  lobby-name: 大廳
+
+island_menu:
+  title: 🏝 我的島嶼
+  content: 請選擇功能
+  go-home: 🏠 傳送到島嶼
+  team: 👥 隊伍
+  settings: ⚙ 島嶼設定
+  protection: 🛡 保護設定
+  info: 📊 島嶼資訊
+  warps: 🚩 傳送點
+  challenges: 🏆 挑戰
+  visit: 🧭 拜訪島嶼
+  wallet-bank: 💰 存提款
+  back-to-main: ⬅ 返回主選單

@@ -1,0 +1,32 @@
+# BentoBox Bedrock Companion locale file (English)
+#
+# Any key missing here falls back to zh-TW.yml automatically —
+# leaving a line out is safe, but keep translations complete
+# where possible.
+
+buttons:
+  island: 🏝 My Island
+  lobby: 🚪 Back to Lobby
+  admin: 👮 Admin Tools
+  debug: 🛠 Developer Tools
+
+main_menu:
+  title: BentoBox
+  welcome: Welcome to the BentoBox Bedrock menu
+  # 換行符號由程式碼自動加在前面，這裡的值不用（也不要）自己包含 \n
+  group-label: '§7Group: §f'
+  current-location-label: '§7Current location: §f'  lobby-name: Lobby
+
+island_menu:
+  title: 🏝 My Island
+  content: Please choose an option
+  go-home: 🏠 Teleport to Island
+  team: 👥 Team
+  settings: ⚙ Island Settings
+  protection: 🛡 Protection Settings
+  info: 📊 Island Info
+  warps: 🚩 Warps
+  challenges: 🏆 Challenges
+  visit: 🧭 Visit Islands
+  wallet-bank: 💰 Deposit/Withdraw
+  back-to-main: ⬅ Back to Main Menu

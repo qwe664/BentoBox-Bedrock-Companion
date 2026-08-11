@@ -14,6 +14,7 @@ import dev.qwe664.bbc.listener.MenuItemListener;
 import dev.qwe664.bbc.manager.FormManager;
 import dev.qwe664.bbc.menu.MenuRegistry;
 import dev.qwe664.bbc.service.BentoBoxService;
+import dev.qwe664.bbc.service.ConfigService;
 import dev.qwe664.bbc.service.LuckPermsService;
 import dev.qwe664.bbc.service.PermissionService;
 import dev.qwe664.bbc.menu.MenuLoader;
@@ -33,9 +34,13 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
     private CommandService commandService;
     private BentoBoxService bentoBoxService;
     private LuckPermsService luckPermsService;
+    private ConfigService configService;
 
     @Override
     public void onEnable() {
+
+        // 設定檔最先載入，其他服務（表單、hook）都可能需要讀取它。
+        configService = new ConfigService(this);
 
         floodgateHook = new FloodgateHook();
         warpsHook = new WarpsHook();
@@ -161,5 +166,9 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     public LuckPermsService getLuckPermsService() {
         return luckPermsService;
+    }
+
+    public ConfigService getConfigService() {
+        return configService;
     }
 }

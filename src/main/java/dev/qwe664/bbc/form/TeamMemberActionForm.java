@@ -65,7 +65,7 @@ public class TeamMemberActionForm {
 
         var builder = SimpleForm.builder()
                 .title("👤 " + targetName)
-                .content("目前職級：§7" + TeamMenuForm.rankLabel(player, targetRank));
+                .content("目前職級：§7" + TeamMenuForm.rankLabel(plugin, player, targetRank));
 
         List<Runnable> actions = new ArrayList<>();
 
@@ -102,7 +102,7 @@ public class TeamMemberActionForm {
         int backButtonId = actions.size();
 
         if (actions.isEmpty()) {
-            builder.content("目前職級：§7" + TeamMenuForm.rankLabel(player, targetRank) + "\n\n§7你目前的職級無法對這位成員執行任何操作。");
+            builder.content("目前職級：§7" + TeamMenuForm.rankLabel(plugin, player, targetRank) + "\n\n§7你目前的職級無法對這位成員執行任何操作。");
         }
 
         builder.validResultHandler(response -> {

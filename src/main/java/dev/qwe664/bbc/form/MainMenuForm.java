@@ -33,9 +33,9 @@ public class MainMenuForm extends BaseForm {
         var builder = SimpleForm.builder();
         List<MenuButton> visibleButtons = new ArrayList<>();
 
-        String welcomeContent = "歡迎使用 BentoBox 基岩版專屬選單";
+        String welcomeContent = plugin.getConfigService().getMessage("welcome", "歡迎使用 BentoBox 基岩版專屬選單");
 
-        if (plugin.getLuckPermsService().isEnabled()) {
+        if (plugin.getConfigService().isFeatureEnabled("luckperms") && plugin.getLuckPermsService().isEnabled()) {
 
             String group = plugin.getLuckPermsService().getPrimaryGroup(player);
 
@@ -46,7 +46,7 @@ public class MainMenuForm extends BaseForm {
 
         String gameModeName = plugin.getBentoBoxService()
                 .getCurrentGameModeName(player)
-                .orElse("大廳");
+                .orElse(plugin.getConfigService().getMessage("lobby-name", "大廳"));
 
         welcomeContent += "\n§7目前所在：§f" + gameModeName;
 

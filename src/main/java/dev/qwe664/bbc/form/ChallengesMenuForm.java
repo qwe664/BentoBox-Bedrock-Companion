@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.challenges.database.object.Challenge;
 import world.bentobox.challenges.database.object.ChallengeLevel;
 import world.bentobox.challenges.managers.ChallengesManager;
 import world.bentobox.challenges.utils.LevelStatus;
@@ -74,8 +75,16 @@ public class ChallengesMenuForm extends BaseForm {
         for (LevelStatus status : statusList) {
 
             ChallengeLevel level = status.getLevel();
-            int total = manager.getLevelChallenges(level).size();
-            int completed = total - status.getNumberOfChallengesStillToDo();
+            List<Challenge> levelChallenges = manager.getLevelChallenges(level);
+            int total = levelChallenges.size();
+
+            // 注意：LevelStatus.getNumberOfChallengesStillToDo() 語意是「前一關還剩幾個沒做完」，
+            // 用來判斷這一關要不要解鎖，不是「這一關本身還剩幾個」——不能拿來算這關的進度條。
+            // 第一關沒有前一關，這個值結構上永遠是 0，直接拿來減會讓第一關進度條恆為滿格。
+            // 正確做法是跟 ChallengeLevelForm 一樣，逐一檢查這關底下每個挑戰的完成狀態。
+            int completed = (int) levelChallenges.stream()
+                    .filter(challenge -> manager.isChallengeComplete(user, world, challenge))
+                    .count();
 
             String lockState = status.isUnlocked() ? "" : ColorUtil.translate("&c🔒 ");
             String levelName = level.getFriendlyName() == null || level.getFriendlyName().isBlank()

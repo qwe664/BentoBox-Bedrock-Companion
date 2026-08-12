@@ -1,0 +1,95 @@
+# BentoBox Bedrock Companion 語言檔（繁體中文，預設語言）
+#
+# 這份語言檔永遠是最終備援：任何 key 在其他語言檔缺翻譯時，
+# LocaleService 都會退回這裡的內容，所以這份必須保持完整，
+# 不要留空值。
+#
+# 玩家看到哪個語言檔，取決於他們自己在 BentoBox 設定的語言
+# （/ob language、/ch language 等），不是另外做一套語言選單。
+
+buttons:
+  island: 🏝 我的島嶼
+  lobby: 🚪 回大廳
+  admin: 👮 管理工具
+  debug: 🛠 開發工具
+
+common:
+  floodgate-not-ready: '§cFloodgate API 尚未初始化。'
+  bedrock-only: '§e目前只有基岩版玩家可以使用 Bedrock UI。'
+  back-to-island-menu: ⬅ 返回島嶼選單
+  no-gamemode: '§c查不到目前玩法，無法執行操作。'
+
+main_menu:
+  title: BentoBox
+  welcome: 歡迎使用 BentoBox 基岩版專屬選單
+  # 換行符號由程式碼自動加在前面，這裡的值不用（也不要）自己包含 \n
+  group-label: '§7身分組：§f'
+  current-location-label: '§7目前所在：§f'
+  lobby-name: 大廳
+
+island_menu:
+  title: 🏝 我的島嶼
+  content: 請選擇功能
+  go-home: 🏠 傳送到島嶼
+  team: 👥 隊伍
+  settings: ⚙ 島嶼設定
+  protection: 🛡 保護設定
+  info: 📊 島嶼資訊
+  warps: 🚩 傳送點
+  challenges: 🏆 挑戰
+  visit: 🧭 拜訪島嶼
+  wallet-bank: 💰 存提款
+  back-to-main: ⬅ 返回主選單
+
+team_menu:
+  title: 👥 隊伍管理
+  no-island: '§c你目前沒有島嶼，無法管理隊伍。'
+  content-members: 島嶼成員（共 {count} 人）：
+  content-hint: 點擊成員可查看可執行的操作。
+  self-tag: （你）
+  invite: ➕ 邀請玩家
+  leave: 🚪 離開隊伍
+  self-click-message: '§7這是你自己。'
+
+protection_menu:
+  title: 🛡 島嶼保護設定
+  content: 選擇要設定的分類
+
+island_info:
+  title: 📊 島嶼資訊
+  no-island: '§c你目前沒有島嶼！'
+  name-label: 島嶼名稱：
+  unnamed: （未命名）
+  owner-label: 島主：
+  no-owner: （無島主）
+  protection-range-label: 保護範圍：
+  range-label: 島嶼範圍：
+  blocks-suffix: ' 格'
+  created-label: 建立時間：
+  member-count-label: 成員人數：
+
+wallet_bank:
+  title: 💰 存提款
+  no-economy: '§c目前沒有經濟外掛掛在 Vault 底下，無法使用存提款功能。'
+  no-bank-addon: '§c伺服器未安裝 Bank 附加模組，無法使用存提款功能。'
+  no-island: '§c你目前沒有島嶼，無法使用存提款功能。'
+  wallet-balance-label: 錢包餘額：
+  bank-balance-label: 島嶼銀行餘額：
+  deposit-button: ⬆ 存款（錢包 → 島嶼銀行）
+  withdraw-button: ⬇ 提款（島嶼銀行 → 錢包）
+  deposit-title: ⬆ 存款
+  withdraw-title: ⬇ 提款
+  deposit-verb: 存入
+  withdraw-verb: 提出
+  amount-label: 金額
+  amount-placeholder: 輸入要{verb}的金額
+  invalid-amount: '§c請輸入有效的數字金額。'
+  amount-must-be-positive: '§c金額必須大於 0。'
+  insufficient-wallet: '§c你的錢包餘額不足。'
+  wallet-withdraw-failed: '§c從錢包扣款失敗：'
+  unknown-error: 未知錯誤
+  deposit-success: '§a已將 {amount} 存入島嶼銀行。'
+  deposit-failed: '§c存款失敗（{reason}），金額已退回錢包。'
+  insufficient-bank: '§c島嶼銀行餘額不足。'
+  withdraw-success: '§a已從島嶼銀行提出 {amount} 到錢包。'
+  withdraw-failed: '§c提款失敗（{reason}）。'

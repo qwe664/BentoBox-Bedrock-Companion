@@ -28,26 +28,26 @@ public class ProtectionMenuForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
         List<ProtectionCategory> categories = ProtectionCategories.ALL;
 
         var builder = SimpleForm.builder()
-                .title("🛡 島嶼保護設定")
-                .content("選擇要設定的分類");
+                .title(plugin.getLocaleService().get(player, "protection_menu.title", "🛡 島嶼保護設定"))
+                .content(plugin.getLocaleService().get(player, "protection_menu.content", "選擇要設定的分類"));
 
         for (ProtectionCategory category : categories) {
             builder.button(category.title());
         }
 
-        builder.button("⬅ 返回島嶼選單");
+        builder.button(plugin.getLocaleService().get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
         builder.validResultHandler(response -> {
 

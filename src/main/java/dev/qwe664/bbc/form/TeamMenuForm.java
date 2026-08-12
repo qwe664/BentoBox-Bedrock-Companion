@@ -42,12 +42,12 @@ public class TeamMenuForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
@@ -55,7 +55,7 @@ public class TeamMenuForm extends BaseForm {
                 .getIsland(player.getWorld(), player.getUniqueId());
 
         if (island == null) {
-            player.sendMessage("§c你目前沒有島嶼，無法管理隊伍。");
+            player.sendMessage(plugin.getLocaleService().get(player, "team_menu.no-island", "§c你目前沒有島嶼，無法管理隊伍。"));
             return;
         }
 
@@ -65,10 +65,14 @@ public class TeamMenuForm extends BaseForm {
         members.sort(Comparator.<UUID>comparingInt(uuid -> island.getRank(uuid)).reversed());
 
         var builder = SimpleForm.builder()
-                .title("👥 隊伍管理");
+                .title(plugin.getLocaleService().get(player, "team_menu.title", "👥 隊伍管理"));
 
-        StringBuilder content = new StringBuilder("島嶼成員（共 ").append(members.size()).append(" 人）：\n");
-        content.append("點擊成員可查看可執行的操作。");
+        String membersLine = plugin.getLocaleService()
+                .get(player, "team_menu.content-members", "島嶼成員（共 {count} 人）：")
+                .replace("{count}", String.valueOf(members.size()));
+
+        StringBuilder content = new StringBuilder(membersLine).append("\n");
+        content.append(plugin.getLocaleService().get(player, "team_menu.content-hint", "點擊成員可查看可執行的操作。"));
         builder.content(content.toString());
 
         for (UUID memberUuid : members) {
@@ -83,7 +87,9 @@ public class TeamMenuForm extends BaseForm {
             };
 
             String rankLabel = rankLabel(plugin, player, rank);
-            String selfTag = memberUuid.equals(player.getUniqueId()) ? "（你）" : "";
+            String selfTag = memberUuid.equals(player.getUniqueId())
+                    ? plugin.getLocaleService().get(player, "team_menu.self-tag", "（你）")
+                    : "";
 
             builder.button(icon + " " + name + selfTag + "\n§7" + rankLabel);
         }
@@ -95,16 +101,16 @@ public class TeamMenuForm extends BaseForm {
         boolean isOwner = island.getOwner().equals(player.getUniqueId());
 
         if (canInvite) {
-            builder.button("➕ 邀請玩家");
+            builder.button(plugin.getLocaleService().get(player, "team_menu.invite", "➕ 邀請玩家"));
             inviteButtonId = members.size();
         }
 
         if (!isOwner) {
-            builder.button("🚪 離開隊伍");
+            builder.button(plugin.getLocaleService().get(player, "team_menu.leave", "🚪 離開隊伍"));
             leaveButtonId = members.size() + (canInvite ? 1 : 0);
         }
 
-        builder.button("⬅ 返回島嶼選單");
+        builder.button(plugin.getLocaleService().get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
         int backButtonId = members.size() + (canInvite ? 1 : 0) + (!isOwner ? 1 : 0);
 
         int finalInviteButtonId = inviteButtonId;
@@ -128,7 +134,7 @@ public class TeamMenuForm extends BaseForm {
                 plugin.getBentoBoxService().getPlayerCommandLabel(player)
                         .ifPresentOrElse(
                                 label -> plugin.getCommandService().execute(player, label + " team leave"),
-                                () -> player.sendMessage("§c查不到目前玩法，無法離開隊伍。")
+                                () -> player.sendMessage(plugin.getLocaleService().get(player, "common.no-gamemode", "§c查不到目前玩法，無法執行操作。"))
                         );
                 return;
             }
@@ -138,7 +144,7 @@ public class TeamMenuForm extends BaseForm {
                 UUID targetUuid = members.get(clickedId);
 
                 if (targetUuid.equals(player.getUniqueId())) {
-                    player.sendMessage("§7這是你自己。");
+                    player.sendMessage(plugin.getLocaleService().get(player, "team_menu.self-click-message", "§7這是你自己。"));
                     open(player);
                     return;
                 }

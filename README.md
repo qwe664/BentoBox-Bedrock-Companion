@@ -28,9 +28,15 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - Configuration file (customizable messages & feature toggles)
 - Developer/Debug tools (environment info, reflection explorer)
 
+### In Progress
+
+- Multi-language support (`en-US`, `zh-TW`) — 16 of 23 forms localized so far: Main Menu, Island Menu, Team Menu, Team Member Action, Team Invite Picker, Warp Menu/Browse/Manage, Protection Menu, Island Info, Wallet/Bank, Challenges Menu/Detail/Level, Admin Menu, Admin Challenges Import.
+  Remaining: Admin Island Teleport, Base Form, Debug Menu, Game Mode Picker, Protection Category, Settings Menu, Visit Browse.
+
 ### Planned
 
-- Multi-language support
+- Documentation
+- Stable release
 
 ---
 
@@ -127,9 +133,13 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 - [x] Vault integration
 
+### v0.11.x 🚧 (current: v0.11.10-Beta)
+
+- [ ] Multi-language support (`en-US`, `zh-TW`) — 16/23 forms localized
+
 ### v1.0
 
-- [ ] Multi-language support
+- [ ] Multi-language support (finish remaining forms)
 - [ ] Documentation
 - [ ] Stable release
 
@@ -147,7 +157,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, configuration file, and Vault integration complete. Multi-language support pending.
+🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, configuration file, and Vault integration complete. Multi-language support (`en-US`, `zh-TW`) in progress — 16/23 forms localized as of v0.11.10-Beta.
 
 ---
 

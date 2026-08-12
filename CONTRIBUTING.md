@@ -6,7 +6,7 @@ Thank you for your interest in contributing to BentoBox Bedrock Companion!
 
 - Java 25
 - Purpur 26.2
-- BentoBox 3.20.x
+- BentoBox 3.22.2+
 - Geyser
 - Floodgate
 

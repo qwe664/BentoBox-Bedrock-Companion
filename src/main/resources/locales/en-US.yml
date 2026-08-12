@@ -195,3 +195,79 @@ admin_challenges_import:
   confirm-no: ❌ Cancel
   cancelled: '§7Cancelled.'
   success: '§aOfficial default challenges have been imported into {gamemode}.'
+
+admin_island_teleport:
+  title: 🔍 Look Up / Teleport to Player's Island
+  input-label: Player Name
+  input-placeholder: Enter the exact in-game name
+  empty-name: '§cPlease enter a player name.'
+  not-found: '§cPlayer not found: {player} (this name has never joined this server)'
+  no-island: '§e{player} currently has no island.'
+  no-center: '§cThis island has no teleportable center location.'
+  success: "§aTeleported to {player}'s island."
+
+game_mode_picker:
+  title: 🏝 Choose a Game Mode
+  no-gamemodes: No enabled skyblock game modes were detected on this server. Please contact an admin.
+  content: "You're not currently in any skyblock world. Please choose which game mode to go to:"
+  choice-button: '🏝 {name}'
+  back-to-main: ⬅ Back to Main Menu
+
+protection_category:
+  rank-visitor: Visitor
+  rank-coop: Co-op
+  rank-trusted: Trusted
+  rank-member: Member
+  rank-sub-owner: Sub-owner
+  rank-owner: Owner
+  no-island: "§cYou don't have an island!"
+  label-hint: |-
+    Rank order (low to high): Visitor → Co-op → Trusted → Member → Sub-owner → Owner.
+    For each item, choose the minimum rank required to use that feature — a lower rank means more members can use it.
+  current-suffix: "\n(Current: {rank})"
+  update-success: '§a"{category}" protection settings updated successfully!'
+
+settings_menu:
+  title: Island Settings
+  no-island: "§cYou don't have an island!"
+  update-success: '§aIsland settings updated successfully!'
+  toggle-pvp-overworld: Allow PvP (Overworld)
+  toggle-pvp-nether: Allow PvP (Nether)
+  toggle-pvp-end: Allow PvP (End)
+  toggle-monster-natural-spawn: Allow natural monster spawning
+  toggle-monster-spawners-spawn: Allow monster spawners
+  toggle-animal-natural-spawn: Allow natural animal spawning
+  toggle-animal-spawners-spawn: Allow animal spawners
+  toggle-fire-spread: Allow fire spread
+  toggle-fire-burning: Allow fire to burn blocks
+  toggle-fire-ignite: Allow non-player fire ignition
+  toggle-leaf-decay: Allow natural leaf decay
+  toggle-tnt-damage: Allow TNT block damage
+  toggle-block-explode-damage: Allow bed/respawn anchor explosion damage
+
+visit_browse:
+  title: 🧭 Visit Islands
+  unavailable: '§cVisiting islands is currently unavailable (the Visit add-on is not installed).'
+  empty: There are no islands to visit in this game mode yet.
+  content: "Choose an island to visit:"
+  self-tag: ' (You)'
+  unknown-owner: Unknown Player
+  island-button: "🏝 {island}{self}\n§7{owner}"
+  no-owner: '§cThis island currently has no owner and cannot be visited.'
+
+debug_menu:
+  title: 🛠 BBC Developer Tools
+  content: Developer Tools
+  environment-info: 🌍 Environment Info
+  plugin-info: 📦 Plugin Info
+  api-info: 📚 BentoBox API
+  reflection: 🔍 Reflection
+  back: ⬅ Back
+  console-output-hint: '§a✔ Output sent to the server console (DiscordSRV will relay it to Discord).'
+  reflection-title: 🔍 Reflection Lookup
+  reflection-input-label: Class Name or Alias
+  reflection-input-placeholder: 'e.g. flag, user, or a full class path'
+  reflection-scope-label: Lookup Scope
+  reflection-scope-public: Public methods only (incl. inherited)
+  reflection-scope-declared: Only methods declared in this class
+  reflection-empty-target: '§cPlease enter a class name or alias.'

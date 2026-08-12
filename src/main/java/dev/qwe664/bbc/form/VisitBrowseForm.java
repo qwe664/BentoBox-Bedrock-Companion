@@ -42,19 +42,22 @@ public class VisitBrowseForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
         if (!plugin.getVisitHook().isAvailable()) {
-            player.sendMessage("§c拜訪島嶼功能目前無法使用（伺服器未安裝 Visit 附加模組）。");
+            player.sendMessage(plugin.getLocaleService().get(player, "visit_browse.unavailable",
+                    "§c拜訪島嶼功能目前無法使用（伺服器未安裝 Visit 附加模組）。"));
             return;
         }
+
+        var locale = plugin.getLocaleService();
 
         World world = player.getWorld();
 
@@ -72,12 +75,12 @@ public class VisitBrowseForm extends BaseForm {
         });
 
         var builder = SimpleForm.builder()
-                .title("🧭 拜訪島嶼");
+                .title(locale.get(player, "visit_browse.title", "🧭 拜訪島嶼"));
 
         if (islandList.isEmpty()) {
 
-            builder.content("目前這個玩法裡還沒有可以拜訪的島嶼。")
-                    .button("⬅ 返回島嶼選單");
+            builder.content(locale.get(player, "visit_browse.empty", "目前這個玩法裡還沒有可以拜訪的島嶼。"))
+                    .button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
             builder.validResultHandler(response -> plugin.getFormManager().openIslandMenu(player));
 
@@ -85,17 +88,24 @@ public class VisitBrowseForm extends BaseForm {
             return;
         }
 
-        builder.content("選擇一座島嶼前往拜訪：");
+        builder.content(locale.get(player, "visit_browse.content", "選擇一座島嶼前往拜訪："));
 
         for (Island island : islandList) {
             String ownerName = plugin.getBentoBoxService().getPlayersManager().getName(island.getOwner());
             String islandName = island.getName() != null ? island.getName()
-                    : (ownerName == null || ownerName.isBlank() ? "未知玩家" : ownerName);
-            String selfTag = island.getOwner() != null && island.getOwner().equals(player.getUniqueId()) ? "（你）" : "";
-            builder.button("🏝 " + islandName + selfTag + "\n§7" + (ownerName == null ? "" : ownerName));
+                    : (ownerName == null || ownerName.isBlank()
+                            ? locale.get(player, "visit_browse.unknown-owner", "未知玩家")
+                            : ownerName);
+            String selfTag = island.getOwner() != null && island.getOwner().equals(player.getUniqueId())
+                    ? locale.get(player, "visit_browse.self-tag", "（你）")
+                    : "";
+            builder.button(locale.get(player, "visit_browse.island-button", "🏝 {island}{self}\n§7{owner}")
+                    .replace("{island}", islandName)
+                    .replace("{self}", selfTag)
+                    .replace("{owner}", ownerName == null ? "" : ownerName));
         }
 
-        builder.button("⬅ 返回島嶼選單");
+        builder.button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
         builder.validResultHandler(response -> {
 
@@ -109,7 +119,7 @@ public class VisitBrowseForm extends BaseForm {
             UUID targetOwnerUuid = islandList.get(clickedId).getOwner();
 
             if (targetOwnerUuid == null) {
-                player.sendMessage("§c這座島嶼目前沒有島主，無法拜訪。");
+                player.sendMessage(locale.get(player, "visit_browse.no-owner", "§c這座島嶼目前沒有島主，無法拜訪。"));
                 open(player);
                 return;
             }
@@ -118,7 +128,7 @@ public class VisitBrowseForm extends BaseForm {
                     .ifPresentOrElse(
                             label -> plugin.getCommandService().execute(player,
                                     label + " visit " + targetOwnerUuid + " bypass"),
-                            () -> player.sendMessage("§c查不到目前玩法，無法執行操作。")
+                            () -> player.sendMessage(locale.get(player, "common.no-gamemode", "§c查不到目前玩法，無法執行操作。"))
                     );
         });
 

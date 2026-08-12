@@ -8,13 +8,16 @@ the current version).
 
 ## [Unreleased] — working toward v1.0
 
-### In Progress
-- Multi-language support (`en-US`, `zh-TW`) — 16 of 23 forms localized so far.
-
 ### Planned
-- Finish localizing the remaining forms (Admin Island Teleport, Base Form, Debug Menu, Game Mode Picker, Protection Category, Settings Menu, Visit Browse).
 - Documentation pass.
+- Decide whether to translate `menu/ProtectionCategories.java`'s 91 flag names/descriptions (currently Traditional Chinese only, same status as challenge/warp content).
 - Stable `v1.0.0` release.
+
+## [0.12.0-Beta] — Multi-language support complete
+
+- `feat:` add unit tests (JUnit 5) for `ProgressBarUtil`, `ColorUtil`, `ReflectionAliases` — the project's first automated tests.
+- `feat:` localize the remaining 6 text-bearing forms: Admin Island Teleport, Debug Menu, Game Mode Picker, Protection Category, Settings Menu, Visit Browse. (`Base Form` is an abstract base class with no UI text.)
+- All form UI text is now localized across `en-US` / `zh-TW`.
 
 ## [0.11.x-Beta] — Multi-language support rollout
 

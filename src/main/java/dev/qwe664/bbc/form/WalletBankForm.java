@@ -48,17 +48,17 @@ public class WalletBankForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!plugin.getVaultHook().isAvailable()) {
-            player.sendMessage("§c目前沒有經濟外掛掛在 Vault 底下，無法使用存提款功能。");
+            player.sendMessage(plugin.getLocaleService().get(player, "wallet_bank.no-economy", "§c目前沒有經濟外掛掛在 Vault 底下，無法使用存提款功能。"));
             return;
         }
 
         if (!plugin.getBankHook().isAvailable()) {
-            player.sendMessage("§c伺服器未安裝 Bank 附加模組，無法使用存提款功能。");
+            player.sendMessage(plugin.getLocaleService().get(player, "wallet_bank.no-bank-addon", "§c伺服器未安裝 Bank 附加模組，無法使用存提款功能。"));
             return;
         }
 
@@ -66,20 +66,22 @@ public class WalletBankForm extends BaseForm {
                 .getIsland(player.getWorld(), player.getUniqueId());
 
         if (island == null) {
-            player.sendMessage("§c你目前沒有島嶼，無法使用存提款功能。");
+            player.sendMessage(plugin.getLocaleService().get(player, "wallet_bank.no-island", "§c你目前沒有島嶼，無法使用存提款功能。"));
             return;
         }
 
         double walletBalance = plugin.getVaultHook().getPlayerBalance(player);
         double bankBalance = plugin.getBankHook().getIslandBalance(island);
 
+        var locale = plugin.getLocaleService();
+
         var builder = SimpleForm.builder()
-                .title("💰 存提款")
-                .content("錢包餘額：" + plugin.getVaultHook().format(walletBalance)
-                        + "\n島嶼銀行餘額：" + String.format("%.2f", bankBalance))
-                .button("⬆ 存款（錢包 → 島嶼銀行）")
-                .button("⬇ 提款（島嶼銀行 → 錢包）")
-                .button("⬅ 返回島嶼選單");
+                .title(locale.get(player, "wallet_bank.title", "💰 存提款"))
+                .content(locale.get(player, "wallet_bank.wallet-balance-label", "錢包餘額：") + plugin.getVaultHook().format(walletBalance)
+                        + "\n" + locale.get(player, "wallet_bank.bank-balance-label", "島嶼銀行餘額：") + String.format("%.2f", bankBalance))
+                .button(locale.get(player, "wallet_bank.deposit-button", "⬆ 存款（錢包 → 島嶼銀行）"))
+                .button(locale.get(player, "wallet_bank.withdraw-button", "⬇ 提款（島嶼銀行 → 錢包）"))
+                .button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
         builder.validResultHandler(response -> {
             switch (response.clickedButtonId()) {
@@ -98,10 +100,20 @@ public class WalletBankForm extends BaseForm {
     private void openAmountInput(Player player, Island island, boolean deposit) {
 
         FloodgateApi api = FloodgateApi.getInstance();
+        var locale = plugin.getLocaleService();
+
+        String title = deposit
+                ? locale.get(player, "wallet_bank.deposit-title", "⬆ 存款")
+                : locale.get(player, "wallet_bank.withdraw-title", "⬇ 提款");
+
+        String verb = deposit
+                ? locale.get(player, "wallet_bank.deposit-verb", "存入")
+                : locale.get(player, "wallet_bank.withdraw-verb", "提出");
 
         CustomForm.Builder builder = CustomForm.builder()
-                .title(deposit ? "⬆ 存款" : "⬇ 提款")
-                .input("金額", "輸入要" + (deposit ? "存入" : "提出") + "的金額");
+                .title(title)
+                .input(locale.get(player, "wallet_bank.amount-label", "金額"),
+                        locale.get(player, "wallet_bank.amount-placeholder", "輸入要{verb}的金額").replace("{verb}", verb));
 
         builder.validResultHandler(response -> {
 
@@ -111,12 +123,12 @@ public class WalletBankForm extends BaseForm {
             try {
                 amount = Double.parseDouble(rawAmount == null ? "" : rawAmount.trim());
             } catch (NumberFormatException e) {
-                player.sendMessage("§c請輸入有效的數字金額。");
+                player.sendMessage(locale.get(player, "wallet_bank.invalid-amount", "§c請輸入有效的數字金額。"));
                 return;
             }
 
             if (amount <= 0) {
-                player.sendMessage("§c金額必須大於 0。");
+                player.sendMessage(locale.get(player, "wallet_bank.amount-must-be-positive", "§c金額必須大於 0。"));
                 return;
             }
 
@@ -132,16 +144,18 @@ public class WalletBankForm extends BaseForm {
 
     private void depositToBank(Player player, Island island, double amount) {
 
+        var locale = plugin.getLocaleService();
+
         if (!plugin.getVaultHook().hasEnough(player, amount)) {
-            player.sendMessage("§c你的錢包餘額不足。");
+            player.sendMessage(locale.get(player, "wallet_bank.insufficient-wallet", "§c你的錢包餘額不足。"));
             return;
         }
 
         var withdrawResponse = plugin.getVaultHook().withdrawPlayer(player, amount);
 
         if (withdrawResponse == null || !withdrawResponse.transactionSuccess()) {
-            player.sendMessage("§c從錢包扣款失敗："
-                    + (withdrawResponse == null ? "未知錯誤" : withdrawResponse.errorMessage));
+            player.sendMessage(locale.get(player, "wallet_bank.wallet-withdraw-failed", "§c從錢包扣款失敗：")
+                    + (withdrawResponse == null ? locale.get(player, "wallet_bank.unknown-error", "未知錯誤") : withdrawResponse.errorMessage));
             return;
         }
 
@@ -153,21 +167,24 @@ public class WalletBankForm extends BaseForm {
                 .thenAccept(bankResponse -> Bukkit.getScheduler().runTask(plugin, () -> {
 
                     if (bankResponse == BankResponse.SUCCESS) {
-                        player.sendMessage("§a已將 " + plugin.getVaultHook().format(amount) + " 存入島嶼銀行。");
+                        player.sendMessage(locale.get(player, "wallet_bank.deposit-success", "§a已將 {amount} 存入島嶼銀行。")
+                                .replace("{amount}", plugin.getVaultHook().format(amount)));
                     } else {
                         // 銀行端存款失敗，把剛剛扣掉的錢退回玩家錢包，不讓玩家平白損失。
                         plugin.getVaultHook().depositPlayer(player, amount);
-                        player.sendMessage("§c存款失敗（" + bankResponse + "），金額已退回錢包。");
+                        player.sendMessage(locale.get(player, "wallet_bank.deposit-failed", "§c存款失敗（{reason}），金額已退回錢包。")
+                                .replace("{reason}", bankResponse.toString()));
                     }
                 }));
     }
 
     private void withdrawFromBank(Player player, Island island, double amount) {
 
+        var locale = plugin.getLocaleService();
         double bankBalance = plugin.getBankHook().getIslandBalance(island);
 
         if (bankBalance < amount) {
-            player.sendMessage("§c島嶼銀行餘額不足。");
+            player.sendMessage(locale.get(player, "wallet_bank.insufficient-bank", "§c島嶼銀行餘額不足。"));
             return;
         }
 
@@ -180,9 +197,11 @@ public class WalletBankForm extends BaseForm {
 
                     if (bankResponse == BankResponse.SUCCESS) {
                         plugin.getVaultHook().depositPlayer(player, amount);
-                        player.sendMessage("§a已從島嶼銀行提出 " + plugin.getVaultHook().format(amount) + " 到錢包。");
+                        player.sendMessage(locale.get(player, "wallet_bank.withdraw-success", "§a已從島嶼銀行提出 {amount} 到錢包。")
+                                .replace("{amount}", plugin.getVaultHook().format(amount)));
                     } else {
-                        player.sendMessage("§c提款失敗（" + bankResponse + "）。");
+                        player.sendMessage(locale.get(player, "wallet_bank.withdraw-failed", "§c提款失敗（{reason}）。")
+                                .replace("{reason}", bankResponse.toString()));
                     }
                 }));
     }

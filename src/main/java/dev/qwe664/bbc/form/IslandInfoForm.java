@@ -17,6 +17,11 @@ import java.util.UUID;
  *
  * 純資訊顯示，不需要互動元件，用 SimpleForm 就夠了，
  * 內容用一段多行文字組成。
+ *
+ * 成員排名文字直接複用 TeamMenuForm.rankLabel()（同一套 BentoBox
+ * 官方語言檔翻譯 + config.yml fallback 的邏輯），不再自己另外維護
+ * 一份 RANK_NAMES 對照表——避免兩個地方各自一份稱呼，改一邊忘了改
+ * 另一邊而顯示不一致。
  */
 public class IslandInfoForm extends BaseForm {
 
@@ -27,15 +32,6 @@ public class IslandInfoForm extends BaseForm {
             RanksManager.MEMBER_RANK,
             RanksManager.SUB_OWNER_RANK,
             RanksManager.OWNER_RANK
-    };
-
-    private static final String[] RANK_NAMES = {
-            "訪客",
-            "合作成員",
-            "信任成員",
-            "成員",
-            "副島主",
-            "島主"
     };
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -50,12 +46,12 @@ public class IslandInfoForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
@@ -63,43 +59,50 @@ public class IslandInfoForm extends BaseForm {
                 .getIsland(player.getWorld(), player.getUniqueId());
 
         if (island == null) {
-            player.sendMessage("§c你目前沒有島嶼！");
+            player.sendMessage(plugin.getLocaleService().get(player, "island_info.no-island", "§c你目前沒有島嶼！"));
             return;
         }
 
-        String content = buildContent(island);
+        String content = buildContent(player, island);
 
         var builder = SimpleForm.builder()
-                .title("📊 島嶼資訊")
+                .title(plugin.getLocaleService().get(player, "island_info.title", "📊 島嶼資訊"))
                 .content(content)
-                .button("⬅ 返回島嶼選單");
+                .button(plugin.getLocaleService().get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
         builder.validResultHandler(response -> plugin.getFormManager().openIslandMenu(player));
 
         api.sendForm(player.getUniqueId(), builder);
     }
 
-    private String buildContent(Island island) {
+    private String buildContent(Player player, Island island) {
 
+        var locale = plugin.getLocaleService();
         StringBuilder sb = new StringBuilder();
 
         String islandName = island.getName();
-        sb.append("島嶼名稱：")
-                .append(islandName == null || islandName.isBlank() ? "（未命名）" : islandName)
+        sb.append(locale.get(player, "island_info.name-label", "島嶼名稱："))
+                .append(islandName == null || islandName.isBlank()
+                        ? locale.get(player, "island_info.unnamed", "（未命名）")
+                        : islandName)
                 .append("\n\n");
 
         UUID ownerUuid = island.getOwner();
         String ownerName = ownerUuid == null
-                ? "（無島主）"
+                ? locale.get(player, "island_info.no-owner", "（無島主）")
                 : plugin.getBentoBoxService().getPlayersManager().getName(ownerUuid);
-        sb.append("島主：").append(ownerName).append("\n\n");
+        sb.append(locale.get(player, "island_info.owner-label", "島主：")).append(ownerName).append("\n\n");
 
-        sb.append("保護範圍：").append(island.getProtectionRange()).append(" 格\n\n");
-        sb.append("島嶼範圍：").append(island.getRange()).append(" 格\n\n");
+        String blocksSuffix = locale.get(player, "island_info.blocks-suffix", " 格");
+        sb.append(locale.get(player, "island_info.protection-range-label", "保護範圍："))
+                .append(island.getProtectionRange()).append(blocksSuffix).append("\n\n");
+        sb.append(locale.get(player, "island_info.range-label", "島嶼範圍："))
+                .append(island.getRange()).append(blocksSuffix).append("\n\n");
 
         long createdMillis = island.getCreatedDate();
         if (createdMillis > 0) {
-            sb.append("建立時間：").append(DATE_FORMAT.format(new Date(createdMillis))).append("\n\n");
+            sb.append(locale.get(player, "island_info.created-label", "建立時間："))
+                    .append(DATE_FORMAT.format(new Date(createdMillis))).append("\n\n");
         }
 
         Map<UUID, Integer> members = island.getMembers();
@@ -107,7 +110,8 @@ public class IslandInfoForm extends BaseForm {
                 .filter(rank -> rank >= RanksManager.COOP_RANK)
                 .count();
 
-        sb.append("成員人數：").append(memberCount).append("\n");
+        sb.append(locale.get(player, "island_info.member-count-label", "成員人數："))
+                .append(memberCount).append("\n");
 
         if (members != null) {
             for (Map.Entry<UUID, Integer> entry : members.entrySet()) {
@@ -120,25 +124,25 @@ public class IslandInfoForm extends BaseForm {
                 }
 
                 String name = plugin.getBentoBoxService().getPlayersManager().getName(entry.getKey());
-                sb.append("  - ").append(name).append("（").append(rankName(rank)).append("）\n");
+                sb.append("  - ").append(name).append("（").append(closestRankLabel(player, rank)).append("）\n");
             }
         }
 
         return sb.toString();
     }
 
-    private String rankName(int rank) {
-        for (int i = 0; i < RANK_VALUES.length; i++) {
-            if (RANK_VALUES[i] == rank) {
-                return RANK_NAMES[i];
+    /**
+     * 找出離 rank 最近（不超過）的官方職級常數，交給 TeamMenuForm.rankLabel()
+     * 統一翻譯——這裡的 rank 值不一定剛好等於六個官方常數之一
+     * （BentoBox 允許自訂中間值），所以要找最接近的一個。
+     */
+    private String closestRankLabel(Player viewer, int rank) {
+        int closest = RANK_VALUES[0];
+        for (int value : RANK_VALUES) {
+            if (rank >= value) {
+                closest = value;
             }
         }
-        String closest = RANK_NAMES[0];
-        for (int i = 0; i < RANK_VALUES.length; i++) {
-            if (rank >= RANK_VALUES[i]) {
-                closest = RANK_NAMES[i];
-            }
-        }
-        return closest;
+        return TeamMenuForm.rankLabel(plugin, viewer, closest);
     }
 }

@@ -50,3 +50,46 @@ team_menu:
   invite: ➕ 邀請玩家
   leave: 🚪 離開隊伍
   self-click-message: '§7這是你自己。'
+
+protection_menu:
+  title: 🛡 島嶼保護設定
+  content: 選擇要設定的分類
+
+island_info:
+  title: 📊 島嶼資訊
+  no-island: '§c你目前沒有島嶼！'
+  name-label: 島嶼名稱：
+  unnamed: （未命名）
+  owner-label: 島主：
+  no-owner: （無島主）
+  protection-range-label: 保護範圍：
+  range-label: 島嶼範圍：
+  blocks-suffix: ' 格'
+  created-label: 建立時間：
+  member-count-label: 成員人數：
+
+wallet_bank:
+  title: 💰 存提款
+  no-economy: '§c目前沒有經濟外掛掛在 Vault 底下，無法使用存提款功能。'
+  no-bank-addon: '§c伺服器未安裝 Bank 附加模組，無法使用存提款功能。'
+  no-island: '§c你目前沒有島嶼，無法使用存提款功能。'
+  wallet-balance-label: 錢包餘額：
+  bank-balance-label: 島嶼銀行餘額：
+  deposit-button: ⬆ 存款（錢包 → 島嶼銀行）
+  withdraw-button: ⬇ 提款（島嶼銀行 → 錢包）
+  deposit-title: ⬆ 存款
+  withdraw-title: ⬇ 提款
+  deposit-verb: 存入
+  withdraw-verb: 提出
+  amount-label: 金額
+  amount-placeholder: 輸入要{verb}的金額
+  invalid-amount: '§c請輸入有效的數字金額。'
+  amount-must-be-positive: '§c金額必須大於 0。'
+  insufficient-wallet: '§c你的錢包餘額不足。'
+  wallet-withdraw-failed: '§c從錢包扣款失敗：'
+  unknown-error: 未知錯誤
+  deposit-success: '§a已將 {amount} 存入島嶼銀行。'
+  deposit-failed: '§c存款失敗（{reason}），金額已退回錢包。'
+  insufficient-bank: '§c島嶼銀行餘額不足。'
+  withdraw-success: '§a已從島嶼銀行提出 {amount} 到錢包。'
+  withdraw-failed: '§c提款失敗（{reason}）。'

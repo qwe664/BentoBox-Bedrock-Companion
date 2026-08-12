@@ -47,3 +47,46 @@ team_menu:
   invite: ➕ Invite Player
   leave: 🚪 Leave Team
   self-click-message: '§7That''s you.'
+
+protection_menu:
+  title: 🛡 Island Protection Settings
+  content: Choose a category to configure
+
+island_info:
+  title: 📊 Island Info
+  no-island: '§cYou don''t have an island!'
+  name-label: 'Island name: '
+  unnamed: '(unnamed)'
+  owner-label: 'Owner: '
+  no-owner: '(no owner)'
+  protection-range-label: 'Protection range: '
+  range-label: 'Island range: '
+  blocks-suffix: ' blocks'
+  created-label: 'Created: '
+  member-count-label: 'Members: '
+
+wallet_bank:
+  title: 💰 Deposit/Withdraw
+  no-economy: '§cNo economy plugin is hooked into Vault, so this feature is unavailable.'
+  no-bank-addon: '§cThe Bank addon is not installed, so this feature is unavailable.'
+  no-island: '§cYou don''t have an island, so you can''t use this feature.'
+  wallet-balance-label: 'Wallet balance: '
+  bank-balance-label: 'Island bank balance: '
+  deposit-button: ⬆ Deposit (Wallet → Island Bank)
+  withdraw-button: ⬇ Withdraw (Island Bank → Wallet)
+  deposit-title: ⬆ Deposit
+  withdraw-title: ⬇ Withdraw
+  deposit-verb: deposit
+  withdraw-verb: withdraw
+  amount-label: Amount
+  amount-placeholder: Enter the amount to {verb}
+  invalid-amount: '§cPlease enter a valid number.'
+  amount-must-be-positive: '§cThe amount must be greater than 0.'
+  insufficient-wallet: '§cYour wallet balance is insufficient.'
+  wallet-withdraw-failed: '§cFailed to withdraw from your wallet: '
+  unknown-error: unknown error
+  deposit-success: '§a{amount} has been deposited into the island bank.'
+  deposit-failed: '§cDeposit failed ({reason}), the amount has been refunded to your wallet.'
+  insufficient-bank: '§cThe island bank balance is insufficient.'
+  withdraw-success: '§a{amount} has been withdrawn from the island bank to your wallet.'
+  withdraw-failed: '§cWithdrawal failed ({reason}).'

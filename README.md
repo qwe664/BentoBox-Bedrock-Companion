@@ -56,7 +56,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 | Component | Version |
 |-----------|---------|
-| Java | 21+ |
+| Java | 25+ |
 | Paper / Purpur | Latest |
 | BentoBox | 3.22.2+ |
 | Floodgate | Required |

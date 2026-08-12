@@ -34,7 +34,23 @@ public class SettingsMenuForm extends BaseForm {
             Flags.BLOCK_EXPLODE_DAMAGE
     };
 
-    private static final String[] TOGGLE_LABELS = {
+    private static final String[] TOGGLE_KEYS = {
+            "toggle-pvp-overworld",
+            "toggle-pvp-nether",
+            "toggle-pvp-end",
+            "toggle-monster-natural-spawn",
+            "toggle-monster-spawners-spawn",
+            "toggle-animal-natural-spawn",
+            "toggle-animal-spawners-spawn",
+            "toggle-fire-spread",
+            "toggle-fire-burning",
+            "toggle-fire-ignite",
+            "toggle-leaf-decay",
+            "toggle-tnt-damage",
+            "toggle-block-explode-damage"
+    };
+
+    private static final String[] TOGGLE_FALLBACKS = {
             "允許 PvP（主世界）",
             "允許 PvP（地獄）",
             "允許 PvP（終界）",
@@ -60,12 +76,12 @@ public class SettingsMenuForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
@@ -73,15 +89,20 @@ public class SettingsMenuForm extends BaseForm {
                 .getIsland(player.getWorld(), player.getUniqueId());
 
         if (island == null) {
-            player.sendMessage("§c你目前沒有島嶼！");
+            player.sendMessage(plugin.getLocaleService().get(player, "settings_menu.no-island", "§c你目前沒有島嶼！"));
             return;
         }
 
+        var locale = plugin.getLocaleService();
+
         CustomForm.Builder builder = CustomForm.builder()
-                .title("島嶼設定管理");
+                .title(locale.get(player, "settings_menu.title", "島嶼設定管理"));
 
         for (int i = 0; i < TOGGLE_FLAGS.length; i++) {
-            builder.toggle(TOGGLE_LABELS[i], island.isAllowed(TOGGLE_FLAGS[i]));
+            builder.toggle(
+                    locale.get(player, "settings_menu." + TOGGLE_KEYS[i], TOGGLE_FALLBACKS[i]),
+                    island.isAllowed(TOGGLE_FLAGS[i])
+            );
         }
 
         builder.validResultHandler(response -> {
@@ -91,7 +112,7 @@ public class SettingsMenuForm extends BaseForm {
                 island.setSettingsFlag(TOGGLE_FLAGS[i], value);
             }
 
-            player.sendMessage("§a島嶼設定已成功更新！");
+            player.sendMessage(locale.get(player, "settings_menu.update-success", "§a島嶼設定已成功更新！"));
         });
 
         api.sendForm(player.getUniqueId(), builder);

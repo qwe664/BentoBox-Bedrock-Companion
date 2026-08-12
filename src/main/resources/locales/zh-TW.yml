@@ -198,3 +198,79 @@ admin_challenges_import:
   confirm-no: ❌ 取消
   cancelled: '§7已取消。'
   success: '§a已將官方預設挑戰組匯入「{gamemode}」。'
+
+admin_island_teleport:
+  title: 🔍 查詢／傳送到玩家島嶼
+  input-label: 玩家名稱
+  input-placeholder: 輸入完整的遊戲內名稱
+  empty-name: '§c請輸入玩家名稱。'
+  not-found: '§c找不到玩家：{player}（這個名字沒有加入過本伺服器）'
+  no-island: '§e{player} 目前沒有島嶼。'
+  no-center: '§c這座島嶼沒有可傳送的中心點資料。'
+  success: '§a已傳送到 {player} 的島嶼。'
+
+game_mode_picker:
+  title: 🏝 選擇玩法
+  no-gamemodes: 目前伺服器沒有偵測到任何已啟用的空島玩法，請聯絡管理員。
+  content: 你目前不在任何空島世界裡，請選擇要前往的玩法：
+  choice-button: '🏝 {name}'
+  back-to-main: ⬅ 返回主選單
+
+protection_category:
+  rank-visitor: 訪客
+  rank-coop: 合作成員
+  rank-trusted: 信任成員
+  rank-member: 成員
+  rank-sub-owner: 副島主
+  rank-owner: 島主
+  no-island: '§c你目前沒有島嶼！'
+  label-hint: |-
+    排名由低到高：訪客 → 合作成員 → 信任成員 → 成員 → 副島主 → 島主。
+    每個項目選擇「該功能最低要什麼身份才能使用」，選越低代表越多人能用。
+  current-suffix: "\n（目前：{rank}）"
+  update-success: '§a「{category}」保護設定已成功更新！'
+
+settings_menu:
+  title: 島嶼設定管理
+  no-island: '§c你目前沒有島嶼！'
+  update-success: '§a島嶼設定已成功更新！'
+  toggle-pvp-overworld: 允許 PvP（主世界）
+  toggle-pvp-nether: 允許 PvP（地獄）
+  toggle-pvp-end: 允許 PvP（終界）
+  toggle-monster-natural-spawn: 允許怪物自然生成
+  toggle-monster-spawners-spawn: 允許刷怪磚生成怪物
+  toggle-animal-natural-spawn: 允許動物自然生成
+  toggle-animal-spawners-spawn: 允許刷怪磚生成動物
+  toggle-fire-spread: 允許火勢蔓延
+  toggle-fire-burning: 允許火焰燃燒方塊
+  toggle-fire-ignite: 允許非玩家方式點火
+  toggle-leaf-decay: 允許樹葉自然凋零
+  toggle-tnt-damage: 允許 TNT 破壞方塊/傷害
+  toggle-block-explode-damage: 允許床/重生錨爆炸傷害方塊
+
+visit_browse:
+  title: 🧭 拜訪島嶼
+  unavailable: '§c拜訪島嶼功能目前無法使用（伺服器未安裝 Visit 附加模組）。'
+  empty: 目前這個玩法裡還沒有可以拜訪的島嶼。
+  content: 選擇一座島嶼前往拜訪：
+  self-tag: （你）
+  unknown-owner: 未知玩家
+  island-button: "🏝 {island}{self}\n§7{owner}"
+  no-owner: '§c這座島嶼目前沒有島主，無法拜訪。'
+
+debug_menu:
+  title: 🛠 BBC Developer Tools
+  content: 開發工具
+  environment-info: 🌍 環境資訊
+  plugin-info: 📦 插件資訊
+  api-info: 📚 BentoBox API
+  reflection: 🔍 Reflection
+  back: ⬅ 返回
+  console-output-hint: '§a✔ 已輸出至伺服器 Console（DiscordSRV 將同步至 Discord）。'
+  reflection-title: 🔍 Reflection 查詢
+  reflection-input-label: 類別名稱或 Alias
+  reflection-input-placeholder: 例如：flag、user，或完整類別路徑
+  reflection-scope-label: 查詢範圍
+  reflection-scope-public: 僅 Public 方法（含繼承）
+  reflection-scope-declared: 僅本類別自行宣告的方法
+  reflection-empty-target: '§c請輸入類別名稱或 Alias。'

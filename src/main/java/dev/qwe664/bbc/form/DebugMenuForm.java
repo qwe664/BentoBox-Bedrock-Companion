@@ -22,16 +22,18 @@ public class DebugMenuForm extends BaseForm {
     @Override
     public void open(Player player) {
 
+        var locale = plugin.getLocaleService();
+
         var builder = SimpleForm.builder();
 
         builder
-                .title("🛠 BBC Developer Tools")
-                .content("開發工具")
-                .button("🌍 環境資訊")
-                .button("📦 插件資訊")
-                .button("📚 BentoBox API")
-                .button("🔍 Reflection")
-                .button("⬅ 返回");
+                .title(locale.get(player, "debug_menu.title", "🛠 BBC Developer Tools"))
+                .content(locale.get(player, "debug_menu.content", "開發工具"))
+                .button(locale.get(player, "debug_menu.environment-info", "🌍 環境資訊"))
+                .button(locale.get(player, "debug_menu.plugin-info", "📦 插件資訊"))
+                .button(locale.get(player, "debug_menu.api-info", "📚 BentoBox API"))
+                .button(locale.get(player, "debug_menu.reflection", "🔍 Reflection"))
+                .button(locale.get(player, "debug_menu.back", "⬅ 返回"));
 
         builder.validResultHandler(response -> {
 
@@ -39,7 +41,8 @@ public class DebugMenuForm extends BaseForm {
 
                 case 0 -> {
                        EnvironmentPrinter.print(plugin);
-                       player.sendMessage("§a✔ 已輸出至伺服器 Console（DiscordSRV 將同步至 Discord）。");
+                       player.sendMessage(locale.get(player, "debug_menu.console-output-hint",
+                               "§a✔ 已輸出至伺服器 Console（DiscordSRV 將同步至 Discord）。"));
                       }
 
                 case 1 -> debugCommand.showPluginStatus(player);
@@ -65,10 +68,19 @@ public class DebugMenuForm extends BaseForm {
      */
     private void openReflectionInputForm(Player player) {
 
+        var locale = plugin.getLocaleService();
+
         CustomForm.Builder builder = CustomForm.builder()
-                .title("🔍 Reflection 查詢")
-                .input("類別名稱或 Alias", "例如：flag、user，或完整類別路徑")
-                .dropdown("查詢範圍", "僅 Public 方法（含繼承）", "僅本類別自行宣告的方法");
+                .title(locale.get(player, "debug_menu.reflection-title", "🔍 Reflection 查詢"))
+                .input(
+                        locale.get(player, "debug_menu.reflection-input-label", "類別名稱或 Alias"),
+                        locale.get(player, "debug_menu.reflection-input-placeholder", "例如：flag、user，或完整類別路徑")
+                )
+                .dropdown(
+                        locale.get(player, "debug_menu.reflection-scope-label", "查詢範圍"),
+                        locale.get(player, "debug_menu.reflection-scope-public", "僅 Public 方法（含繼承）"),
+                        locale.get(player, "debug_menu.reflection-scope-declared", "僅本類別自行宣告的方法")
+                );
 
         builder.validResultHandler(response -> {
 
@@ -76,7 +88,7 @@ public class DebugMenuForm extends BaseForm {
             int scope = response.asDropdown(1);
 
             if (target == null || target.isBlank()) {
-                player.sendMessage("§c請輸入類別名稱或 Alias。");
+                player.sendMessage(locale.get(player, "debug_menu.reflection-empty-target", "§c請輸入類別名稱或 Alias。"));
                 return;
             }
 
@@ -88,7 +100,8 @@ public class DebugMenuForm extends BaseForm {
                 ReflectionUtil.printDeclaredMethods(className);
             }
 
-            player.sendMessage("§a✔ 已輸出至伺服器 Console（DiscordSRV 將同步至 Discord）。");
+            player.sendMessage(locale.get(player, "debug_menu.console-output-hint",
+                    "§a✔ 已輸出至伺服器 Console（DiscordSRV 將同步至 Discord）。"));
         });
 
         FloodgateApi.getInstance().sendForm(player.getUniqueId(), builder);

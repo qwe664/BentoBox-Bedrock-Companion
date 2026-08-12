@@ -27,11 +27,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - PlaceholderAPI support (%bbc_*% variables)
 - Configuration file (customizable messages & feature toggles)
 - Developer/Debug tools (environment info, reflection explorer)
-
-### In Progress
-
-- Multi-language support (`en-US`, `zh-TW`) — 16 of 23 forms localized so far: Main Menu, Island Menu, Team Menu, Team Member Action, Team Invite Picker, Warp Menu/Browse/Manage, Protection Menu, Island Info, Wallet/Bank, Challenges Menu/Detail/Level, Admin Menu, Admin Challenges Import.
-  Remaining: Admin Island Teleport, Base Form, Debug Menu, Game Mode Picker, Protection Category, Settings Menu, Visit Browse.
+- Multi-language support (`en-US`, `zh-TW`) — every form's UI text is localized. (The 91 protection flags' own names/descriptions in `menu/ProtectionCategories.java` are still Traditional Chinese only, same as challenge/warp content configured by the server admin.)
 
 ### Planned
 
@@ -133,13 +129,12 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 - [x] Vault integration
 
-### v0.11.x 🚧 (current: v0.11.10-Beta)
+### v0.12.0 ✅
 
-- [ ] Multi-language support (`en-US`, `zh-TW`) — 16/23 forms localized
+- [x] Multi-language support (`en-US`, `zh-TW`) — all forms localized
 
 ### v1.0
 
-- [ ] Multi-language support (finish remaining forms)
 - [ ] Documentation
 - [ ] Stable release
 
@@ -157,7 +152,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, configuration file, and Vault integration complete. Multi-language support (`en-US`, `zh-TW`) in progress — 16/23 forms localized as of v0.11.10-Beta.
+🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, configuration file, Vault integration, and multi-language support (`en-US`, `zh-TW`) all complete as of v0.12.0-Beta. Working toward documentation and a stable v1.0 release.
 
 ---
 

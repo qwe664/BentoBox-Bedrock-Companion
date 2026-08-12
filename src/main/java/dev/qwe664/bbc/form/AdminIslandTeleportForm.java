@@ -29,20 +29,25 @@ public class AdminIslandTeleportForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            admin.sendMessage("§cFloodgate API 尚未初始化。");
+            admin.sendMessage(plugin.getLocaleService().get(admin, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
+        var locale = plugin.getLocaleService();
+
         CustomForm.Builder builder = CustomForm.builder()
-                .title("🔍 查詢／傳送到玩家島嶼")
-                .input("玩家名稱", "輸入完整的遊戲內名稱");
+                .title(locale.get(admin, "admin_island_teleport.title", "🔍 查詢／傳送到玩家島嶼"))
+                .input(
+                        locale.get(admin, "admin_island_teleport.input-label", "玩家名稱"),
+                        locale.get(admin, "admin_island_teleport.input-placeholder", "輸入完整的遊戲內名稱")
+                );
 
         builder.validResultHandler(response -> {
 
             String targetName = response.asInput(0);
 
             if (targetName == null || targetName.isBlank()) {
-                admin.sendMessage("§c請輸入玩家名稱。");
+                admin.sendMessage(locale.get(admin, "admin_island_teleport.empty-name", "§c請輸入玩家名稱。"));
                 return;
             }
 
@@ -52,7 +57,9 @@ public class AdminIslandTeleportForm extends BaseForm {
             UUID targetUuid = target.getUniqueId();
 
             if (!target.hasPlayedBefore() && !target.isOnline()) {
-                admin.sendMessage("§c找不到玩家：" + targetName + "（這個名字沒有加入過本伺服器）");
+                admin.sendMessage(locale.get(admin, "admin_island_teleport.not-found",
+                                "§c找不到玩家：{player}（這個名字沒有加入過本伺服器）")
+                        .replace("{player}", targetName));
                 return;
             }
 
@@ -60,17 +67,19 @@ public class AdminIslandTeleportForm extends BaseForm {
                     .getIsland(admin.getWorld(), targetUuid);
 
             if (island == null) {
-                admin.sendMessage("§e" + targetName + " 目前沒有島嶼。");
+                admin.sendMessage(locale.get(admin, "admin_island_teleport.no-island", "§e{player} 目前沒有島嶼。")
+                        .replace("{player}", targetName));
                 return;
             }
 
             if (island.getCenter() == null) {
-                admin.sendMessage("§c這座島嶼沒有可傳送的中心點資料。");
+                admin.sendMessage(locale.get(admin, "admin_island_teleport.no-center", "§c這座島嶼沒有可傳送的中心點資料。"));
                 return;
             }
 
             admin.teleport(island.getCenter());
-            admin.sendMessage("§a已傳送到 " + targetName + " 的島嶼。");
+            admin.sendMessage(locale.get(admin, "admin_island_teleport.success", "§a已傳送到 {player} 的島嶼。")
+                    .replace("{player}", targetName));
         });
 
         api.sendForm(admin.getUniqueId(), builder);

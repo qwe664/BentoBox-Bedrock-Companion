@@ -56,15 +56,20 @@ more detail per milestone.
 
 - [x] Personal wallet display, wallet ↔ island bank transfer
 
-## v0.11.x 🚧 Multi-language support (in progress, current: v0.11.10-Beta)
+## v0.12.0 ✅ Multi-language support complete
 
 - [x] `LocaleService` with `en-US` / `zh-TW` locale files, auto-merge fallback
-- [x] 16 of 23 forms localized (Main Menu, Island Menu, Team Menu, Team Member
-      Action, Team Invite Picker, Warp Menu/Browse/Manage, Protection Menu,
-      Island Info, Wallet/Bank, Challenges Menu/Detail/Level, Admin Menu,
-      Admin Challenges Import)
-- [ ] Remaining forms: Admin Island Teleport, Base Form, Debug Menu, Game
-      Mode Picker, Protection Category, Settings Menu, Visit Browse
+- [x] All 22 text-bearing forms localized (Main Menu, Island Menu, Team Menu,
+      Team Member Action, Team Invite Picker, Warp Menu/Browse/Manage,
+      Protection Menu, Island Info, Wallet/Bank, Challenges Menu/Detail/Level,
+      Admin Menu, Admin Challenges Import, Admin Island Teleport, Debug Menu,
+      Game Mode Picker, Protection Category, Settings Menu, Visit Browse) —
+      `Base Form` is an abstract base class with no UI text, so it needed no
+      localization
+- [ ] Not covered: the 91 protection flags' names/descriptions in
+      `menu/ProtectionCategories.java` are still Traditional Chinese only —
+      treated as BentoBox-side content data, same as challenge/warp names,
+      out of scope for form-UI localization
 
 ## v1.0.0 — Stable Release
 
@@ -77,6 +82,6 @@ more detail per milestone.
 
 ### Remaining
 
-- [ ] Finish multi-language support (see v0.11.x above)
 - [ ] Documentation pass
+- [ ] Decide whether to translate `menu/ProtectionCategories.java` content
 - [ ] Stable release

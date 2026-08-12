@@ -28,25 +28,32 @@
 - [x] PlaceholderAPI support
 - [x] Vault integration
 
-## Phase 5 — Multi-language support (in progress)
+## Phase 5 — Multi-language support ✅
 
 - [x] `LocaleService` (`en-US` / `zh-TW`, auto-merge fallback)
 - [x] Main Menu, Island Menu, Team Menu, Team Member Action, Team Invite Picker
 - [x] Warp Menu / Browse / Manage
 - [x] Protection Menu, Island Info, Wallet/Bank
 - [x] Challenges Menu / Detail / Level, Admin Challenges Import
-- [ ] Admin Island Teleport Form
-- [ ] Base Form
-- [ ] Debug Menu Form
-- [ ] Game Mode Picker Form
-- [ ] Protection Category Form
-- [ ] Settings Menu Form
-- [ ] Visit Browse Form
+- [x] Admin Island Teleport Form
+- [x] Base Form (no user-facing text — nothing to localize)
+- [x] Debug Menu Form
+- [x] Game Mode Picker Form
+- [x] Protection Category Form (form UI chrome only — see note below)
+- [x] Settings Menu Form
+- [x] Visit Browse Form
+
+Note: the 91 protection flags' names/descriptions themselves
+(`menu/ProtectionCategories.java`, ~200 strings) are still Traditional
+Chinese only, same as challenge/warp *content* configured by the server
+admin — this project's `LocaleService` covers form UI chrome, not
+BentoBox-side data content. Translating `ProtectionCategories.java` is a
+separate, larger follow-up if wanted.
 
 ## Phase 6 — Release v1.0
 
-- [ ] Finish Phase 5 (all forms localized)
 - [ ] Documentation pass (README, CONTRIBUTING, docs/API.md up to date)
+- [ ] Decide whether to translate `menu/ProtectionCategories.java` content
 - [ ] Release v1.0
 
 ## Testing

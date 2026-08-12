@@ -36,24 +36,26 @@ public class GameModePickerForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
+
+        var locale = plugin.getLocaleService();
 
         List<BentoBoxService.GameModeChoice> choices = plugin.getBentoBoxService().getAvailableGameModes();
 
         var builder = SimpleForm.builder()
-                .title("🏝 選擇玩法");
+                .title(locale.get(player, "game_mode_picker.title", "🏝 選擇玩法"));
 
         if (choices.isEmpty()) {
 
-            builder.content("目前伺服器沒有偵測到任何已啟用的空島玩法，請聯絡管理員。")
-                    .button("⬅ 返回主選單");
+            builder.content(locale.get(player, "game_mode_picker.no-gamemodes", "目前伺服器沒有偵測到任何已啟用的空島玩法，請聯絡管理員。"))
+                    .button(locale.get(player, "game_mode_picker.back-to-main", "⬅ 返回主選單"));
 
             builder.validResultHandler(response -> plugin.getFormManager().openMainMenu(player));
 
@@ -61,13 +63,13 @@ public class GameModePickerForm {
             return;
         }
 
-        builder.content("你目前不在任何空島世界裡，請選擇要前往的玩法：");
+        builder.content(locale.get(player, "game_mode_picker.content", "你目前不在任何空島世界裡，請選擇要前往的玩法："));
 
         for (BentoBoxService.GameModeChoice choice : choices) {
-            builder.button("🏝 " + choice.name());
+            builder.button(locale.get(player, "game_mode_picker.choice-button", "🏝 {name}").replace("{name}", choice.name()));
         }
 
-        builder.button("⬅ 返回主選單");
+        builder.button(locale.get(player, "game_mode_picker.back-to-main", "⬅ 返回主選單"));
 
         int backButtonId = choices.size();
 

@@ -43,6 +43,16 @@ dependencies {
         // 我們只需要 Vault 的介面（Economy 等），排除它附帶的舊 Bukkit。
         exclude(group = "org.bukkit", module = "bukkit")
     }
+
+    // 測試只涵蓋不依賴伺服器實例、純邏輯的 util/reflection class，
+    // 用 paper-api 提供 ChatColor 等不需要真正伺服器就能跑的靜態工具類別。
+    testImplementation("io.papermc.paper:paper-api:26.2.build.+")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 java {

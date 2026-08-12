@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.form;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import dev.qwe664.bbc.util.ColorUtil;
 import dev.qwe664.bbc.util.ProgressBarUtil;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -76,12 +77,12 @@ public class ChallengesMenuForm extends BaseForm {
             int total = manager.getLevelChallenges(level).size();
             int completed = total - status.getNumberOfChallengesStillToDo();
 
-            String lockState = status.isUnlocked() ? "" : "§c🔒 ";
+            String lockState = status.isUnlocked() ? "" : ColorUtil.translate("&c🔒 ");
             String levelName = level.getFriendlyName() == null || level.getFriendlyName().isBlank()
                     ? level.getUniqueId()
-                    : level.getFriendlyName();
+                    : ColorUtil.translate(level.getFriendlyName());
 
-            String buttonText = lockState + "§f" + levelName
+            String buttonText = lockState + ColorUtil.translate("&f") + levelName
                     + "\n" + ProgressBarUtil.build(completed, total);
 
             builder.button(buttonText);

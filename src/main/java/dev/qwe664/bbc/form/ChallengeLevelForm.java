@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.form;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import dev.qwe664.bbc.util.ColorUtil;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
@@ -56,7 +57,7 @@ public class ChallengeLevelForm {
 
         String levelName = level.getFriendlyName() == null || level.getFriendlyName().isBlank()
                 ? level.getUniqueId()
-                : level.getFriendlyName();
+                : ColorUtil.translate(level.getFriendlyName());
 
         var locale = plugin.getLocaleService();
 
@@ -81,9 +82,9 @@ public class ChallengeLevelForm {
             boolean complete = manager.isChallengeComplete(user, world, challenge);
             String name = challenge.getFriendlyName() == null || challenge.getFriendlyName().isBlank()
                     ? challenge.getUniqueId()
-                    : challenge.getFriendlyName();
+                    : ColorUtil.translate(challenge.getFriendlyName());
 
-            String statusMark = complete ? "§a✅ " : "§7⏳ ";
+            String statusMark = complete ? ColorUtil.translate("&a✅ ") : ColorUtil.translate("&7⏳ ");
             String extra = "";
 
             if (complete && challenge.isRepeatable()) {
@@ -91,7 +92,7 @@ public class ChallengeLevelForm {
                 extra = "\n" + locale.get(player, "challenge_level.completed-times", "§7已完成 {times} 次").replace("{times}", String.valueOf(times));
             }
 
-            builder.button(statusMark + "§f" + name + extra);
+            builder.button(statusMark + ColorUtil.translate("&f") + name + extra);
         }
 
         builder.button(locale.get(player, "challenge_level.back-to-levels", "⬅ 返回關卡清單"));

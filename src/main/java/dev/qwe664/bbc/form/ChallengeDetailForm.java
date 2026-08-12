@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.form;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import dev.qwe664.bbc.util.ColorUtil;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -75,14 +76,14 @@ public class ChallengeDetailForm {
 
         String name = challenge.getFriendlyName() == null || challenge.getFriendlyName().isBlank()
                 ? challenge.getUniqueId()
-                : challenge.getFriendlyName();
+                : ColorUtil.translate(challenge.getFriendlyName());
 
         var locale = plugin.getLocaleService();
 
         StringBuilder content = new StringBuilder();
 
         if (challenge.getDescription() != null && !challenge.getDescription().isEmpty()) {
-            content.append(String.join("\n", challenge.getDescription())).append("\n\n");
+            content.append(ColorUtil.translate(String.join("\n", challenge.getDescription()))).append("\n\n");
         }
 
         content.append(complete

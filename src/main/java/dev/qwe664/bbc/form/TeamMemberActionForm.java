@@ -33,6 +33,13 @@ public class TeamMemberActionForm {
     private final int viewerRank;
     private final boolean viewerIsOwner;
 
+    /**
+     * 一個表單按鈕對應的動作：實際要執行的邏輯，以及執行完之後
+     * 要不要自動跳回隊伍管理選單。
+     */
+    private record MemberAction(Runnable action, boolean autoReturnToMenu) {
+    }
+
     public TeamMemberActionForm(
             BentoBoxBedrockCompanion plugin,
             UUID targetUuid,
@@ -54,55 +61,72 @@ public class TeamMemberActionForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
+        var locale = plugin.getLocaleService();
+
         var builder = SimpleForm.builder()
                 .title("👤 " + targetName)
-                .content("目前職級：§7" + TeamMenuForm.rankLabel(plugin, player, targetRank));
+                .content(locale.get(player, "team_member_action.current-rank", "目前職級：§7") + TeamMenuForm.rankLabel(plugin, player, targetRank));
 
-        List<Runnable> actions = new ArrayList<>();
+        List<MemberAction> actions = new ArrayList<>();
 
         boolean canManage = viewerRank > targetRank;
 
         if (canManage && targetRank < RanksManager.SUB_OWNER_RANK) {
-            builder.button("⬆ 升為副隊長");
-            actions.add(() -> plugin.getBentoBoxService().getPlayerCommandLabel(player)
+            builder.button(locale.get(player, "team_member_action.promote", "⬆ 升為副隊長"));
+            // 升職指令沒有二次確認機制，執行完直接返回隊伍選單沒問題。
+            actions.add(new MemberAction(() -> plugin.getBentoBoxService().getPlayerCommandLabel(player)
                     .ifPresentOrElse(
                             label -> plugin.getCommandService().execute(player, label + " team promote " + targetName),
-                            () -> player.sendMessage("§c查不到目前玩法，無法執行操作。")
-                    ));
+                            () -> player.sendMessage(locale.get(player, "common.no-gamemode", "§c查不到目前玩法，無法執行操作。"))
+                    ), true));
         }
 
         if (canManage) {
-            builder.button("👢 踢出隊伍");
-            actions.add(() -> plugin.getBentoBoxService().getPlayerCommandLabel(player)
+            builder.button(locale.get(player, "team_member_action.kick", "👢 踢出隊伍"));
+            // 反編譯確認 IslandTeamKickCommand extends ConfirmableCommand，
+            // 唯獨踢除這個動作需要玩家在 BentoBox 自己跳出的原生二次確認畫面
+            // 再答一次（新版 BentoBox 是原生 Minecraft 對話框，不是我們的表單）。
+            // 這裡執行完指令後刻意不自動跳回隊伍選單，讓那個原生確認畫面自己
+            // 跑完，不然兩套介面系統同時搶畫面，玩家會覺得轉場卡卡的，
+            // 而且此時實際上人都還沒被踢掉（還在等確認），提早跳回選單看到
+            // 的成員清單也是還沒更新的舊資料。
+            actions.add(new MemberAction(() -> plugin.getBentoBoxService().getPlayerCommandLabel(player)
                     .ifPresentOrElse(
-                            label -> plugin.getCommandService().execute(player, label + " team kick " + targetName),
-                            () -> player.sendMessage("§c查不到目前玩法，無法執行操作。")
-                    ));
+                            label -> {
+                                plugin.getCommandService().execute(player, label + " team kick " + targetName);
+                                player.sendMessage(locale.get(player, "team_member_action.kick-confirm-hint",
+                                        "§e請在跳出的確認畫面完成確認，才會真的踢除。"));
+                            },
+                            () -> player.sendMessage(locale.get(player, "common.no-gamemode", "§c查不到目前玩法，無法執行操作。"))
+                    ), false));
         }
 
         if (viewerIsOwner) {
-            builder.button("👑 轉讓隊長給他");
-            actions.add(() -> plugin.getBentoBoxService().getPlayerCommandLabel(player)
+            builder.button(locale.get(player, "team_member_action.transfer-owner", "👑 轉讓隊長給他"));
+            // 反編譯確認 IslandTeamSetownerCommand 沒有繼承 ConfirmableCommand，
+            // 不需要二次確認，執行完直接返回隊伍選單沒問題。
+            actions.add(new MemberAction(() -> plugin.getBentoBoxService().getPlayerCommandLabel(player)
                     .ifPresentOrElse(
                             label -> plugin.getCommandService().execute(player, label + " team setowner " + targetName),
-                            () -> player.sendMessage("§c查不到目前玩法，無法執行操作。")
-                    ));
+                            () -> player.sendMessage(locale.get(player, "common.no-gamemode", "§c查不到目前玩法，無法執行操作。"))
+                    ), true));
         }
 
-        builder.button("⬅ 返回隊伍管理");
+        builder.button(locale.get(player, "team_member_action.back-to-team-menu", "⬅ 返回隊伍管理"));
         int backButtonId = actions.size();
 
         if (actions.isEmpty()) {
-            builder.content("目前職級：§7" + TeamMenuForm.rankLabel(plugin, player, targetRank) + "\n\n§7你目前的職級無法對這位成員執行任何操作。");
+            builder.content(locale.get(player, "team_member_action.current-rank", "目前職級：§7") + TeamMenuForm.rankLabel(plugin, player, targetRank)
+                    + "\n\n" + locale.get(player, "team_member_action.no-actions", "§7你目前的職級無法對這位成員執行任何操作。"));
         }
 
         builder.validResultHandler(response -> {
@@ -114,8 +138,12 @@ public class TeamMemberActionForm {
                 return;
             }
 
-            actions.get(clickedId).run();
-            new TeamMenuForm(plugin).open(player);
+            MemberAction action = actions.get(clickedId);
+            action.action().run();
+
+            if (action.autoReturnToMenu()) {
+                new TeamMenuForm(plugin).open(player);
+            }
         });
 
         api.sendForm(player.getUniqueId(), builder);

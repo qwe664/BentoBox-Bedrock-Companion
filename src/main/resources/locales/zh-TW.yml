@@ -13,6 +13,12 @@ buttons:
   admin: 👮 管理工具
   debug: 🛠 開發工具
 
+common:
+  floodgate-not-ready: '§cFloodgate API 尚未初始化。'
+  bedrock-only: '§e目前只有基岩版玩家可以使用 Bedrock UI。'
+  back-to-island-menu: ⬅ 返回島嶼選單
+  no-gamemode: '§c查不到目前玩法，無法執行操作。'
+
 main_menu:
   title: BentoBox
   welcome: 歡迎使用 BentoBox 基岩版專屬選單
@@ -34,3 +40,13 @@ island_menu:
   visit: 🧭 拜訪島嶼
   wallet-bank: 💰 存提款
   back-to-main: ⬅ 返回主選單
+
+team_menu:
+  title: 👥 隊伍管理
+  no-island: '§c你目前沒有島嶼，無法管理隊伍。'
+  content-members: 島嶼成員（共 {count} 人）：
+  content-hint: 點擊成員可查看可執行的操作。
+  self-tag: （你）
+  invite: ➕ 邀請玩家
+  leave: 🚪 離開隊伍
+  self-click-message: '§7這是你自己。'

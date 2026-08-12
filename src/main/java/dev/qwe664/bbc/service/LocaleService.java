@@ -6,6 +6,10 @@ import org.bukkit.entity.Player;
 import world.bentobox.bentobox.api.user.User;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -21,7 +25,10 @@ import java.util.Map;
  *
  * 語言檔放在 plugins/BentoBoxBedrockCompanion/locales/ 底下，
  * 首次啟動會從 jar 內建的 resources/locales/ 複製出來，伺服器
- * 管理員可以直接編輯那兩個檔案調整翻譯，不用重新編譯。
+ * 管理員可以直接編輯那兩個檔案調整翻譯，不用重新編譯。之後每次
+ * 插件更新新增翻譯內容時，會自動把硬碟上缺少的 key 從 jar 內建
+ * 版本補進去（不覆蓋管理員已經自訂過的既有翻譯），伺服器管理員
+ * 不用手動刪檔重生就能拿到新版的翻譯內容。
  *
  * 查詢優先序：玩家語言檔 → zh-TW.yml（永遠當最終備援）→ 呼叫端
  * 自己傳入的 fallback 字串（理論上不會用到，除非兩個語言檔都
@@ -58,7 +65,64 @@ public class LocaleService {
             plugin.saveResource("locales/" + code + ".yml", false);
         }
 
-        locales.put(code, YamlConfiguration.loadConfiguration(file));
+        YamlConfiguration onDisk = YamlConfiguration.loadConfiguration(file);
+
+        // 補漏：伺服器上已經存在的語言檔（從舊版就有）不會因為新版 jar
+        // 更新而自動拿到新增的翻譯 key——saveResource 只在檔案「完全不存在」
+        // 時才會複製，檔案已存在就完全不動它。這裡把 jar 內建版本裡「硬碟上
+        // 沒有的 key」逐一補進去（不覆蓋伺服器管理員已經自訂過的既有翻譯），
+        // 這樣升級插件版本、新增翻譯內容時，既有安裝也能自動跟上，不用手動
+        // 刪檔重生或每次都提醒管理員去對照補檔案。
+        boolean updated = mergeMissingKeys(onDisk, code);
+
+        if (updated) {
+            try {
+                onDisk.save(file);
+            } catch (IOException e) {
+                plugin.getLogger().warning("無法把補齊的翻譯寫回 " + code + ".yml：" + e.getMessage());
+            }
+        }
+
+        locales.put(code, onDisk);
+    }
+
+    /**
+     * 把 jar 內建的語言檔（resources/locales/xx.yml）裡，硬碟上那份缺少的
+     * key 逐一補上去。回傳是否有實際補到東西（true 才需要存檔）。
+     */
+    private boolean mergeMissingKeys(YamlConfiguration onDisk, String code) {
+
+        try (InputStream stream = plugin.getResource("locales/" + code + ".yml")) {
+
+            if (stream == null) {
+                return false;
+            }
+
+            YamlConfiguration bundled = YamlConfiguration
+                    .loadConfiguration(new InputStreamReader(stream, StandardCharsets.UTF_8));
+
+            boolean changed = false;
+
+            for (String key : bundled.getKeys(true)) {
+
+                // 只補「葉節點」（實際有翻譯值的 key），跳過中繼的區塊節點
+                // （例如 "team_menu" 這種底下還有子 key 的節點本身）。
+                if (bundled.isConfigurationSection(key)) {
+                    continue;
+                }
+
+                if (!onDisk.contains(key)) {
+                    onDisk.set(key, bundled.get(key));
+                    changed = true;
+                }
+            }
+
+            return changed;
+
+        } catch (IOException e) {
+            plugin.getLogger().warning("無法讀取 jar 內建的 " + code + ".yml 進行翻譯補齊：" + e.getMessage());
+            return false;
+        }
     }
 
     /**

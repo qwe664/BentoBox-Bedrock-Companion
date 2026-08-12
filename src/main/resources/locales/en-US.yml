@@ -10,12 +10,19 @@ buttons:
   admin: 👮 Admin Tools
   debug: 🛠 Developer Tools
 
+common:
+  floodgate-not-ready: '§cFloodgate API is not ready yet.'
+  bedrock-only: '§eOnly Bedrock players can use the Bedrock UI right now.'
+  back-to-island-menu: ⬅ Back to Island Menu
+  no-gamemode: '§cCould not determine your current gamemode.'
+
 main_menu:
   title: BentoBox
   welcome: Welcome to the BentoBox Bedrock menu
-  # 換行符號由程式碼自動加在前面，這裡的值不用（也不要）自己包含 \n
+  # Newline is prepended in code — do not include \n in this value
   group-label: '§7Group: §f'
-  current-location-label: '§7Current location: §f'  lobby-name: Lobby
+  current-location-label: '§7Current location: §f'
+  lobby-name: Lobby
 
 island_menu:
   title: 🏝 My Island
@@ -30,3 +37,13 @@ island_menu:
   visit: 🧭 Visit Islands
   wallet-bank: 💰 Deposit/Withdraw
   back-to-main: ⬅ Back to Main Menu
+
+team_menu:
+  title: 👥 Team Management
+  no-island: '§cYou don''t have an island, so you can''t manage a team.'
+  content-members: 'Island members ({count}):'
+  content-hint: Click a member to see available actions.
+  self-tag: ' (you)'
+  invite: ➕ Invite Player
+  leave: 🚪 Leave Team
+  self-click-message: '§7That''s you.'

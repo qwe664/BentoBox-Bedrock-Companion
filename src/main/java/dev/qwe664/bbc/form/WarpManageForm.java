@@ -27,17 +27,17 @@ public class WarpManageForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
         if (!plugin.getWarpsHook().isAvailable()) {
-            player.sendMessage("§c傳送點功能目前無法使用（伺服器未安裝 Warps 附加模組）。");
+            player.sendMessage(plugin.getLocaleService().get(player, "warp_menu.unavailable", "§c傳送點功能目前無法使用（伺服器未安裝 Warps 附加模組）。"));
             return;
         }
 
@@ -46,15 +46,15 @@ public class WarpManageForm extends BaseForm {
 
         PlayerWarp playerWarp = warpSignsManager.getPlayerWarp(world, player.getUniqueId());
 
-        var builder = SimpleForm.builder().title("🚩 我的傳送點");
+        var locale = plugin.getLocaleService();
+
+        var builder = SimpleForm.builder().title(locale.get(player, "warp_manage.title", "🚩 我的傳送點"));
 
         if (playerWarp == null) {
 
-            builder.content(
-                    "你目前還沒有設置傳送點。\n\n"
-                            + "在自己島上放一個招牌，第一行寫 [WELCOME]，"
-                            + "就能建立屬於你的傳送點。"
-            ).button("⬅ 返回島嶼選單");
+            builder.content(locale.get(player, "warp_manage.no-warp",
+                    "你目前還沒有設置傳送點。\n\n在自己島上放一個招牌，第一行寫 [WELCOME]，就能建立屬於你的傳送點。")
+            ).button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
             builder.validResultHandler(response -> plugin.getFormManager().openIslandMenu(player));
 
@@ -63,14 +63,16 @@ public class WarpManageForm extends BaseForm {
         }
 
         Location location = playerWarp.getLocation();
-        String status = playerWarp.isEnabled() ? "§a開放中" : "§c已關閉";
+        String status = playerWarp.isEnabled()
+                ? locale.get(player, "warp_manage.status-open", "§a開放中")
+                : locale.get(player, "warp_manage.status-closed", "§c已關閉");
 
-        String content = "狀態：" + status + "\n\n"
-                + "位置：" + formatLocation(location);
+        String content = locale.get(player, "warp_manage.status-label", "狀態：") + status + "\n\n"
+                + locale.get(player, "warp_manage.location-label", "位置：") + formatLocation(player, location);
 
         builder.content(content)
-                .button("🗑 刪除傳送點")
-                .button("⬅ 返回島嶼選單");
+                .button(locale.get(player, "warp_manage.delete", "🗑 刪除傳送點"))
+                .button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
         builder.validResultHandler(response -> {
 
@@ -78,7 +80,7 @@ public class WarpManageForm extends BaseForm {
 
                 case 0 -> {
                     warpSignsManager.removeWarp(world, player.getUniqueId());
-                    player.sendMessage("§a已刪除你的傳送點。");
+                    player.sendMessage(locale.get(player, "warp_manage.deleted", "§a已刪除你的傳送點。"));
                     plugin.getFormManager().openIslandMenu(player);
                 }
 
@@ -92,10 +94,10 @@ public class WarpManageForm extends BaseForm {
         api.sendForm(player.getUniqueId(), builder);
     }
 
-    private String formatLocation(Location location) {
+    private String formatLocation(Player player, Location location) {
 
         if (location == null) {
-            return "（未知）";
+            return plugin.getLocaleService().get(player, "warp_manage.location-unknown", "（未知）");
         }
 
         return String.format(

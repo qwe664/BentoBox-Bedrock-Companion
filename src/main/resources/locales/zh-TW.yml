@@ -93,3 +93,47 @@ wallet_bank:
   insufficient-bank: '§c島嶼銀行餘額不足。'
   withdraw-success: '§a已從島嶼銀行提出 {amount} 到錢包。'
   withdraw-failed: '§c提款失敗（{reason}）。'
+
+team_member_action:
+  current-rank: 目前職級：§7
+  promote: ⬆ 升為副隊長
+  kick: 👢 踢出隊伍
+  kick-confirm-hint: '§e請在跳出的確認畫面完成確認，才會真的踢除。'
+  transfer-owner: 👑 轉讓隊長給他
+  back-to-team-menu: ⬅ 返回隊伍管理
+  no-actions: '§7你目前的職級無法對這位成員執行任何操作。'
+
+team_invite:
+  title: ➕ 邀請玩家
+  no-island: '§c你目前沒有島嶼，無法邀請玩家。'
+  no-candidates: 目前沒有可邀請的在線玩家。
+  content: 選擇要邀請加入隊伍的玩家：
+  no-gamemode: '§c查不到目前玩法，無法送出邀請。'
+
+warp_menu:
+  title: 🚩 傳送點
+  content: 請選擇功能
+  browse: 🗺 瀏覽全部傳送點
+  manage: ⚙ 管理我的傳送點
+  unavailable: '§c傳送點功能目前無法使用（伺服器未安裝 Warps 附加模組）。'
+
+warp_browse:
+  title: 🚩 傳送點列表
+  empty: 目前還沒有玩家設置傳送點。
+  content: 選擇一個傳送點前往：
+  unknown-player: 未知玩家
+  gone: '§c這個傳送點已經不存在了。'
+
+warp_manage:
+  title: 🚩 我的傳送點
+  no-warp: |-
+    你目前還沒有設置傳送點。
+
+    在自己島上放一個招牌，第一行寫 [WELCOME]，就能建立屬於你的傳送點。
+  status-open: '§a開放中'
+  status-closed: '§c已關閉'
+  status-label: 狀態：
+  location-label: 位置：
+  location-unknown: （未知）
+  delete: 🗑 刪除傳送點
+  deleted: '§a已刪除你的傳送點。'

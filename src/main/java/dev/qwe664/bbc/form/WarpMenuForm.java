@@ -22,26 +22,28 @@ public class WarpMenuForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
         if (!plugin.getWarpsHook().isAvailable()) {
-            player.sendMessage("§c傳送點功能目前無法使用（伺服器未安裝 Warps 附加模組）。");
+            player.sendMessage(plugin.getLocaleService().get(player, "warp_menu.unavailable", "§c傳送點功能目前無法使用（伺服器未安裝 Warps 附加模組）。"));
             return;
         }
 
+        var locale = plugin.getLocaleService();
+
         var builder = SimpleForm.builder()
-                .title("🚩 傳送點")
-                .content("請選擇功能")
-                .button("🗺 瀏覽全部傳送點")
-                .button("⚙ 管理我的傳送點")
-                .button("⬅ 返回島嶼選單");
+                .title(locale.get(player, "warp_menu.title", "🚩 傳送點"))
+                .content(locale.get(player, "warp_menu.content", "請選擇功能"))
+                .button(locale.get(player, "warp_menu.browse", "🗺 瀏覽全部傳送點"))
+                .button(locale.get(player, "warp_menu.manage", "⚙ 管理我的傳送點"))
+                .button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
         builder.validResultHandler(response -> {
 

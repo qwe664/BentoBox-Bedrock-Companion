@@ -30,12 +30,12 @@ public class TeamInvitePickerForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
@@ -43,7 +43,7 @@ public class TeamInvitePickerForm {
                 .getIsland(player.getWorld(), player.getUniqueId());
 
         if (island == null) {
-            player.sendMessage("§c你目前沒有島嶼，無法邀請玩家。");
+            player.sendMessage(plugin.getLocaleService().get(player, "team_invite.no-island", "§c你目前沒有島嶼，無法邀請玩家。"));
             return;
         }
 
@@ -62,13 +62,15 @@ public class TeamInvitePickerForm {
             candidates.add(online);
         }
 
+        var locale = plugin.getLocaleService();
+
         var builder = SimpleForm.builder()
-                .title("➕ 邀請玩家");
+                .title(locale.get(player, "team_invite.title", "➕ 邀請玩家"));
 
         if (candidates.isEmpty()) {
 
-            builder.content("目前沒有可邀請的在線玩家。")
-                    .button("⬅ 返回隊伍管理");
+            builder.content(locale.get(player, "team_invite.no-candidates", "目前沒有可邀請的在線玩家。"))
+                    .button(locale.get(player, "team_member_action.back-to-team-menu", "⬅ 返回隊伍管理"));
 
             builder.validResultHandler(response -> new TeamMenuForm(plugin).open(player));
 
@@ -76,13 +78,13 @@ public class TeamInvitePickerForm {
             return;
         }
 
-        builder.content("選擇要邀請加入隊伍的玩家：");
+        builder.content(locale.get(player, "team_invite.content", "選擇要邀請加入隊伍的玩家："));
 
         for (Player candidate : candidates) {
             builder.button("👤 " + candidate.getName());
         }
 
-        builder.button("⬅ 返回隊伍管理");
+        builder.button(locale.get(player, "team_member_action.back-to-team-menu", "⬅ 返回隊伍管理"));
         int backButtonId = candidates.size();
 
         builder.validResultHandler(response -> {
@@ -99,7 +101,7 @@ public class TeamInvitePickerForm {
             plugin.getBentoBoxService().getPlayerCommandLabel(player)
                     .ifPresentOrElse(
                             label -> plugin.getCommandService().execute(player, label + " team invite " + targetName),
-                            () -> player.sendMessage("§c查不到目前玩法，無法送出邀請。")
+                            () -> player.sendMessage(locale.get(player, "team_invite.no-gamemode", "§c查不到目前玩法，無法送出邀請。"))
                     );
 
             new TeamMenuForm(plugin).open(player);

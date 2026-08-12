@@ -90,3 +90,47 @@ wallet_bank:
   insufficient-bank: '§cThe island bank balance is insufficient.'
   withdraw-success: '§a{amount} has been withdrawn from the island bank to your wallet.'
   withdraw-failed: '§cWithdrawal failed ({reason}).'
+
+team_member_action:
+  current-rank: 'Current rank: §7'
+  promote: ⬆ Promote to Sub-Owner
+  kick: 👢 Kick from Team
+  kick-confirm-hint: '§ePlease confirm on the prompt that just appeared to actually kick this member.'
+  transfer-owner: 👑 Transfer Ownership
+  back-to-team-menu: ⬅ Back to Team Menu
+  no-actions: '§7Your rank doesn''t allow any actions on this member.'
+
+team_invite:
+  title: ➕ Invite Player
+  no-island: '§cYou don''t have an island, so you can''t invite players.'
+  no-candidates: There are no online players available to invite right now.
+  content: 'Choose a player to invite to your team:'
+  no-gamemode: '§cCould not determine your current gamemode, invite not sent.'
+
+warp_menu:
+  title: 🚩 Warps
+  content: Please choose an option
+  browse: 🗺 Browse All Warps
+  manage: ⚙ Manage My Warp
+  unavailable: '§cWarps is currently unavailable (the Warps addon is not installed).'
+
+warp_browse:
+  title: 🚩 Warp List
+  empty: No players have set up a warp yet.
+  content: 'Choose a warp to teleport to:'
+  unknown-player: Unknown Player
+  gone: '§cThis warp no longer exists.'
+
+warp_manage:
+  title: 🚩 My Warp
+  no-warp: |-
+    You don't have a warp set up yet.
+
+    Place a sign on your island with [WELCOME] as the first line to create your warp.
+  status-open: '§aOpen'
+  status-closed: '§cClosed'
+  status-label: 'Status: '
+  location-label: 'Location: '
+  location-unknown: (unknown)
+  delete: 🗑 Delete Warp
+  deleted: '§aYour warp has been deleted.'

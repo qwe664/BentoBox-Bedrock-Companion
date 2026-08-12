@@ -33,17 +33,17 @@ public class WarpBrowseForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
         if (!plugin.getWarpsHook().isAvailable()) {
-            player.sendMessage("§c傳送點功能目前無法使用（伺服器未安裝 Warps 附加模組）。");
+            player.sendMessage(plugin.getLocaleService().get(player, "warp_menu.unavailable", "§c傳送點功能目前無法使用（伺服器未安裝 Warps 附加模組）。"));
             return;
         }
 
@@ -52,13 +52,15 @@ public class WarpBrowseForm extends BaseForm {
 
         Map<UUID, PlayerWarp> warpMap = warpSignsManager.getWarpMap(world);
 
+        var locale = plugin.getLocaleService();
+
         var builder = SimpleForm.builder()
-                .title("🚩 傳送點列表");
+                .title(locale.get(player, "warp_browse.title", "🚩 傳送點列表"));
 
         if (warpMap == null || warpMap.isEmpty()) {
 
-            builder.content("目前還沒有玩家設置傳送點。")
-                    .button("⬅ 返回島嶼選單");
+            builder.content(locale.get(player, "warp_browse.empty", "目前還沒有玩家設置傳送點。"))
+                    .button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
             builder.validResultHandler(response -> plugin.getFormManager().openIslandMenu(player));
 
@@ -66,16 +68,17 @@ public class WarpBrowseForm extends BaseForm {
             return;
         }
 
-        builder.content("選擇一個傳送點前往：");
+        builder.content(locale.get(player, "warp_browse.content", "選擇一個傳送點前往："));
 
         List<UUID> ownerList = new ArrayList<>(warpMap.keySet());
 
         for (UUID ownerUuid : ownerList) {
             String ownerName = plugin.getBentoBoxService().getPlayersManager().getName(ownerUuid);
-            builder.button("🚩 " + (ownerName == null || ownerName.isBlank() ? "未知玩家" : ownerName));
+            builder.button("🚩 " + (ownerName == null || ownerName.isBlank()
+                    ? locale.get(player, "warp_browse.unknown-player", "未知玩家") : ownerName));
         }
 
-        builder.button("⬅ 返回島嶼選單");
+        builder.button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
         builder.validResultHandler(response -> {
 
@@ -91,7 +94,7 @@ public class WarpBrowseForm extends BaseForm {
             Location warpLocation = warpSignsManager.getWarpLocation(world, targetOwnerUuid);
 
             if (warpLocation == null) {
-                player.sendMessage("§c這個傳送點已經不存在了。");
+                player.sendMessage(locale.get(player, "warp_browse.gone", "§c這個傳送點已經不存在了。"));
                 open(player);
                 return;
             }

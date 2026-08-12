@@ -48,3 +48,9 @@
 - [ ] Finish Phase 5 (all forms localized)
 - [ ] Documentation pass (README, CONTRIBUTING, docs/API.md up to date)
 - [ ] Release v1.0
+
+## Testing
+
+- [x] JUnit 5 test infrastructure (`build.gradle.kts`, `src/test/`)
+- [x] Unit tests for pure-logic utility classes: `ProgressBarUtil`, `ColorUtil`, `ReflectionAliases`
+- [ ] Unit tests for Bukkit-dependent classes (would need MockBukkit — `MenuItem`, hooks, services)

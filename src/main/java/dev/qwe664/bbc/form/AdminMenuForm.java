@@ -17,37 +17,48 @@ public class AdminMenuForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
         var builder = SimpleForm.builder();
 
-        builder
-                .title("👮 管理工具")
-                .content("選擇要執行的管理操作")
-                .button("🔍 查詢／傳送到玩家島嶼")
-                .button("♻ 重載插件設定")
-                .button("⬅ 返回主選單");
+        var locale = plugin.getLocaleService();
+
+        java.util.List<Runnable> actions = new java.util.ArrayList<>();
+
+        builder.title(locale.get(player, "admin_menu.title", "👮 管理工具"))
+                .content(locale.get(player, "admin_menu.content", "選擇要執行的管理操作"));
+
+        builder.button(locale.get(player, "admin_menu.teleport", "🔍 查詢／傳送到玩家島嶼"));
+        actions.add(() -> plugin.getFormManager().openAdminIslandTeleport(player));
+
+        if (plugin.getChallengesHook().isAvailable()) {
+            builder.button(locale.get(player, "admin_menu.import-challenges", "📥 匯入官方預設挑戰"));
+            actions.add(() -> new AdminChallengesImportForm(plugin).open(player));
+        }
+
+        builder.button(locale.get(player, "admin_menu.reload", "♻ 重載插件設定"));
+        actions.add(() -> openReloadConfirm(player));
+
+        builder.button(locale.get(player, "admin_menu.back", "⬅ 返回主選單"));
+        int backButtonId = actions.size();
 
         builder.validResultHandler(response -> {
 
-            switch (response.clickedButtonId()) {
+            int clickedId = response.clickedButtonId();
 
-                case 0 -> plugin.getFormManager().openAdminIslandTeleport(player);
-
-                case 1 -> openReloadConfirm(player);
-
-                case 2 -> plugin.getFormManager().openMainMenu(player);
-
-                default -> {
-                }
+            if (clickedId == backButtonId) {
+                plugin.getFormManager().openMainMenu(player);
+                return;
             }
+
+            actions.get(clickedId).run();
         });
 
         api.sendForm(player.getUniqueId(), builder);
@@ -59,11 +70,13 @@ public class AdminMenuForm extends BaseForm {
      */
     private void openReloadConfirm(Player player) {
 
+        var locale = plugin.getLocaleService();
+
         var confirm = SimpleForm.builder()
-                .title("♻ 重載插件設定")
-                .content("即將執行 /bentobox reload，這會重新載入 BentoBox 的設定檔，\n影響範圍是整個伺服器。確定要執行嗎？")
-                .button("✅ 確認重載")
-                .button("❌ 取消");
+                .title(locale.get(player, "admin_menu.reload-confirm-title", "♻ 重載插件設定"))
+                .content(locale.get(player, "admin_menu.reload-confirm-content", "即將執行 /bentobox reload，這會重新載入 BentoBox 的設定檔，\n影響範圍是整個伺服器。確定要執行嗎？"))
+                .button(locale.get(player, "admin_menu.reload-confirm-yes", "✅ 確認重載"))
+                .button(locale.get(player, "admin_menu.reload-confirm-no", "❌ 取消"));
 
         confirm.validResultHandler(response -> {
 
@@ -71,9 +84,9 @@ public class AdminMenuForm extends BaseForm {
                 plugin.getConfigService().reload();
                 plugin.getLocaleService().load();
                 plugin.getCommandService().execute(player, "bentobox reload");
-                player.sendMessage("§a已重新載入 BBC 設定檔與語言檔，並送出 /bentobox reload 指令。");
+                player.sendMessage(locale.get(player, "admin_menu.reload-done", "§a已重新載入 BBC 設定檔與語言檔，並送出 /bentobox reload 指令。"));
             } else {
-                player.sendMessage("§7已取消。");
+                player.sendMessage(locale.get(player, "admin_menu.reload-cancelled", "§7已取消。"));
             }
         });
 

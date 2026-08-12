@@ -134,3 +134,64 @@ warp_manage:
   location-unknown: (unknown)
   delete: 🗑 Delete Warp
   deleted: '§aYour warp has been deleted.'
+
+challenges_menu:
+  title: 🏆 Challenges
+  unavailable: '§cChallenges is currently unavailable (the Challenges addon is not installed).'
+  empty: This world doesn't have any challenge levels set up yet.
+  content: 'Choose a level to see its challenges:'
+  locked: '§cThis level is still locked. Complete the previous levels first.'
+
+challenge_level:
+  empty: This level doesn't have any challenges set up yet.
+  back-to-levels: ⬅ Back to Levels
+  content: 'Choose a challenge to see its details:'
+  completed-times: '§7Completed {times} times'
+
+challenge_detail:
+  status-complete: "§a✅ Complete\n\n"
+  status-incomplete: "§7⏳ Incomplete\n\n"
+  requirement-label: "§eRequirements:\n"
+  try-complete: ✅ Try to Complete
+  back-to-challenges: ⬅ Back to Challenges
+  try-success: '§a✅ Challenge "{name}" completed!'
+  try-failure: '§cRequirements not met yet. Please check them and try again.'
+  no-requirements: '§7(No special requirements)'
+  island-blocks-label: "§7Your island needs to have:\n"
+  search-radius-label: "§7(Search radius: {radius} blocks)\n"
+  required-experience: "§f- Experience §7x{amount}\n"
+  required-money: "§f- Money §7${amount}\n"
+  required-island-level: "§f- Island level §7at least {level}\n"
+
+admin_menu:
+  title: 👮 Admin Tools
+  content: Please choose an admin action
+  teleport: 🔍 Look Up / Teleport to Player's Island
+  import-challenges: 📥 Import Official Default Challenges
+  reload: ♻ Reload Plugin Settings
+  back: ⬅ Back to Main Menu
+  reload-confirm-title: ♻ Reload Plugin Settings
+  reload-confirm-content: |-
+    This will run /bentobox reload, which reloads BentoBox's configuration.
+    This affects the entire server. Are you sure?
+  reload-confirm-yes: ✅ Confirm Reload
+  reload-confirm-no: ❌ Cancel
+  reload-done: '§aBBC settings and locale files reloaded, and /bentobox reload has been sent.'
+  reload-cancelled: '§7Cancelled.'
+
+admin_challenges_import:
+  title: 📥 Import Official Default Challenges
+  no-gamemodes: No enabled skyblock gamemodes were detected on this server.
+  back: ⬅ Back to Admin Tools
+  content: |-
+    Choose a gamemode to import the official default challenges (5 levels, 57 challenges) into:
+    §cThis will wipe that gamemode's existing challenge data and cannot be undone.
+  confirm-title: ⚠ Confirm Import
+  confirm-content: |-
+    This will completely wipe {gamemode}'s existing challenge data and replace it with the official default challenge set (5 levels, 57 challenges).
+
+    This cannot be undone. Are you sure?
+  confirm-yes: ✅ Confirm Import
+  confirm-no: ❌ Cancel
+  cancelled: '§7Cancelled.'
+  success: '§aOfficial default challenges have been imported into {gamemode}.'

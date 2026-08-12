@@ -137,3 +137,64 @@ warp_manage:
   location-unknown: （未知）
   delete: 🗑 刪除傳送點
   deleted: '§a已刪除你的傳送點。'
+
+challenges_menu:
+  title: 🏆 挑戰關卡
+  unavailable: '§c挑戰功能目前無法使用（伺服器未安裝 Challenges 附加模組）。'
+  empty: 這個世界目前還沒有設置任何挑戰關卡。
+  content: 選擇一個關卡查看挑戰內容：
+  locked: '§c這個關卡尚未解鎖，請先完成前面的關卡。'
+
+challenge_level:
+  empty: 這個關卡目前還沒有設置任何挑戰。
+  back-to-levels: ⬅ 返回關卡清單
+  content: 選擇一個挑戰查看詳情：
+  completed-times: '§7已完成 {times} 次'
+
+challenge_detail:
+  status-complete: "§a✅ 已完成\n\n"
+  status-incomplete: "§7⏳ 尚未完成\n\n"
+  requirement-label: "§e需求詳情：\n"
+  try-complete: ✅ 嘗試完成
+  back-to-challenges: ⬅ 返回挑戰清單
+  try-success: '§a✅ 挑戰「{name}」完成！'
+  try-failure: '§c尚未達成挑戰條件，請確認需求後再試一次。'
+  no-requirements: '§7（無特殊需求）'
+  island-blocks-label: "§7島嶼範圍內需要有：\n"
+  search-radius-label: "§7（搜尋半徑：{radius} 方塊）\n"
+  required-experience: "§f- 經驗值 §7x{amount}\n"
+  required-money: "§f- 金錢 §7${amount}\n"
+  required-island-level: "§f- 島嶼等級 §7需達 {level}\n"
+
+admin_menu:
+  title: 👮 管理工具
+  content: 選擇要執行的管理操作
+  teleport: 🔍 查詢／傳送到玩家島嶼
+  import-challenges: 📥 匯入官方預設挑戰
+  reload: ♻ 重載插件設定
+  back: ⬅ 返回主選單
+  reload-confirm-title: ♻ 重載插件設定
+  reload-confirm-content: |-
+    即將執行 /bentobox reload，這會重新載入 BentoBox 的設定檔，
+    影響範圍是整個伺服器。確定要執行嗎？
+  reload-confirm-yes: ✅ 確認重載
+  reload-confirm-no: ❌ 取消
+  reload-done: '§a已重新載入 BBC 設定檔與語言檔，並送出 /bentobox reload 指令。'
+  reload-cancelled: '§7已取消。'
+
+admin_challenges_import:
+  title: 📥 匯入官方預設挑戰
+  no-gamemodes: 目前伺服器沒有偵測到任何已啟用的空島玩法。
+  back: ⬅ 返回管理工具
+  content: |-
+    選擇要匯入官方預設挑戰組（5 個等級、57 個挑戰）的玩法：
+    §c這個動作會清空該玩法現有的挑戰資料，無法復原。
+  confirm-title: ⚠ 確認匯入
+  confirm-content: |-
+    即將把「{gamemode}」現有的挑戰資料全部清除，改用官方預設挑戰組（5 個等級、57 個挑戰）取代。
+
+    這個動作無法復原，確定要繼續嗎？
+  confirm-yes: ✅ 確認匯入
+  confirm-no: ❌ 取消
+  cancelled: '§7已取消。'
+  success: '§a已將官方預設挑戰組匯入「{gamemode}」。'

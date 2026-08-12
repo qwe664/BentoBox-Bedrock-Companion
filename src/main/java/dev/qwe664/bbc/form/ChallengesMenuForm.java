@@ -32,17 +32,17 @@ public class ChallengesMenuForm extends BaseForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
         if (!plugin.getChallengesHook().isAvailable()) {
-            player.sendMessage("§c挑戰功能目前無法使用（伺服器未安裝 Challenges 附加模組）。");
+            player.sendMessage(plugin.getLocaleService().get(player, "challenges_menu.unavailable", "§c挑戰功能目前無法使用（伺服器未安裝 Challenges 附加模組）。"));
             return;
         }
 
@@ -52,13 +52,15 @@ public class ChallengesMenuForm extends BaseForm {
 
         List<LevelStatus> statusList = manager.getAllChallengeLevelStatus(user, world);
 
+        var locale = plugin.getLocaleService();
+
         var builder = SimpleForm.builder()
-                .title("🏆 挑戰關卡");
+                .title(locale.get(player, "challenges_menu.title", "🏆 挑戰關卡"));
 
         if (statusList == null || statusList.isEmpty()) {
 
-            builder.content("這個世界目前還沒有設置任何挑戰關卡。")
-                    .button("⬅ 返回島嶼選單");
+            builder.content(locale.get(player, "challenges_menu.empty", "這個世界目前還沒有設置任何挑戰關卡。"))
+                    .button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
             builder.validResultHandler(response -> plugin.getFormManager().openIslandMenu(player));
 
@@ -66,7 +68,7 @@ public class ChallengesMenuForm extends BaseForm {
             return;
         }
 
-        builder.content("選擇一個關卡查看挑戰內容：");
+        builder.content(locale.get(player, "challenges_menu.content", "選擇一個關卡查看挑戰內容："));
 
         for (LevelStatus status : statusList) {
 
@@ -85,7 +87,7 @@ public class ChallengesMenuForm extends BaseForm {
             builder.button(buttonText);
         }
 
-        builder.button("⬅ 返回島嶼選單");
+        builder.button(locale.get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));
 
         int backButtonId = statusList.size();
 
@@ -101,7 +103,7 @@ public class ChallengesMenuForm extends BaseForm {
             LevelStatus clickedStatus = statusList.get(clickedId);
 
             if (!clickedStatus.isUnlocked()) {
-                player.sendMessage("§c這個關卡尚未解鎖，請先完成前面的關卡。");
+                player.sendMessage(locale.get(player, "challenges_menu.locked", "§c這個關卡尚未解鎖，請先完成前面的關卡。"));
                 open(player);
                 return;
             }

@@ -34,17 +34,17 @@ public class ChallengeLevelForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
         if (!plugin.getChallengesHook().isAvailable()) {
-            player.sendMessage("§c挑戰功能目前無法使用（伺服器未安裝 Challenges 附加模組）。");
+            player.sendMessage(plugin.getLocaleService().get(player, "challenges_menu.unavailable", "§c挑戰功能目前無法使用（伺服器未安裝 Challenges 附加模組）。"));
             return;
         }
 
@@ -58,13 +58,15 @@ public class ChallengeLevelForm {
                 ? level.getUniqueId()
                 : level.getFriendlyName();
 
+        var locale = plugin.getLocaleService();
+
         var builder = SimpleForm.builder()
                 .title("🏆 " + levelName);
 
         if (challenges == null || challenges.isEmpty()) {
 
-            builder.content("這個關卡目前還沒有設置任何挑戰。")
-                    .button("⬅ 返回關卡清單");
+            builder.content(locale.get(player, "challenge_level.empty", "這個關卡目前還沒有設置任何挑戰。"))
+                    .button(locale.get(player, "challenge_level.back-to-levels", "⬅ 返回關卡清單"));
 
             builder.validResultHandler(response -> new ChallengesMenuForm(plugin).open(player));
 
@@ -72,7 +74,7 @@ public class ChallengeLevelForm {
             return;
         }
 
-        builder.content("選擇一個挑戰查看詳情：");
+        builder.content(locale.get(player, "challenge_level.content", "選擇一個挑戰查看詳情："));
 
         for (Challenge challenge : challenges) {
 
@@ -86,13 +88,13 @@ public class ChallengeLevelForm {
 
             if (complete && challenge.isRepeatable()) {
                 long times = manager.getChallengeTimes(user, world, challenge);
-                extra = "\n§7已完成 " + times + " 次";
+                extra = "\n" + locale.get(player, "challenge_level.completed-times", "§7已完成 {times} 次").replace("{times}", String.valueOf(times));
             }
 
             builder.button(statusMark + "§f" + name + extra);
         }
 
-        builder.button("⬅ 返回關卡清單");
+        builder.button(locale.get(player, "challenge_level.back-to-levels", "⬅ 返回關卡清單"));
 
         int backButtonId = challenges.size();
 

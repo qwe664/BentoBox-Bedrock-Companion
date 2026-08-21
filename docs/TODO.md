@@ -1,38 +1,63 @@
-## Phase 1
+## Phase 1 ✅
 
 - [x] Create Gradle project
 - [x] Load plugin
 - [x] Floodgate detection
 - [x] Test Form
 
-## Phase 2
+## Phase 2 ✅
 
 - [x] Read BentoBox settings
 - [x] Open Bedrock Form from /is
 - [x] Intercept /is settings
 
-## Phase 3
+## Phase 3 ✅
 
 - [x] Island Information
 - [x] Island Settings
 - [x] Member Management
 - [x] Island Flags
 
-## Phase 4
+## Phase 4 ✅
 
-- [ ] Island Warp
-- [ ] Challenges
+- [x] Island Warp
+- [x] Challenges
 - [x] Admin Forms
+- [x] Island Visit
+- [x] Configuration file
+- [x] PlaceholderAPI support
+- [x] Vault integration
 
-## Phase 5
+## Phase 5 — Multi-language support ✅
 
+- [x] `LocaleService` (`en-US` / `zh-TW`, auto-merge fallback)
+- [x] Main Menu, Island Menu, Team Menu, Team Member Action, Team Invite Picker
+- [x] Warp Menu / Browse / Manage
+- [x] Protection Menu, Island Info, Wallet/Bank
+- [x] Challenges Menu / Detail / Level, Admin Challenges Import
+- [x] Admin Island Teleport Form
+- [x] Base Form (no user-facing text — nothing to localize)
+- [x] Debug Menu Form
+- [x] Game Mode Picker Form
+- [x] Protection Category Form (form UI chrome only — see note below)
+- [x] Settings Menu Form
+- [x] Visit Browse Form
+
+Note: the 91 protection flags' names/descriptions themselves
+(`menu/ProtectionCategories.java`, ~200 strings) are still Traditional
+Chinese only, same as challenge/warp *content* configured by the server
+admin — this project's `LocaleService` covers form UI chrome, not
+BentoBox-side data content. Translating `ProtectionCategories.java` is a
+separate, larger follow-up if wanted.
+
+## Phase 6 — Release v1.0
+
+- [ ] Documentation pass (README, CONTRIBUTING, docs/API.md up to date)
+- [ ] Decide whether to translate `menu/ProtectionCategories.java` content
 - [ ] Release v1.0
 
-## 尚待補完（未列在原 Phase 但實際存在）
+## Testing
 
-- [ ] Debug 選單「📦 插件資訊」「📚 BentoBox API」按鈕（目前是假按鈕，顯示「開發中」）
-- [ ] /bbc debug 的 api、island、flags、version 子指令（目前只有說明文字，無實際邏輯）
-- [ ] Island Visit（見 ROADMAP.md v0.2.0）
-- [ ] Configuration file（見 ROADMAP.md v0.3.0）
-- [ ] PlaceholderAPI support（見 ROADMAP.md v0.3.0）
-- [ ] Multi-language support（見 ROADMAP.md v0.3.0）
+- [x] JUnit 5 test infrastructure (`build.gradle.kts`, `src/test/`)
+- [x] Unit tests for pure-logic utility classes: `ProgressBarUtil`, `ColorUtil`, `ReflectionAliases`
+- [ ] Unit tests for Bukkit-dependent classes (would need MockBukkit — `MenuItem`, hooks, services)

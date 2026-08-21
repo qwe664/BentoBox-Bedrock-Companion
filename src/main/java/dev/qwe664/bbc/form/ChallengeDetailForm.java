@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.form;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import dev.qwe664.bbc.util.ColorUtil;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -52,17 +53,17 @@ public class ChallengeDetailForm {
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
-            player.sendMessage("§cFloodgate API 尚未初始化。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.floodgate-not-ready", "§cFloodgate API 尚未初始化。"));
             return;
         }
 
         if (!api.isFloodgatePlayer(player.getUniqueId())) {
-            player.sendMessage("§e目前只有基岩版玩家可以使用 Bedrock UI。");
+            player.sendMessage(plugin.getLocaleService().get(player, "common.bedrock-only", "§e目前只有基岩版玩家可以使用 Bedrock UI。"));
             return;
         }
 
         if (!plugin.getChallengesHook().isAvailable()) {
-            player.sendMessage("§c挑戰功能目前無法使用（伺服器未安裝 Challenges 附加模組）。");
+            player.sendMessage(plugin.getLocaleService().get(player, "challenges_menu.unavailable", "§c挑戰功能目前無法使用（伺服器未安裝 Challenges 附加模組）。"));
             return;
         }
 
@@ -75,16 +76,20 @@ public class ChallengeDetailForm {
 
         String name = challenge.getFriendlyName() == null || challenge.getFriendlyName().isBlank()
                 ? challenge.getUniqueId()
-                : challenge.getFriendlyName();
+                : ColorUtil.translate(challenge.getFriendlyName());
+
+        var locale = plugin.getLocaleService();
 
         StringBuilder content = new StringBuilder();
 
         if (challenge.getDescription() != null && !challenge.getDescription().isEmpty()) {
-            content.append(String.join("\n", challenge.getDescription())).append("\n\n");
+            content.append(ColorUtil.translate(String.join("\n", challenge.getDescription()))).append("\n\n");
         }
 
-        content.append(complete ? "§a✅ 已完成\n\n" : "§7⏳ 尚未完成\n\n");
-        content.append("§e需求詳情：\n").append(buildRequirementDetail(player));
+        content.append(complete
+                ? locale.get(player, "challenge_detail.status-complete", "§a✅ 已完成\n\n")
+                : locale.get(player, "challenge_detail.status-incomplete", "§7⏳ 尚未完成\n\n"));
+        content.append(locale.get(player, "challenge_detail.requirement-label", "§e需求詳情：\n")).append(buildRequirementDetail(player));
 
         var builder = SimpleForm.builder()
                 .title("🏆 " + name)
@@ -93,10 +98,10 @@ public class ChallengeDetailForm {
         boolean canTry = !complete || challenge.isRepeatable();
 
         if (canTry) {
-            builder.button("✅ 嘗試完成");
+            builder.button(locale.get(player, "challenge_detail.try-complete", "✅ 嘗試完成"));
         }
 
-        builder.button("⬅ 返回挑戰清單");
+        builder.button(locale.get(player, "challenge_detail.back-to-challenges", "⬅ 返回挑戰清單"));
 
         int backButtonId = canTry ? 1 : 0;
 
@@ -120,9 +125,9 @@ public class ChallengeDetailForm {
             );
 
             if (success) {
-                player.sendMessage("§a✅ 挑戰「" + name + "」完成！");
+                player.sendMessage(locale.get(player, "challenge_detail.try-success", "§a✅ 挑戰「{name}」完成！").replace("{name}", name));
             } else {
-                player.sendMessage("§c尚未達成挑戰條件，請確認需求後再試一次。");
+                player.sendMessage(locale.get(player, "challenge_detail.try-failure", "§c尚未達成挑戰條件，請確認需求後再試一次。"));
             }
 
             // 重新整理，讓完成狀態立即反映在畫面上
@@ -138,9 +143,10 @@ public class ChallengeDetailForm {
     private String buildRequirementDetail(Player player) {
 
         Requirements requirements = challenge.getRequirements();
+        var locale = plugin.getLocaleService();
 
         if (requirements == null) {
-            return "§7（無特殊需求）";
+            return locale.get(player, "challenge_detail.no-requirements", "§7（無特殊需求）");
         }
 
         StringBuilder detail = new StringBuilder();
@@ -155,7 +161,7 @@ public class ChallengeDetailForm {
 
             case ISLAND_TYPE -> {
                 if (requirements instanceof IslandRequirements island) {
-                    detail.append(buildIslandRequirementDetail(island));
+                    detail.append(buildIslandRequirementDetail(player, island));
                 }
             }
 
@@ -167,13 +173,13 @@ public class ChallengeDetailForm {
 
             case OTHER_TYPE -> {
                 if (requirements instanceof OtherRequirements other) {
-                    detail.append(buildOtherRequirementDetail(other));
+                    detail.append(buildOtherRequirementDetail(player, other));
                 }
             }
         }
 
         if (detail.isEmpty()) {
-            detail.append("§7（無特殊需求）");
+            detail.append(locale.get(player, "challenge_detail.no-requirements", "§7（無特殊需求）"));
         }
 
         return detail.toString();
@@ -203,20 +209,22 @@ public class ChallengeDetailForm {
         return sb.toString();
     }
 
-    private String buildIslandRequirementDetail(IslandRequirements island) {
+    private String buildIslandRequirementDetail(Player player, IslandRequirements island) {
 
+        var locale = plugin.getLocaleService();
         StringBuilder sb = new StringBuilder();
 
         Map<Material, Integer> requiredBlocks = island.getRequiredBlocks();
         if (requiredBlocks != null && !requiredBlocks.isEmpty()) {
-            sb.append("§7島嶼範圍內需要有：\n");
+            sb.append(locale.get(player, "challenge_detail.island-blocks-label", "§7島嶼範圍內需要有：\n"));
             requiredBlocks.forEach((material, amount) ->
                     sb.append("§f- ").append(formatMaterialName(material))
                             .append(" §7x").append(amount).append("\n"));
         }
 
         if (!sb.isEmpty()) {
-            sb.append("§7（搜尋半徑：").append(island.getSearchRadius()).append(" 方塊）\n");
+            sb.append(locale.get(player, "challenge_detail.search-radius-label", "§7（搜尋半徑：{radius} 方塊）\n")
+                    .replace("{radius}", String.valueOf(island.getSearchRadius())));
         }
 
         return sb.toString();
@@ -239,20 +247,24 @@ public class ChallengeDetailForm {
         return sb.toString();
     }
 
-    private String buildOtherRequirementDetail(OtherRequirements other) {
+    private String buildOtherRequirementDetail(Player player, OtherRequirements other) {
 
+        var locale = plugin.getLocaleService();
         StringBuilder sb = new StringBuilder();
 
         if (other.getRequiredExperience() > 0) {
-            sb.append("§f- 經驗值 §7x").append(other.getRequiredExperience()).append("\n");
+            sb.append(locale.get(player, "challenge_detail.required-experience", "§f- 經驗值 §7x{amount}\n")
+                    .replace("{amount}", String.valueOf(other.getRequiredExperience())));
         }
 
         if (other.getRequiredMoney() > 0) {
-            sb.append("§f- 金錢 §7$").append(other.getRequiredMoney()).append("\n");
+            sb.append(locale.get(player, "challenge_detail.required-money", "§f- 金錢 §7${amount}\n")
+                    .replace("{amount}", String.valueOf(other.getRequiredMoney())));
         }
 
         if (other.getRequiredIslandLevel() > 0) {
-            sb.append("§f- 島嶼等級 §7需達 ").append(other.getRequiredIslandLevel()).append("\n");
+            sb.append(locale.get(player, "challenge_detail.required-island-level", "§f- 島嶼等級 §7需達 {level}\n")
+                    .replace("{level}", String.valueOf(other.getRequiredIslandLevel())));
         }
 
         return sb.toString();

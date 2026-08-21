@@ -4,9 +4,9 @@ Thank you for your interest in contributing to BentoBox Bedrock Companion!
 
 ## Development Environment
 
-- Java 21
+- Java 25
 - Purpur 26.2
-- BentoBox 3.20.x
+- BentoBox 3.22.2+
 - Geyser
 - Floodgate
 

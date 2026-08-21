@@ -27,10 +27,12 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - PlaceholderAPI support (%bbc_*% variables)
 - Configuration file (customizable messages & feature toggles)
 - Developer/Debug tools (environment info, reflection explorer)
+- Multi-language support (`en-US`, `zh-TW`) — every form's UI text is localized. (The 91 protection flags' own names/descriptions in `menu/ProtectionCategories.java` are still Traditional Chinese only, same as challenge/warp content configured by the server admin.)
 
 ### Planned
 
-- Multi-language support
+- Documentation
+- Stable release
 
 ---
 
@@ -50,7 +52,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 | Component | Version |
 |-----------|---------|
-| Java | 21+ |
+| Java | 25+ |
 | Paper / Purpur | Latest |
 | BentoBox | 3.22.2+ |
 | Floodgate | Required |
@@ -127,9 +129,12 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 - [x] Vault integration
 
+### v0.12.0 ✅
+
+- [x] Multi-language support (`en-US`, `zh-TW`) — all forms localized
+
 ### v1.0
 
-- [ ] Multi-language support
 - [ ] Documentation
 - [ ] Stable release
 
@@ -147,7 +152,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, configuration file, and Vault integration complete. Multi-language support pending.
+🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, configuration file, Vault integration, and multi-language support (`en-US`, `zh-TW`) all complete as of v0.12.0-Beta. Working toward documentation and a stable v1.0 release.
 
 ---
 

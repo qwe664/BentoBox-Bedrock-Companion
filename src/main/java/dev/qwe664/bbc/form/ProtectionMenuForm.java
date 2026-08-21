@@ -43,8 +43,10 @@ public class ProtectionMenuForm extends BaseForm {
                 .title(plugin.getLocaleService().get(player, "protection_menu.title", "🛡 島嶼保護設定"))
                 .content(plugin.getLocaleService().get(player, "protection_menu.content", "選擇要設定的分類"));
 
+        var locale = plugin.getLocaleService();
+
         for (ProtectionCategory category : categories) {
-            builder.button(category.title());
+            builder.button(locale.get(player, "protection_categories." + category.id(), category.title()));
         }
 
         builder.button(plugin.getLocaleService().get(player, "common.back-to-island-menu", "⬅ 返回島嶼選單"));

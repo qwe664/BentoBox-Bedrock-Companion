@@ -195,3 +195,380 @@ admin_challenges_import:
   confirm-no: ❌ Cancel
   cancelled: '§7Cancelled.'
   success: '§aOfficial default challenges have been imported into {gamemode}.'
+
+admin_island_teleport:
+  title: 🔍 Look Up / Teleport to Player's Island
+  input-label: Player Name
+  input-placeholder: Enter the exact in-game name
+  empty-name: '§cPlease enter a player name.'
+  not-found: '§cPlayer not found: {player} (this name has never joined this server)'
+  no-island: '§e{player} currently has no island.'
+  no-center: '§cThis island has no teleportable center location.'
+  success: "§aTeleported to {player}'s island."
+
+game_mode_picker:
+  title: 🏝 Choose a Game Mode
+  no-gamemodes: No enabled skyblock game modes were detected on this server. Please contact an admin.
+  content: "You're not currently in any skyblock world. Please choose which game mode to go to:"
+  choice-button: '🏝 {name}'
+  back-to-main: ⬅ Back to Main Menu
+
+protection_category:
+  rank-visitor: Visitor
+  rank-coop: Co-op
+  rank-trusted: Trusted
+  rank-member: Member
+  rank-sub-owner: Sub-owner
+  rank-owner: Owner
+  no-island: "§cYou don't have an island!"
+  label-hint: |-
+    Rank order (low to high): Visitor → Co-op → Trusted → Member → Sub-owner → Owner.
+    For each item, choose the minimum rank required to use that feature — a lower rank means more members can use it.
+  current-suffix: "\n(Current: {rank})"
+  update-success: '§a"{category}" protection settings updated successfully!'
+
+settings_menu:
+  title: Island Settings
+  no-island: "§cYou don't have an island!"
+  update-success: '§aIsland settings updated successfully!'
+  toggle-pvp-overworld: Allow PvP (Overworld)
+  toggle-pvp-nether: Allow PvP (Nether)
+  toggle-pvp-end: Allow PvP (End)
+  toggle-monster-natural-spawn: Allow natural monster spawning
+  toggle-monster-spawners-spawn: Allow monster spawners
+  toggle-animal-natural-spawn: Allow natural animal spawning
+  toggle-animal-spawners-spawn: Allow animal spawners
+  toggle-fire-spread: Allow fire spread
+  toggle-fire-burning: Allow fire to burn blocks
+  toggle-fire-ignite: Allow non-player fire ignition
+  toggle-leaf-decay: Allow natural leaf decay
+  toggle-tnt-damage: Allow TNT block damage
+  toggle-block-explode-damage: Allow bed/respawn anchor explosion damage
+
+visit_browse:
+  title: 🧭 Visit Islands
+  unavailable: '§cVisiting islands is currently unavailable (the Visit add-on is not installed).'
+  empty: There are no islands to visit in this game mode yet.
+  content: "Choose an island to visit:"
+  self-tag: ' (You)'
+  unknown-owner: Unknown Player
+  island-button: "🏝 {island}{self}\n§7{owner}"
+  no-owner: '§cThis island currently has no owner and cannot be visited.'
+
+debug_menu:
+  title: 🛠 BBC Developer Tools
+  content: Developer Tools
+  environment-info: 🌍 Environment Info
+  plugin-info: 📦 Plugin Info
+  api-info: 📚 BentoBox API
+  reflection: 🔍 Reflection
+  back: ⬅ Back
+  console-output-hint: '§a✔ Output sent to the server console (DiscordSRV will relay it to Discord).'
+  reflection-title: 🔍 Reflection Lookup
+  reflection-input-label: Class Name or Alias
+  reflection-input-placeholder: 'e.g. flag, user, or a full class path'
+  reflection-scope-label: Lookup Scope
+  reflection-scope-public: Public methods only (incl. inherited)
+  reflection-scope-declared: Only methods declared in this class
+  reflection-empty-target: '§cPlease enter a class name or alias.'
+
+protection_categories:
+  BUILDING: Building & Breaking
+  STORAGE: Storage & Containers
+  WORKSTATION: Workstations & Crafting
+  MECHANISM: Redstone & Mechanisms
+  MOB: Mob Interaction
+  MOVEMENT: Movement & Teleport
+  ITEMS: Item Pickup & Drop
+  COLLECTING: Resource Collecting
+  MISC: Misc & Management
+
+protection_flags:
+  BREAK_BLOCKS:
+    label: Break Blocks
+    description: Set who can break normal blocks
+  BREAK_SPAWNERS:
+    label: Break Spawners
+    description: "Overrides \"Break Blocks\" to control spawners separately"
+  BREAK_HOPPERS:
+    label: Break Hoppers
+    description: "Overrides \"Break Blocks\" to control hoppers separately"
+  PLACE_BLOCKS:
+    label: Place Blocks
+    description: Set who can place blocks
+  CROP_TRAMPLE:
+    label: Trample Crops
+    description: Set who can trample crops on farmland
+  DYE:
+    label: Use Dye
+    description: Set who can use dye
+  TURTLE_EGGS:
+    label: Trample Turtle Eggs
+    description: Set who can trample turtle eggs
+  HARVEST:
+    label: Harvest Crops
+    description: Set who can harvest crops; remember to also allow item pickup
+  CROP_PLANTING:
+    label: Plant Crops
+    description: Set who can plant crops
+  CHEST:
+    label: Chest / Minecart Chest
+    description: Set who can open chests and minecart chests (excludes trapped chests)
+  TRAPPED_CHEST:
+    label: Trapped Chest
+    description: Set who can open trapped chests
+  BARREL:
+    label: Barrel
+    description: Set who can open barrels
+  SHULKER_BOX:
+    label: Shulker Box
+    description: Set who can open shulker boxes
+  HOPPER:
+    label: Hopper
+    description: Set who can operate hoppers
+  DISPENSER:
+    label: Dispenser
+    description: Set who can operate dispensers
+  DROPPER:
+    label: Dropper
+    description: Set who can operate droppers
+  FURNACE:
+    label: Furnace
+    description: Set who can use furnaces
+  BREWING:
+    label: Brewing Stand
+    description: Set who can use brewing stands
+  COMPOSTER:
+    label: Composter
+    description: Set who can use composters
+  FLOWER_POT:
+    label: Flower Pot
+    description: Set who can interact with flower pots
+  CONTAINER:
+    label: All Containers (master switch)
+    description: Overrides all container types above at once; individual settings take priority over this
+  LECTERN:
+    label: Lectern
+    description: Set who can place or take books from lecterns (does not affect reading)
+  CRAFTING:
+    label: Crafting Table
+    description: Set who can use crafting tables
+  CRAFTER:
+    label: Crafter
+    description: Set who can use crafters
+  ENCHANTING:
+    label: Enchanting Table
+    description: Set who can use enchanting tables
+  ANVIL:
+    label: Anvil
+    description: Set who can use anvils
+  BEACON:
+    label: Beacon
+    description: Set who can operate beacons
+  CAKE:
+    label: Cake
+    description: Set who can eat cake
+  JUKEBOX:
+    label: Jukebox
+    description: Set who can use jukeboxes
+  CARTOGRAPHY:
+    label: Cartography Table
+    description: Set who can use cartography tables
+  GRINDSTONE:
+    label: Grindstone
+    description: Set who can use grindstones
+  SMITHING:
+    label: Smithing Table
+    description: Set who can use smithing tables
+  STONECUTTING:
+    label: Stonecutter
+    description: Set who can use stonecutters
+  LOOM:
+    label: Loom
+    description: Set who can use looms
+  BOOKSHELF:
+    label: Bookshelf
+    description: Set who can interact with bookshelves
+  REDSTONE:
+    label: Redstone Components
+    description: Set who can operate redstone components
+  LEVER:
+    label: Lever
+    description: Set who can operate levers
+  BUTTON:
+    label: Button
+    description: Set who can use buttons
+  PRESSURE_PLATE:
+    label: Pressure Plate
+    description: Set who can trigger pressure plates
+  NOTE_BLOCK:
+    label: Note Block
+    description: Set who can use note blocks
+  TRAPDOOR:
+    label: Trapdoor
+    description: Set who can operate trapdoors
+  DOOR:
+    label: Door
+    description: Set who can open and close doors
+  GATE:
+    label: Fence Gate
+    description: Set who can open and close fence gates
+  TNT_PRIMING:
+    label: Ignite TNT
+    description: Set who can ignite TNT (does not affect flint and steel itself)
+  SCULK_SENSOR:
+    label: Sculk Sensor
+    description: Set who can trigger sculk sensors
+  SCULK_SHRIEKER:
+    label: Sculk Shrieker
+    description: Set who can trigger sculk shriekers
+  SIGN_EDITING:
+    label: Edit Signs
+    description: Set who can edit sign text
+  BELL_RINGING:
+    label: Ring Bell
+    description: Set who can ring the village bell
+  CANDLES:
+    label: Candle Interaction
+    description: Set who can light or extinguish candles
+  FROST_WALKER:
+    label: Frost Walker Enchant
+    description: Set who can walk on the island using Frost Walker
+  BED:
+    label: Bed
+    description: Set who can use beds
+  RIDING:
+    label: Ride Animals
+    description: Set who can ride animals
+  ARMOR_STAND:
+    label: Armor Stand
+    description: Set who can operate armor stands
+  TRADING:
+    label: Trade With Villagers
+    description: Set who can trade with villagers
+  NAME_TAG:
+    label: Name Tag
+    description: Set who can use name tags
+  ALLAY:
+    label: Allay Interaction
+    description: Set who can give items to or take items from allays
+  BREEDING:
+    label: Breed Animals
+    description: Set who can breed animals
+  MILKING:
+    label: Milk Cows
+    description: Set who can milk cows
+  FISH_SCOOPING:
+    label: Scoop Fish
+    description: Set who can scoop fish with a bucket
+  AXOLOTL_SCOOPING:
+    label: Scoop Axolotls
+    description: Set who can scoop axolotls with a bucket
+  HURT_ANIMALS:
+    label: Hurt Animals
+    description: Set who can hurt animals
+  HURT_MONSTERS:
+    label: Hurt Monsters
+    description: Set who can hurt monsters
+  HURT_VILLAGERS:
+    label: Hurt Villagers
+    description: Set who can hurt villagers
+  HURT_TAMED_ANIMALS:
+    label: Hurt Tamed Animals
+    description: Set who can hurt tamed animals
+  LEASH:
+    label: Leash
+    description: Set who can use leads
+  SHEARING:
+    label: Shear
+    description: Set who can shear sheep or mooshrooms
+  SPAWN_EGGS:
+    label: Use Spawn Eggs
+    description: Set who can use spawn eggs
+  HIVE:
+    label: Harvest Beehive
+    description: Set who can collect honey from beehives/bee nests
+  PAUSE_MOB_GROWTH:
+    label: Pause Mob Growth
+    description: Set whose actions pause mob growth (e.g. baby to adult)
+  MINECART:
+    label: Minecart
+    description: Set who can place, break, and enter/exit minecarts
+  BOAT:
+    label: Boat
+    description: Set who can place, break, and enter/exit boats
+  ELYTRA:
+    label: Elytra
+    description: Set who can fly with elytra
+  ENDER_PEARL:
+    label: Ender Pearl
+    description: Set who can throw ender pearls
+  CHORUS_FRUIT:
+    label: Chorus Fruit
+    description: Set who can teleport with chorus fruit
+  NETHER_PORTAL:
+    label: Nether Portal
+    description: Set who can use nether portals
+  END_PORTAL:
+    label: End Portal
+    description: Set who can use end portals
+  MOUNT_INVENTORY:
+    label: Mount Inventory
+    description: Set who can open the inventory of mounts (e.g. donkeys, llamas)
+  ITEM_FRAME:
+    label: Item Frame
+    description: Set who can interact with item frames; overrides the place/break blocks settings
+  DRAGON_EGG:
+    label: Dragon Egg
+    description: Prevents interacting with the dragon egg; does not affect it being placed or broken
+  ITEM_DROP:
+    label: Drop Items
+    description: Set who can drop items
+  ITEM_PICKUP:
+    label: Pick Up Items
+    description: Set who can pick up items
+  EXPERIENCE_PICKUP:
+    label: Pick Up Experience
+    description: Set who can pick up experience orbs
+  EXPERIENCE_BOTTLE_THROWING:
+    label: Throw Experience Bottles
+    description: Set who can throw bottles o' enchanting
+  POTION_THROWING:
+    label: Throw Potions
+    description: Set who can throw splash or lingering potions
+  EGGS:
+    label: Throw Eggs
+    description: Set who can throw eggs
+  WIND_CHARGE:
+    label: Wind Charge
+    description: Set who can use wind charges
+  BUCKET:
+    label: Bucket Interaction
+    description: Set who can use bucket-type items
+  COLLECT_LAVA:
+    label: Collect Lava
+    description: "Overrides \"Bucket Interaction\" to control collecting lava separately"
+  COLLECT_WATER:
+    label: Collect Water
+    description: "Overrides \"Bucket Interaction\" to control collecting water separately"
+  COLLECT_POWDERED_SNOW:
+    label: Collect Powder Snow
+    description: "Overrides \"Bucket Interaction\" to control collecting powder snow separately"
+  FISHING:
+    label: Fishing
+    description: Set who can fish with a fishing rod (prevents fishing into the protected area from outside the island)
+  FLINT_AND_STEEL:
+    label: Ignite With Flint and Steel
+    description: Set who can ignite fire with flint and steel or fire charges
+  FIRE_EXTINGUISH:
+    label: Extinguish Fire
+    description: Set who can put out fires
+  COMMAND_RANKS:
+    label: Command Rank Settings
+    description: Set the minimum rank required for each command
+  LOCK:
+    label: Lock Island
+    description: Set who can lock/unlock the island to keep other players out
+  CHANGE_SETTINGS:
+    label: Change Island Settings
+    description: Set who can change the island's protection and settings options

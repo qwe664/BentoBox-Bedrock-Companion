@@ -198,3 +198,380 @@ admin_challenges_import:
   confirm-no: ❌ 取消
   cancelled: '§7已取消。'
   success: '§a已將官方預設挑戰組匯入「{gamemode}」。'
+
+admin_island_teleport:
+  title: 🔍 查詢／傳送到玩家島嶼
+  input-label: 玩家名稱
+  input-placeholder: 輸入完整的遊戲內名稱
+  empty-name: '§c請輸入玩家名稱。'
+  not-found: '§c找不到玩家：{player}（這個名字沒有加入過本伺服器）'
+  no-island: '§e{player} 目前沒有島嶼。'
+  no-center: '§c這座島嶼沒有可傳送的中心點資料。'
+  success: '§a已傳送到 {player} 的島嶼。'
+
+game_mode_picker:
+  title: 🏝 選擇玩法
+  no-gamemodes: 目前伺服器沒有偵測到任何已啟用的空島玩法，請聯絡管理員。
+  content: 你目前不在任何空島世界裡，請選擇要前往的玩法：
+  choice-button: '🏝 {name}'
+  back-to-main: ⬅ 返回主選單
+
+protection_category:
+  rank-visitor: 訪客
+  rank-coop: 合作成員
+  rank-trusted: 信任成員
+  rank-member: 成員
+  rank-sub-owner: 副島主
+  rank-owner: 島主
+  no-island: '§c你目前沒有島嶼！'
+  label-hint: |-
+    排名由低到高：訪客 → 合作成員 → 信任成員 → 成員 → 副島主 → 島主。
+    每個項目選擇「該功能最低要什麼身份才能使用」，選越低代表越多人能用。
+  current-suffix: "\n（目前：{rank}）"
+  update-success: '§a「{category}」保護設定已成功更新！'
+
+settings_menu:
+  title: 島嶼設定管理
+  no-island: '§c你目前沒有島嶼！'
+  update-success: '§a島嶼設定已成功更新！'
+  toggle-pvp-overworld: 允許 PvP（主世界）
+  toggle-pvp-nether: 允許 PvP（地獄）
+  toggle-pvp-end: 允許 PvP（終界）
+  toggle-monster-natural-spawn: 允許怪物自然生成
+  toggle-monster-spawners-spawn: 允許刷怪磚生成怪物
+  toggle-animal-natural-spawn: 允許動物自然生成
+  toggle-animal-spawners-spawn: 允許刷怪磚生成動物
+  toggle-fire-spread: 允許火勢蔓延
+  toggle-fire-burning: 允許火焰燃燒方塊
+  toggle-fire-ignite: 允許非玩家方式點火
+  toggle-leaf-decay: 允許樹葉自然凋零
+  toggle-tnt-damage: 允許 TNT 破壞方塊/傷害
+  toggle-block-explode-damage: 允許床/重生錨爆炸傷害方塊
+
+visit_browse:
+  title: 🧭 拜訪島嶼
+  unavailable: '§c拜訪島嶼功能目前無法使用（伺服器未安裝 Visit 附加模組）。'
+  empty: 目前這個玩法裡還沒有可以拜訪的島嶼。
+  content: 選擇一座島嶼前往拜訪：
+  self-tag: （你）
+  unknown-owner: 未知玩家
+  island-button: "🏝 {island}{self}\n§7{owner}"
+  no-owner: '§c這座島嶼目前沒有島主，無法拜訪。'
+
+debug_menu:
+  title: 🛠 BBC Developer Tools
+  content: 開發工具
+  environment-info: 🌍 環境資訊
+  plugin-info: 📦 插件資訊
+  api-info: 📚 BentoBox API
+  reflection: 🔍 Reflection
+  back: ⬅ 返回
+  console-output-hint: '§a✔ 已輸出至伺服器 Console（DiscordSRV 將同步至 Discord）。'
+  reflection-title: 🔍 Reflection 查詢
+  reflection-input-label: 類別名稱或 Alias
+  reflection-input-placeholder: 例如：flag、user，或完整類別路徑
+  reflection-scope-label: 查詢範圍
+  reflection-scope-public: 僅 Public 方法（含繼承）
+  reflection-scope-declared: 僅本類別自行宣告的方法
+  reflection-empty-target: '§c請輸入類別名稱或 Alias。'
+
+protection_categories:
+  BUILDING: 建築與破壞
+  STORAGE: 容器與儲存
+  WORKSTATION: 工作站與製作
+  MECHANISM: 紅石與機關
+  MOB: 生物互動
+  MOVEMENT: 移動與傳送
+  ITEMS: 物品拾取與丟棄
+  COLLECTING: 收集資源
+  MISC: 其他與管理
+
+protection_flags:
+  BREAK_BLOCKS:
+    label: 破壞方塊
+    description: 設定誰可以破壞一般方塊
+  BREAK_SPAWNERS:
+    label: 破壞刷怪磚
+    description: 覆蓋「破壞方塊」，單獨控制刷怪磚
+  BREAK_HOPPERS:
+    label: 破壞漏斗
+    description: 覆蓋「破壞方塊」，單獨控制漏斗
+  PLACE_BLOCKS:
+    label: 放置方塊
+    description: 設定誰可以放置方塊
+  CROP_TRAMPLE:
+    label: 踩壞作物
+    description: 設定誰可以踩壞耕地上的作物
+  DYE:
+    label: 使用染料
+    description: 設定誰可以使用染料
+  TURTLE_EGGS:
+    label: 踩壞海龜蛋
+    description: 設定誰可以踩壞海龜蛋
+  HARVEST:
+    label: 收成作物
+    description: 設定誰可以收成作物，別忘了也要允許拾取物品
+  CROP_PLANTING:
+    label: 種植作物
+    description: 設定誰可以種植作物
+  CHEST:
+    label: 箱子/礦車箱
+    description: 設定誰可以開啟箱子與礦車箱（不含陷阱箱）
+  TRAPPED_CHEST:
+    label: 陷阱箱
+    description: 設定誰可以開啟陷阱箱
+  BARREL:
+    label: 木桶
+    description: 設定誰可以開啟木桶
+  SHULKER_BOX:
+    label: 潛影盒
+    description: 設定誰可以開啟潛影盒
+  HOPPER:
+    label: 漏斗
+    description: 設定誰可以操作漏斗
+  DISPENSER:
+    label: 發射器
+    description: 設定誰可以操作發射器
+  DROPPER:
+    label: 投擲器
+    description: 設定誰可以操作投擲器
+  FURNACE:
+    label: 熔爐
+    description: 設定誰可以使用熔爐
+  BREWING:
+    label: 釀造台
+    description: 設定誰可以使用釀造台
+  COMPOSTER:
+    label: 堆肥桶
+    description: 設定誰可以使用堆肥桶
+  FLOWER_POT:
+    label: 花盆
+    description: 設定誰可以操作花盆
+  CONTAINER:
+    label: 所有容器（總開關）
+    description: 同時覆蓋以上所有容器類；個別設定會優先於此項
+  LECTERN:
+    label: 講台
+    description: 設定誰可以放書到講台或從講台拿書（不影響閱讀）
+  CRAFTING:
+    label: 工作台
+    description: 設定誰可以使用工作台
+  CRAFTER:
+    label: 合成器
+    description: 設定誰可以使用合成器
+  ENCHANTING:
+    label: 附魔台
+    description: 設定誰可以使用附魔台
+  ANVIL:
+    label: 鐵砧
+    description: 設定誰可以使用鐵砧
+  BEACON:
+    label: 烽火台
+    description: 設定誰可以操作烽火台
+  CAKE:
+    label: 蛋糕
+    description: 設定誰可以吃蛋糕
+  JUKEBOX:
+    label: 唱片機
+    description: 設定誰可以使用唱片機
+  CARTOGRAPHY:
+    label: 製圖台
+    description: 設定誰可以使用製圖台
+  GRINDSTONE:
+    label: 砂輪
+    description: 設定誰可以使用砂輪
+  SMITHING:
+    label: 鍛造台
+    description: 設定誰可以使用鍛造台
+  STONECUTTING:
+    label: 切石機
+    description: 設定誰可以使用切石機
+  LOOM:
+    label: 織布機
+    description: 設定誰可以使用織布機
+  BOOKSHELF:
+    label: 書架
+    description: 設定誰可以與書架互動
+  REDSTONE:
+    label: 紅石元件
+    description: 設定誰可以操作紅石元件
+  LEVER:
+    label: 拉桿
+    description: 設定誰可以操作拉桿
+  BUTTON:
+    label: 按鈕
+    description: 設定誰可以使用按鈕
+  PRESSURE_PLATE:
+    label: 壓力板
+    description: 設定誰可以觸發壓力板
+  NOTE_BLOCK:
+    label: 音階盒
+    description: 設定誰可以使用音階盒
+  TRAPDOOR:
+    label: 活板門
+    description: 設定誰可以操作活板門
+  DOOR:
+    label: 門
+    description: 設定誰可以開關門
+  GATE:
+    label: 柵欄門
+    description: 設定誰可以開關柵欄門
+  TNT_PRIMING:
+    label: 點燃 TNT
+    description: 設定誰可以點燃 TNT（不影響打火石本身的保護）
+  SCULK_SENSOR:
+    label: 幽匿感測體
+    description: 設定誰可以觸發幽匿感測體
+  SCULK_SHRIEKER:
+    label: 幽匿尖鳴體
+    description: 設定誰可以觸發幽匿尖鳴體
+  SIGN_EDITING:
+    label: 編輯告示牌
+    description: 設定誰可以編輯告示牌內容
+  BELL_RINGING:
+    label: 敲鐘
+    description: 設定誰可以敲響村莊之鐘
+  CANDLES:
+    label: 蠟燭互動
+    description: 設定誰可以點燃或熄滅蠟燭
+  FROST_WALKER:
+    label: 冰霜行者附魔
+    description: 設定誰可以使用冰霜行者附魔在島上行走
+  BED:
+    label: 床
+    description: 設定誰可以使用床
+  RIDING:
+    label: 騎乘動物
+    description: 設定誰可以騎乘動物
+  ARMOR_STAND:
+    label: 盔甲座
+    description: 設定誰可以操作盔甲座
+  TRADING:
+    label: 與村民交易
+    description: 設定誰可以跟村民交易
+  NAME_TAG:
+    label: 命名牌
+    description: 設定誰可以使用命名牌
+  ALLAY:
+    label: 悅靈互動
+    description: 設定誰可以給予/拿取悅靈身上的物品
+  BREEDING:
+    label: 繁殖動物
+    description: 設定誰可以繁殖動物
+  MILKING:
+    label: 擠牛奶
+    description: 設定誰可以擠牛奶
+  FISH_SCOOPING:
+    label: 撈魚
+    description: 設定誰可以用水桶撈魚
+  AXOLOTL_SCOOPING:
+    label: 撈美西螈
+    description: 設定誰可以用水桶撈美西螈
+  HURT_ANIMALS:
+    label: 傷害動物
+    description: 設定誰可以傷害動物
+  HURT_MONSTERS:
+    label: 傷害怪物
+    description: 設定誰可以傷害怪物
+  HURT_VILLAGERS:
+    label: 傷害村民
+    description: 設定誰可以傷害村民
+  HURT_TAMED_ANIMALS:
+    label: 傷害已馴服動物
+    description: 設定誰可以傷害已被馴服的動物
+  LEASH:
+    label: 拴繩
+    description: 設定誰可以使用拴繩
+  SHEARING:
+    label: 剪羊毛
+    description: 設定誰可以剪羊毛或剪蘑菇牛
+  SPAWN_EGGS:
+    label: 使用生怪蛋
+    description: 設定誰可以使用生怪蛋
+  HIVE:
+    label: 採集蜂巢
+    description: 設定誰可以採集蜂巢/蜂箱裡的蜂蜜
+  PAUSE_MOB_GROWTH:
+    label: 暫停生物成長
+    description: 設定誰的操作會暫停生物的成長（例如幼體變成體）
+  MINECART:
+    label: 礦車
+    description: 設定誰可以放置、破壞、進出礦車
+  BOAT:
+    label: 船
+    description: 設定誰可以放置、破壞、進出船
+  ELYTRA:
+    label: 鞘翅
+    description: 設定誰可以使用鞘翅飛行
+  ENDER_PEARL:
+    label: 終界珍珠
+    description: 設定誰可以丟擲終界珍珠
+  CHORUS_FRUIT:
+    label: 紫頌果
+    description: 設定誰可以用紫頌果傳送
+  NETHER_PORTAL:
+    label: 地獄門
+    description: 設定誰可以使用地獄門
+  END_PORTAL:
+    label: 終界傳送門
+    description: 設定誰可以使用終界傳送門
+  MOUNT_INVENTORY:
+    label: 坐騎物品欄
+    description: 設定誰可以開啟坐騎（如驢、駱馬）的物品欄
+  ITEM_FRAME:
+    label: 物品展示框
+    description: 設定誰可以操作物品展示框，會覆蓋放置/破壞方塊的設定
+  DRAGON_EGG:
+    label: 龍蛋
+    description: 阻止與龍蛋互動，不影響龍蛋被放置或破壞
+  ITEM_DROP:
+    label: 丟棄物品
+    description: 設定誰可以丟棄物品
+  ITEM_PICKUP:
+    label: 拾取物品
+    description: 設定誰可以拾取物品
+  EXPERIENCE_PICKUP:
+    label: 拾取經驗
+    description: 設定誰可以拾取經驗球
+  EXPERIENCE_BOTTLE_THROWING:
+    label: 丟擲經驗瓶
+    description: 設定誰可以丟擲經驗瓶
+  POTION_THROWING:
+    label: 丟擲藥水
+    description: 設定誰可以丟擲潑濺藥水或滯留藥水
+  EGGS:
+    label: 丟雞蛋
+    description: 設定誰可以丟雞蛋
+  WIND_CHARGE:
+    label: 風彈
+    description: 設定誰可以使用風彈
+  BUCKET:
+    label: 水桶類互動
+    description: 設定誰可以使用水桶類物品
+  COLLECT_LAVA:
+    label: 收集熔岩
+    description: 覆蓋「水桶類互動」，單獨控制收集熔岩
+  COLLECT_WATER:
+    label: 收集水
+    description: 覆蓋「水桶類互動」，單獨控制收集水
+  COLLECT_POWDERED_SNOW:
+    label: 收集粉雪
+    description: 覆蓋「水桶類互動」，單獨控制收集粉雪
+  FISHING:
+    label: 釣魚
+    description: 設定誰可以用釣竿釣魚（防止從島外釣進保護區）
+  FLINT_AND_STEEL:
+    label: 打火石點火
+    description: 設定誰可以用打火石或火焰彈點火
+  FIRE_EXTINGUISH:
+    label: 撲滅火焰
+    description: 設定誰可以撲滅火焰
+  COMMAND_RANKS:
+    label: 指令權限設定
+    description: 設定各項指令需要的最低排名
+  LOCK:
+    label: 鎖定島嶼
+    description: 設定誰可以鎖定/解鎖島嶼，阻擋其他玩家進入
+  CHANGE_SETTINGS:
+    label: 變更島嶼設定的權限
+    description: 設定誰可以變更島嶼的保護與設定選項

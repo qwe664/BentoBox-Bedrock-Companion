@@ -3,6 +3,9 @@ package dev.qwe664.bbc.form;
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import dev.qwe664.bbc.menu.ProtectionCategory;
 import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
+import dev.qwe664.bbc.service.SettingsAccess;
+import world.bentobox.bentobox.api.events.flags.FlagProtectionChangeEvent;
 import org.geysermc.cumulus.form.CustomForm;
 import org.geysermc.floodgate.api.FloodgateApi;
 import world.bentobox.bentobox.api.flags.Flag;
@@ -58,6 +61,11 @@ public class ProtectionCategoryForm {
 
     public void open(Player player) {
 
+        if (!Bukkit.isPrimaryThread()) {
+            Bukkit.getScheduler().runTask(plugin, () -> open(player));
+            return;
+        }
+        if (!player.isOnline()) return;
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
@@ -78,6 +86,10 @@ public class ProtectionCategoryForm {
             return;
         }
 
+        if (!SettingsAccess.canOpen(player, island)) {
+            SettingsAccess.deny(player);
+            return;
+        }
         var locale = plugin.getLocaleService();
 
         String[] rankNames = new String[RANK_KEYS.length];
@@ -105,10 +117,18 @@ public class ProtectionCategoryForm {
         // 因為最上面多加了一個 label 元件，後面的 dropdown 在整張表單裡的
         // 元件索引都會往後移一位，所以要用這個位移量來對應 asDropdown() 的索引。
         int fieldOffset = 1;
+        boolean[] editable = new boolean[flags.length];
+        int[] original = new int[flags.length];
 
         for (int i = 0; i < flags.length; i++) {
 
             int currentRank = island.getFlag(flags[i]);
+            original[i] = currentRank;
+            int selected = -1;
+            for (int r = 0; r < RANK_VALUES.length; r++) {
+                if (RANK_VALUES[r] == currentRank) selected = r;
+            }
+            editable[i] = selected >= 0 && SettingsAccess.canEdit(player, island, flags[i]);
             String currentRankName = rankName(rankNames, currentRank);
 
             // 標籤同時放名稱、簡短說明、目前排名，讓玩家不用猜這個旗標在做什麼。
@@ -116,20 +136,44 @@ public class ProtectionCategoryForm {
                     + locale.get(player, "protection_category.current-suffix", "\n（目前：{rank}）")
                             .replace("{rank}", currentRankName);
 
-            builder.dropdown(labelWithCurrent, rankNames);
+            if (editable[i]) builder.dropdown(labelWithCurrent, selected, rankNames);
+            else builder.label(labelWithCurrent + " [唯讀]");
         }
 
-        builder.validResultHandler(response -> {
-
-            for (int i = 0; i < flags.length; i++) {
-                int selectedIndex = response.asDropdown(i + fieldOffset);
-                island.setFlag(flags[i], RANK_VALUES[selectedIndex]);
+        builder.validResultHandler(response -> Bukkit.getScheduler().runTask(plugin, () -> {
+            if (!player.isOnline()) return;
+            Island current = plugin.getBentoBoxService().getIslandsManager()
+                    .getIslandById(island.getUniqueId()).orElse(null);
+            if (current == null || !SettingsAccess.canOpen(player, current)) {
+                SettingsAccess.deny(player);
+                return;
             }
+            int[] desired = original.clone();
+            for (int i = 0; i < flags.length; i++) {
+                if (!editable[i]) continue;
+                desired[i] = RANK_VALUES[response.asDropdown(i + fieldOffset)];
+                if (desired[i] == original[i]) continue;
+                if (!SettingsAccess.canEdit(player, current, flags[i])
+                        || current.getFlag(flags[i]) != original[i]) {
+                    SettingsAccess.deny(player);
+                    return;
+                }
+            }
+            // Validate every change before applying any of them.
+            for (int i = 0; i < flags.length; i++) {
+                if (desired[i] == original[i]) continue;
+                current.setFlag(flags[i], desired[i]);
 
-            player.sendMessage(locale.get(player, "protection_category.update-success", "§a「{category}」保護設定已成功更新！")
-                    .replace("{category}", categoryTitle));
-            plugin.getFormManager().openProtectionMenu(player);
-        });
+            }
+            for (int i = 0; i < flags.length; i++) {
+                if (desired[i] == original[i]) continue;
+                Bukkit.getPluginManager().callEvent(new FlagProtectionChangeEvent(current, player.getUniqueId(), flags[i], current.getFlag(flags[i])));
+                for (Flag child : flags[i].getSubflags()) {
+                    Bukkit.getPluginManager().callEvent(new FlagProtectionChangeEvent(current, player.getUniqueId(), child, current.getFlag(child)));
+                }
+            }
+            player.sendMessage(locale.get(player, "settings_menu.update-success", "§a島嶼設定已成功更新！"));
+        }));
 
         api.sendForm(player.getUniqueId(), builder);
     }

@@ -16,6 +16,7 @@ import dev.qwe664.bbc.form.VisitBrowseForm;
 import dev.qwe664.bbc.form.WalletBankForm;
 import dev.qwe664.bbc.form.ChallengesMenuForm;
 import dev.qwe664.bbc.form.TeamMenuForm;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class FormManager {
@@ -76,6 +77,10 @@ public class FormManager {
 
     public void openSettingsMenu(Player player) {
         settingsMenuForm.open(player);
+    }
+
+    public void openSettingsMenu(Player player, World targetWorld) {
+        settingsMenuForm.open(player, targetWorld);
     }
 
     public void openProtectionMenu(Player player) {

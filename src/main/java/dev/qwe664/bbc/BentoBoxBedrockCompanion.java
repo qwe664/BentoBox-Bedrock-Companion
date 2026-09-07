@@ -7,11 +7,13 @@ import dev.qwe664.bbc.hook.WarpsHook;
 import dev.qwe664.bbc.hook.VisitHook;
 import dev.qwe664.bbc.hook.ChallengesHook;
 import dev.qwe664.bbc.hook.BankHook;
-import dev.qwe664.bbc.hook.VaultHook;
+import dev.qwe664.bbc.hook.EconomyHook;
+import dev.qwe664.bbc.hook.UnavailableEconomyHook;
 import dev.qwe664.bbc.placeholder.BBCExpansion;
 import dev.qwe664.bbc.listener.PlayerJoinListener;
 import dev.qwe664.bbc.listener.CommandListener; // <-- 1. 記得引入剛剛寫好的攔截器
 import dev.qwe664.bbc.listener.MenuItemListener;
+import dev.qwe664.bbc.listener.BentoBoxReadyListener;
 import dev.qwe664.bbc.manager.FormManager;
 import dev.qwe664.bbc.menu.MenuRegistry;
 import dev.qwe664.bbc.service.BentoBoxService;
@@ -22,6 +24,9 @@ import dev.qwe664.bbc.service.PermissionService;
 import dev.qwe664.bbc.menu.MenuLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+
 public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     private FloodgateHook floodgateHook;
@@ -29,7 +34,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
     private VisitHook visitHook;
     private ChallengesHook challengesHook;
     private BankHook bankHook;
-    private VaultHook vaultHook;
+    private EconomyHook economyHook;
     private FormManager formManager;
 
     private MenuRegistry menuRegistry;
@@ -52,7 +57,7 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
         visitHook = new VisitHook();
         challengesHook = new ChallengesHook();
         bankHook = new BankHook();
-        vaultHook = new VaultHook();
+        economyHook = createEconomyHook();
 
         menuRegistry = new MenuRegistry();
         permissionService = new PermissionService();
@@ -77,6 +82,13 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
         // 3. 註冊選單物品的右鍵監聽器
         getServer().getPluginManager().registerEvents(
                 new MenuItemListener(this),
+                this
+        );
+
+        // BentoBox 的附加元件會在 Bukkit ServerLoadEvent 之後才完成啟用。
+        // Bank 的最終狀態因此交給 BentoBoxReadyEvent 判斷，避免過早誤報。
+        getServer().getPluginManager().registerEvents(
+                new BentoBoxReadyListener(this),
                 this
         );
 
@@ -108,15 +120,8 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
             getLogger().info("未偵測到 Visit 附加模組，拜訪島嶼功能將不會顯示（不影響其他功能）。");
         }
 
-        if (bankHook.isAvailable()) {
-            getLogger().info("已偵測到 Bank 附加模組，島嶼餘額變數已啟用。");
-        } else {
-            getLogger().info("未偵測到 Bank 附加模組，%bbc_island_money% 變數固定回傳 0（不影響其他功能）。");
-        }
-
-        vaultHook.setup(getServer().getServicesManager());
-        if (vaultHook.isAvailable()) {
-            getLogger().info("已偵測到 Vault 經濟系統（" + vaultHook.getEconomyName() + "），玩家錢包功能已啟用。");
+        if (economyHook.isAvailable()) {
+            getLogger().info("已偵測到 Vault 經濟系統（" + economyHook.getEconomyName() + "），玩家錢包功能已啟用。");
         } else {
             getLogger().info("未偵測到 Vault 經濟系統，%bbc_player_money% 變數固定回傳 0、存提款功能將不會顯示（不影響其他功能）。");
         }
@@ -157,8 +162,8 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
         return bankHook;
     }
 
-    public VaultHook getVaultHook() {
-        return vaultHook;
+    public EconomyHook getEconomyHook() {
+        return economyHook;
     }
 
     public FormManager getFormManager() {
@@ -191,5 +196,26 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
 
     public LocaleService getLocaleService() {
         return localeService;
+    }
+
+    /**
+     * Vault 是 softdepend。只有確認外掛存在時才以反射載入 VaultHook，避免 JVM
+     * 在沒有 Vault API 的伺服器上解析其 Economy 類別。
+     */
+    private EconomyHook createEconomyHook() {
+        if (!getServer().getPluginManager().isPluginEnabled("Vault")) {
+            return new UnavailableEconomyHook();
+        }
+
+        try {
+            Class<?> hookClass = Class.forName("dev.qwe664.bbc.hook.VaultHook", true, getClassLoader());
+            return (EconomyHook) hookClass
+                    .getConstructor(org.bukkit.plugin.ServicesManager.class)
+                    .newInstance(getServer().getServicesManager());
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException
+                 | IllegalAccessException | InvocationTargetException | LinkageError e) {
+            getLogger().log(Level.WARNING, "Vault hook 初始化失敗，玩家錢包功能將停用。", e);
+            return new UnavailableEconomyHook();
+        }
     }
 }

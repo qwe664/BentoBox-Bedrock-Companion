@@ -2,7 +2,12 @@ package dev.qwe664.bbc.form;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import dev.qwe664.bbc.service.SettingsAccess;
+import world.bentobox.bentobox.api.events.flags.FlagSettingChangeEvent;
 import org.geysermc.cumulus.form.CustomForm;
+import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.database.objects.Island;
@@ -72,7 +77,19 @@ public class SettingsMenuForm extends BaseForm {
 
     @Override
     public void open(Player player) {
+        open(player, player.getWorld());
+    }
 
+    /**
+     * @param targetWorld 要查詢島嶼的玩法世界；從跨玩法指令開啟時不能使用玩家當前世界。
+     */
+    public void open(Player player, World targetWorld) {
+
+        if (!Bukkit.isPrimaryThread()) {
+            Bukkit.getScheduler().runTask(plugin, () -> open(player, targetWorld));
+            return;
+        }
+        if (!player.isOnline()) return;
         FloodgateApi api = FloodgateApi.getInstance();
 
         if (api == null) {
@@ -86,34 +103,85 @@ public class SettingsMenuForm extends BaseForm {
         }
 
         Island island = plugin.getBentoBoxService().getIslandsManager()
-                .getIsland(player.getWorld(), player.getUniqueId());
+                .getIsland(targetWorld, player.getUniqueId());
 
         if (island == null) {
             player.sendMessage(plugin.getLocaleService().get(player, "settings_menu.no-island", "§c你目前沒有島嶼！"));
             return;
         }
 
+        if (!SettingsAccess.canOpen(player, island)) {
+            SettingsAccess.deny(player);
+            return;
+        }
         var locale = plugin.getLocaleService();
 
         CustomForm.Builder builder = CustomForm.builder()
                 .title(locale.get(player, "settings_menu.title", "島嶼設定管理"));
 
+        boolean[] editable = new boolean[TOGGLE_FLAGS.length];
+        int[] original = new int[TOGGLE_FLAGS.length];
+        boolean hasEditable = false;
+        StringBuilder readOnlyContent = new StringBuilder();
+        String readOnlyText = locale.get(player, "common.read-only", "唯讀");
+        String enabledText = locale.get(player, "common.enabled", "開啟");
+        String disabledText = locale.get(player, "common.disabled", "關閉");
         for (int i = 0; i < TOGGLE_FLAGS.length; i++) {
-            builder.toggle(
-                    locale.get(player, "settings_menu." + TOGGLE_KEYS[i], TOGGLE_FALLBACKS[i]),
-                    island.isAllowed(TOGGLE_FLAGS[i])
-            );
+            original[i] = island.getFlag(TOGGLE_FLAGS[i]);
+            editable[i] = SettingsAccess.canEdit(player, island, TOGGLE_FLAGS[i]);
+            hasEditable |= editable[i];
+            String label = locale.get(player, "settings_menu." + TOGGLE_KEYS[i], TOGGLE_FALLBACKS[i]);
+            if (editable[i]) builder.toggle(label, island.isAllowed(TOGGLE_FLAGS[i]));
+            else builder.label(label + " [" + readOnlyText + "]："
+                    + (island.isAllowed(TOGGLE_FLAGS[i]) ? enabledText : disabledText));
+            readOnlyContent.append(label).append("：")
+                    .append(island.isAllowed(TOGGLE_FLAGS[i]) ? enabledText : disabledText)
+                    .append('\n');
         }
 
-        builder.validResultHandler(response -> {
+        if (!hasEditable) {
+            var readOnlyForm = SimpleForm.builder()
+                    .title(locale.get(player, "settings_menu.title", "島嶼設定管理"))
+                    .content(readOnlyContent.toString())
+                    .button(locale.get(player, "common.done", "✅ 完成"));
+            api.sendForm(player.getUniqueId(), readOnlyForm);
+            return;
+        }
 
-            for (int i = 0; i < TOGGLE_FLAGS.length; i++) {
-                boolean value = response.asToggle(i);
-                island.setSettingsFlag(TOGGLE_FLAGS[i], value);
+        builder.validResultHandler(response -> Bukkit.getScheduler().runTask(plugin, () -> {
+            if (!player.isOnline()) return;
+            Island current = plugin.getBentoBoxService().getIslandsManager()
+                    .getIslandById(island.getUniqueId()).orElse(null);
+            if (current == null || !SettingsAccess.canOpen(player, current)) {
+                SettingsAccess.deny(player);
+                return;
             }
-
+            int[] desired = original.clone();
+            for (int i = 0; i < TOGGLE_FLAGS.length; i++) {
+                if (!editable[i]) continue;
+                desired[i] = response.asToggle(i) ? 1 : -1;
+                if (desired[i] == original[i]) continue;
+                if (!SettingsAccess.canEdit(player, current, TOGGLE_FLAGS[i])
+                        || current.getFlag(TOGGLE_FLAGS[i]) != original[i] || (!player.isOp() && current.isCooldown(TOGGLE_FLAGS[i]))) {
+                    SettingsAccess.deny(player);
+                    return;
+                }
+            }
+            // Validate every change before applying any of them.
+            for (int i = 0; i < TOGGLE_FLAGS.length; i++) {
+                if (desired[i] == original[i]) continue;
+                current.setSettingsFlag(TOGGLE_FLAGS[i], desired[i] > 0);
+                current.setCooldown(TOGGLE_FLAGS[i]);
+            }
+            for (int i = 0; i < TOGGLE_FLAGS.length; i++) {
+                if (desired[i] == original[i]) continue;
+                Bukkit.getPluginManager().callEvent(new FlagSettingChangeEvent(current, player.getUniqueId(), TOGGLE_FLAGS[i], current.isAllowed(TOGGLE_FLAGS[i])));
+                for (Flag child : TOGGLE_FLAGS[i].getSubflags()) {
+                    Bukkit.getPluginManager().callEvent(new FlagSettingChangeEvent(current, player.getUniqueId(), child, current.isAllowed(child)));
+                }
+            }
             player.sendMessage(locale.get(player, "settings_menu.update-success", "§a島嶼設定已成功更新！"));
-        });
+        }));
 
         api.sendForm(player.getUniqueId(), builder);
     }

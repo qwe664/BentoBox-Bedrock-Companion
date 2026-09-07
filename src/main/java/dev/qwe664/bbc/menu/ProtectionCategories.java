@@ -7,13 +7,25 @@ import java.util.List;
 
 /**
  * 島嶼保護旗標（Flag.Type.PROTECTION，需要排名的那類）分類註冊表。
- * 依照用途分成 9 個分類，總共涵蓋 BentoBox 3.20.0 的 96 個保護旗標。
+ * 一般保護項目依用途分成 9 個分類；CHANGE_SETTINGS 另設島嶼選單入口。
  * 每個旗標附上簡短的中文說明，顯示在下拉選單標籤裡。
  */
 public final class ProtectionCategories {
 
     private ProtectionCategories() {
     }
+
+    /**
+     * 島嶼選單中的獨立入口，只調整誰可以修改島嶼設定。
+     * 不放進一般保護分類清單，避免同一旗標出現兩次。
+     */
+    public static final ProtectionCategory SETTINGS_ACCESS = new ProtectionCategory(
+            "SETTINGS_ACCESS",
+            "設定修改職級",
+            new Flag[]{Flags.CHANGE_SETTINGS},
+            new String[]{"變更島嶼設定的權限"},
+            new String[]{"設定最低哪個島嶼職級可以變更保護與設定選項"}
+    );
 
     private static final Flag[] BUILDING_FLAGS = {
             Flags.BREAK_BLOCKS,
@@ -369,19 +381,16 @@ public final class ProtectionCategories {
     private static final Flag[] MISC_FLAGS = {
             Flags.COMMAND_RANKS,
             Flags.LOCK,
-            Flags.CHANGE_SETTINGS,
     };
 
     private static final String[] MISC_LABELS = {
             "指令權限設定",
             "鎖定島嶼",
-            "變更島嶼設定的權限",
     };
 
     private static final String[] MISC_DESCRIPTIONS = {
             "設定各項指令需要的最低排名",
             "設定誰可以鎖定/解鎖島嶼，阻擋其他玩家進入",
-            "設定誰可以變更島嶼的保護與設定選項",
     };
 
     public static final List<ProtectionCategory> ALL = List.of(

@@ -66,10 +66,29 @@ more detail per milestone.
       Game Mode Picker, Protection Category, Settings Menu, Visit Browse) —
       `Base Form` is an abstract base class with no UI text, so it needed no
       localization
-- [ ] Not covered: the 91 protection flags' names/descriptions in
-      `menu/ProtectionCategories.java` are still Traditional Chinese only —
-      treated as BentoBox-side content data, same as challenge/warp names,
-      out of scope for form-UI localization
+- [x] All 96 protection flag names/descriptions and 9 category titles localized
+      through `protection_flags.*` and `protection_categories.*` keys
+
+## v0.13.0 ✅ Settings and economy hardening
+
+- [x] Match BentoBox's settings command, per-flag, `CHANGE_SETTINGS`, OP, and
+      admin permission rules
+- [x] Revalidate the island and all proposed changes at form submission; make
+      unauthorized entries read-only and reject the whole batch on conflict
+- [x] Preselect protection ranks and add a dedicated setting-management rank entry
+- [x] Check Vault transaction results and compensate partial transfer failures
+- [x] Support startup without Vault and an installed Bank addon whose manager is
+      not ready
+- [x] Reject non-finite money amounts
+- [x] Route intercepted settings commands to the selected game-mode world
+
+## v0.13.3 ✅ BentoBox startup health check
+
+- [x] Move the final Bank check to `BentoBoxReadyEvent`
+- [x] Verify the BentoBox main plugin after addon initialization
+- [x] Log every registered addon's name, version, and final state
+- [x] Report enabled/total counts and warn for non-`ENABLED` addons
+- [x] Confirm `BankManager` readiness separately from the Bank addon state
 
 ## v1.0.0 — Stable Release
 
@@ -83,5 +102,4 @@ more detail per milestone.
 ### Remaining
 
 - [ ] Documentation pass
-- [ ] Decide whether to translate `menu/ProtectionCategories.java` content
 - [ ] Stable release

@@ -66,6 +66,7 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 tasks.processResources {
+    inputs.property("version", project.version)
     filesMatching("plugin.yml") {
         expand(
             "version" to project.version

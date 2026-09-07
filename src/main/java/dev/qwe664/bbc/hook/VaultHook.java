@@ -24,15 +24,12 @@ import org.bukkit.plugin.ServicesManager;
  * 這裡讀的是「玩家個人 Vault 錢包餘額」，跟 BankHook 讀的「島嶼銀行餘額」
  * 是完全不同的兩筆錢——不要混用。
  */
-public class VaultHook {
+public class VaultHook implements EconomyHook {
 
     private Economy economy;
 
-    /**
-     * 在 onEnable() 時呼叫一次，嘗試向 ServicesManager 註冊經濟服務。
-     * 沒有任何經濟外掛掛在 Vault 底下時，economy 會維持 null。
-     */
-    public void setup(ServicesManager servicesManager) {
+    /** 建立時向 ServicesManager 查詢經濟服務；沒有提供者時 economy 維持 null。 */
+    public VaultHook(ServicesManager servicesManager) {
         RegisteredServiceProvider<Economy> rsp =
                 servicesManager.getRegistration(Economy.class);
         this.economy = (rsp == null) ? null : rsp.getProvider();
@@ -59,19 +56,18 @@ public class VaultHook {
     }
 
     /**
-     * 從玩家個人錢包扣款。回傳 Vault 原生的 EconomyResponse，
-     * 呼叫端用 transactionSuccess() 判斷是否成功、errorMessage 顯示失敗原因。
-     * Vault 未安裝時回傳 null，呼叫端要自己配合 isAvailable() 判斷。
+     * 從玩家個人錢包扣款。Vault 的回傳值會立刻轉成 BBC 自己的結果型別，
+     * 避免 Vault API 類別洩漏到其他類別的方法簽章。
      */
-    public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
-        return isAvailable() ? economy.withdrawPlayer(player, amount) : null;
+    public EconomyTransactionResult withdrawPlayer(OfflinePlayer player, double amount) {
+        return result(isAvailable() ? economy.withdrawPlayer(player, amount) : null);
     }
 
     /**
      * 存款進玩家個人錢包。用於「把島嶼銀行的錢提到個人錢包」這個方向。
      */
-    public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
-        return isAvailable() ? economy.depositPlayer(player, amount) : null;
+    public EconomyTransactionResult depositPlayer(OfflinePlayer player, double amount) {
+        return result(isAvailable() ? economy.depositPlayer(player, amount) : null);
     }
 
     public boolean hasEnough(OfflinePlayer player, double amount) {
@@ -80,5 +76,14 @@ public class VaultHook {
 
     public String format(double amount) {
         return isAvailable() ? economy.format(amount) : String.format("%.2f", amount);
+    }
+
+    private EconomyTransactionResult result(EconomyResponse response) {
+        if (response == null) {
+            return EconomyTransactionResult.failed("");
+        }
+        return response.transactionSuccess()
+                ? EconomyTransactionResult.succeeded()
+                : EconomyTransactionResult.failed(response.errorMessage);
     }
 }

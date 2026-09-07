@@ -115,7 +115,7 @@ public class BBCExpansion extends PlaceholderExpansion {
             }
 
             case "player_money" -> {
-                double balance = plugin.getVaultHook().getPlayerBalance(player);
+                double balance = plugin.getEconomyHook().getPlayerBalance(player);
                 yield String.format("%.2f", balance);
             }
 

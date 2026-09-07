@@ -12,6 +12,30 @@ the current version).
 - Documentation pass.
 - Stable `v1.0.0` release.
 
+## [0.13.3-beta] — BentoBox startup health check
+
+- `fix:` defer the final Bank integration status check until
+  `BentoBoxReadyEvent`, after BentoBox has enabled all addons and initialized
+  their managers. Logs distinguish a missing Bank addon from a detected addon
+  whose `BankManager` is still unavailable.
+- `feat:` after BentoBox reports ready, verify that its main plugin is enabled,
+  log the version and state of every registered addon, and report an enabled
+  addon count with a warning when any addon has not reached `ENABLED`.
+- Validation: the test server reported BentoBox enabled, all 9 registered
+  addons at `ENABLED`, and an initialized `BankManager`.
+
+## [0.13.0-Beta] — Settings and economy hardening
+
+- `fix:` enforce the game-mode settings permission, per-flag permissions, and each island's live `CHANGE_SETTINGS` rank; OPs and the game-mode admin-settings permission retain BentoBox's administrative exception.
+- `fix:` render unauthorized settings as read-only, reselect each protection flag's current rank, and prevent unmapped custom ranks from being overwritten.
+- `fix:` re-resolve the island by ID and revalidate permissions, membership, original values, and cooldowns on the main server thread before applying any submitted changes. All changes are validated before any are written, while BentoBox cooldowns and flag-change events are preserved.
+- `feat:` expose `CHANGE_SETTINGS` as a dedicated island menu entry so authorized players can configure the minimum rank through the Bedrock form.
+- `fix:` check Vault withdrawal, wallet credit, and refund results; compensate the opposite side after a partial transfer failure and log unrecovered transfers for administrators.
+- `fix:` isolate the optional Vault API behind `EconomyHook`, allowing the plugin to start without Vault, and treat a present but uninitialized Bank manager as unavailable.
+- `fix:` reject `NaN`, positive infinity, and negative infinity as transfer amounts.
+- `fix:` carry the selected game mode's world through intercepted settings commands so the form reads and changes the intended island.
+- Validation: 27 automated tests pass. Gameplay checks covered setting authorization and revocation at submit time, dropdown defaults, normal economy transfers, invalid non-finite amounts, startup without Vault, and two installed game modes. Forced economy/refund failure branches have not yet been reproduced in-game.
+
 ## [0.12.1-Beta] — Protection flags localized
 
 - `feat:` localize all 96 `Flag.Type.PROTECTION` flags in `menu/ProtectionCategories.java` — labels and descriptions now resolve via `protection_flags.<FLAG_ID>.label` / `.description`, with the existing Traditional Chinese arrays kept in code purely as fallback text.

@@ -10,6 +10,18 @@ Thank you for your interest in contributing to BentoBox Bedrock Companion!
 - Geyser
 - Floodgate
 
+Gradle downloads dependencies from the configured Maven repositories on the
+first build. Build and run the test suite with:
+
+```bash
+./gradlew clean build --no-daemon
+```
+
+The current suite contains pure-logic permission and amount tests plus a class
+isolation test that verifies the plugin's non-Vault startup path. Changes to
+Bukkit, Floodgate, BentoBox forms, or economy transactions still require a
+separate test server check.
+
 ## Project Goals
 
 - Improve the Bedrock Edition experience.
@@ -49,3 +61,5 @@ docs: update README
 - Keep each pull request focused on a single feature or fix.
 - Update documentation when needed.
 - Ensure the project builds successfully before submitting.
+- For a version change, inspect `plugin.yml` inside the built JAR and confirm it
+  matches `gradle.properties`.

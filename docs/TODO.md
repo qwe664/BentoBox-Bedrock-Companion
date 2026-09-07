@@ -43,21 +43,33 @@
 - [x] Settings Menu Form
 - [x] Visit Browse Form
 
-Note: the 91 protection flags' names/descriptions themselves
-(`menu/ProtectionCategories.java`, ~200 strings) are still Traditional
-Chinese only, same as challenge/warp *content* configured by the server
-admin — this project's `LocaleService` covers form UI chrome, not
-BentoBox-side data content. Translating `ProtectionCategories.java` is a
-separate, larger follow-up if wanted.
+## Phase 5.1 — v0.13.0 hardening ✅
+
+- [x] Enforce command, per-flag, and live `CHANGE_SETTINGS` authorization
+- [x] Revalidate island identity, permissions, cooldowns, and original values on submit
+- [x] Preselect current protection ranks and preserve custom unmapped ranks as read-only
+- [x] Add a dedicated form entry for the setting-management rank
+- [x] Check economy transaction/refund results and compensate partial failures
+- [x] Keep Vault optional and handle an unavailable Bank manager
+- [x] Reject non-finite money amounts
+- [x] Use the selected game-mode world for intercepted settings commands
+
+## Phase 5.2 — v0.13.3 startup health check ✅
+
+- [x] Wait for `BentoBoxReadyEvent` before the final integration check
+- [x] Verify the BentoBox main plugin and all registered addon states
+- [x] Log addon names, versions, enabled totals, and failed states
+- [x] Confirm Bank addon and `BankManager` readiness separately
 
 ## Phase 6 — Release v1.0
 
 - [ ] Documentation pass (README, CONTRIBUTING, docs/API.md up to date)
-- [ ] Decide whether to translate `menu/ProtectionCategories.java` content
 - [ ] Release v1.0
 
 ## Testing
 
 - [x] JUnit 5 test infrastructure (`build.gradle.kts`, `src/test/`)
-- [x] Unit tests for pure-logic utility classes: `ProgressBarUtil`, `ColorUtil`, `ReflectionAliases`
+- [x] 27 tests covering `ProgressBarUtil`, `ColorUtil`, `ReflectionAliases`,
+      `SettingsPermissionPolicy`, `MoneyAmountValidator`, and optional Vault class isolation
 - [ ] Unit tests for Bukkit-dependent classes (would need MockBukkit — `MenuItem`, hooks, services)
+- [ ] Automated integration tests for Floodgate forms and Bank/Vault failure compensation

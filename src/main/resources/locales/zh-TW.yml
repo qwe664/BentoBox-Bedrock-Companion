@@ -18,6 +18,10 @@ common:
   bedrock-only: '§e目前只有基岩版玩家可以使用 Bedrock UI。'
   back-to-island-menu: ⬅ 返回島嶼選單
   no-gamemode: '§c查不到目前玩法，無法執行操作。'
+  done: ✅ 完成
+  read-only: 唯讀
+  enabled: 開啟
+  disabled: 關閉
 
 main_menu:
   title: BentoBox
@@ -33,6 +37,7 @@ island_menu:
   go-home: 🏠 傳送到島嶼
   team: 👥 隊伍
   settings: ⚙ 島嶼設定
+  settings-access-rank: 🔐 設定修改職級
   protection: 🛡 保護設定
   info: 📊 島嶼資訊
   warps: 🚩 傳送點
@@ -90,9 +95,12 @@ wallet_bank:
   unknown-error: 未知錯誤
   deposit-success: '§a已將 {amount} 存入島嶼銀行。'
   deposit-failed: '§c存款失敗（{reason}），金額已退回錢包。'
+  deposit-refund-failed: '§4存款失敗（{bank_reason}），而且 {amount} 無法退回錢包（{wallet_reason}）。請立即聯絡管理員。'
   insufficient-bank: '§c島嶼銀行餘額不足。'
   withdraw-success: '§a已從島嶼銀行提出 {amount} 到錢包。'
   withdraw-failed: '§c提款失敗（{reason}）。'
+  wallet-credit-failed-refunded: '§c錢包入帳失敗（{reason}），{amount} 已退回島嶼銀行。'
+  wallet-credit-refund-failed: '§4島嶼銀行已扣款，但錢包入帳（{wallet_reason}）與銀行退款（{bank_reason}）都失敗。金額：{amount}，請立即聯絡管理員。'
 
 team_member_action:
   current-rank: 目前職級：§7
@@ -276,6 +284,7 @@ debug_menu:
   reflection-empty-target: '§c請輸入類別名稱或 Alias。'
 
 protection_categories:
+  SETTINGS_ACCESS: 設定修改職級
   BUILDING: 建築與破壞
   STORAGE: 容器與儲存
   WORKSTATION: 工作站與製作

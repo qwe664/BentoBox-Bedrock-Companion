@@ -3,6 +3,7 @@ package dev.qwe664.bbc.form;
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import dev.qwe664.bbc.service.SettingsAccess;
 import world.bentobox.bentobox.api.events.flags.FlagSettingChangeEvent;
 import org.geysermc.cumulus.form.CustomForm;
@@ -76,9 +77,16 @@ public class SettingsMenuForm extends BaseForm {
 
     @Override
     public void open(Player player) {
+        open(player, player.getWorld());
+    }
+
+    /**
+     * @param targetWorld 要查詢島嶼的玩法世界；從跨玩法指令開啟時不能使用玩家當前世界。
+     */
+    public void open(Player player, World targetWorld) {
 
         if (!Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().runTask(plugin, () -> open(player));
+            Bukkit.getScheduler().runTask(plugin, () -> open(player, targetWorld));
             return;
         }
         if (!player.isOnline()) return;
@@ -95,7 +103,7 @@ public class SettingsMenuForm extends BaseForm {
         }
 
         Island island = plugin.getBentoBoxService().getIslandsManager()
-                .getIsland(player.getWorld(), player.getUniqueId());
+                .getIsland(targetWorld, player.getUniqueId());
 
         if (island == null) {
             player.sendMessage(plugin.getLocaleService().get(player, "settings_menu.no-island", "§c你目前沒有島嶼！"));

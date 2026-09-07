@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.service;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.addons.GameModeAddon;
@@ -64,16 +65,17 @@ public class BentoBoxService {
         return getBentoBox().getAddonsManager().getGameModeAddons().stream()
                 .map(addon -> new GameModeChoice(
                         addon.getDescription().getName(),
-                        addon.getPlayerCommand().map(CompositeCommand::getTopLabel).orElse(null)
+                        addon.getPlayerCommand().map(CompositeCommand::getTopLabel).orElse(null),
+                        addon.getOverWorld()
                 ))
-                .filter(choice -> choice.label() != null)
+                .filter(choice -> choice.label() != null && choice.world() != null)
                 .toList();
     }
 
     /**
-     * 一個玩法選項：顯示名稱 + 該玩法的玩家指令別名。
+     * 一個玩法選項：顯示名稱、玩家指令別名，以及用來查島的玩法主世界。
      */
-    public record GameModeChoice(String name, String label) {
+    public record GameModeChoice(String name, String label, World world) {
     }
 
     /**

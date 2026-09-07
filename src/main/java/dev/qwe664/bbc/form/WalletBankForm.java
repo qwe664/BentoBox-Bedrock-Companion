@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.CustomForm;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
-import world.bentobox.bank.Bank;
 import world.bentobox.bank.BankManager;
 import world.bentobox.bank.BankResponse;
 import world.bentobox.bank.data.Money;
@@ -153,13 +152,12 @@ public class WalletBankForm extends BaseForm {
     private void depositToBank(Player player, Island island, double amount) {
 
         var locale = plugin.getLocaleService();
-        Bank bankAddon = plugin.getBankHook().getBankAddon();
+        BankManager bankManager = plugin.getBankHook().getBankManager();
 
-        if (bankAddon == null) {
+        if (bankManager == null) {
             player.sendMessage(locale.get(player, "wallet_bank.no-bank-addon", "§c伺服器未安裝 Bank 附加模組，無法使用存提款功能。"));
             return;
         }
-        BankManager bankManager = bankAddon.getBankManager();
 
         if (!plugin.getEconomyHook().hasEnough(player, amount)) {
             player.sendMessage(locale.get(player, "wallet_bank.insufficient-wallet", "§c你的錢包餘額不足。"));
@@ -209,13 +207,12 @@ public class WalletBankForm extends BaseForm {
     private void withdrawFromBank(Player player, Island island, double amount) {
 
         var locale = plugin.getLocaleService();
-        Bank bankAddon = plugin.getBankHook().getBankAddon();
+        BankManager bankManager = plugin.getBankHook().getBankManager();
 
-        if (bankAddon == null) {
+        if (bankManager == null) {
             player.sendMessage(locale.get(player, "wallet_bank.no-bank-addon", "§c伺服器未安裝 Bank 附加模組，無法使用存提款功能。"));
             return;
         }
-        BankManager bankManager = bankAddon.getBankManager();
         double bankBalance = plugin.getBankHook().getIslandBalance(island);
 
         if (bankBalance < amount) {

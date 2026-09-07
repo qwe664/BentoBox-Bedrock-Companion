@@ -23,7 +23,7 @@ import world.bentobox.bentobox.database.objects.Island;
 public class BankHook {
 
     public boolean isAvailable() {
-        return getBankAddon() != null;
+        return getBankManager() != null;
     }
 
     /**
@@ -39,6 +39,12 @@ public class BankHook {
                 .orElse(null);
     }
 
+    /** Addon 可能已被 BentoBox 找到，但因缺少經濟服務而沒有完成初始化。 */
+    public BankManager getBankManager() {
+        Bank addon = getBankAddon();
+        return addon == null ? null : addon.getBankManager();
+    }
+
     /**
      * 取得指定島嶼的銀行餘額。Bank 未安裝、島嶼為 null、或該島嶼查無帳戶資料
      * （例如剛建立的新島嶼還沒有任何存款紀錄）時回傳 0.0，不回傳 null，
@@ -46,13 +52,12 @@ public class BankHook {
      */
     public double getIslandBalance(Island island) {
 
-        Bank addon = getBankAddon();
+        BankManager bankManager = getBankManager();
 
-        if (addon == null || island == null) {
+        if (bankManager == null || island == null) {
             return 0.0;
         }
 
-        BankManager bankManager = addon.getBankManager();
         Money balance = bankManager.getBalance(island);
 
         return balance == null ? 0.0 : balance.getValue();

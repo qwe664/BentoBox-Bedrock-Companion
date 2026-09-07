@@ -1,7 +1,7 @@
 package dev.qwe664.bbc.form;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
-import net.milkbowl.vault.economy.EconomyResponse;
+import dev.qwe664.bbc.hook.EconomyTransactionResult;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.CustomForm;
@@ -56,7 +56,7 @@ public class WalletBankForm extends BaseForm {
             return;
         }
 
-        if (!plugin.getVaultHook().isAvailable()) {
+        if (!plugin.getEconomyHook().isAvailable()) {
             player.sendMessage(plugin.getLocaleService().get(player, "wallet_bank.no-economy", "§c目前沒有經濟外掛掛在 Vault 底下，無法使用存提款功能。"));
             return;
         }
@@ -74,14 +74,14 @@ public class WalletBankForm extends BaseForm {
             return;
         }
 
-        double walletBalance = plugin.getVaultHook().getPlayerBalance(player);
+        double walletBalance = plugin.getEconomyHook().getPlayerBalance(player);
         double bankBalance = plugin.getBankHook().getIslandBalance(island);
 
         var locale = plugin.getLocaleService();
 
         var builder = SimpleForm.builder()
                 .title(locale.get(player, "wallet_bank.title", "💰 存提款"))
-                .content(locale.get(player, "wallet_bank.wallet-balance-label", "錢包餘額：") + plugin.getVaultHook().format(walletBalance)
+                .content(locale.get(player, "wallet_bank.wallet-balance-label", "錢包餘額：") + plugin.getEconomyHook().format(walletBalance)
                         + "\n" + locale.get(player, "wallet_bank.bank-balance-label", "島嶼銀行餘額：") + String.format("%.2f", bankBalance))
                 .button(locale.get(player, "wallet_bank.deposit-button", "⬆ 存款（錢包 → 島嶼銀行）"))
                 .button(locale.get(player, "wallet_bank.withdraw-button", "⬇ 提款（島嶼銀行 → 錢包）"))
@@ -161,16 +161,16 @@ public class WalletBankForm extends BaseForm {
         }
         BankManager bankManager = bankAddon.getBankManager();
 
-        if (!plugin.getVaultHook().hasEnough(player, amount)) {
+        if (!plugin.getEconomyHook().hasEnough(player, amount)) {
             player.sendMessage(locale.get(player, "wallet_bank.insufficient-wallet", "§c你的錢包餘額不足。"));
             return;
         }
 
-        var withdrawResponse = plugin.getVaultHook().withdrawPlayer(player, amount);
+        var withdrawResponse = plugin.getEconomyHook().withdrawPlayer(player, amount);
 
-        if (withdrawResponse == null || !withdrawResponse.transactionSuccess()) {
+        if (!withdrawResponse.success()) {
             player.sendMessage(locale.get(player, "wallet_bank.wallet-withdraw-failed", "§c從錢包扣款失敗：")
-                    + (withdrawResponse == null ? locale.get(player, "wallet_bank.unknown-error", "未知錯誤") : withdrawResponse.errorMessage));
+                    + economyReason(player, withdrawResponse));
             return;
         }
 
@@ -183,22 +183,22 @@ public class WalletBankForm extends BaseForm {
 
                     if (bankResponse == BankResponse.SUCCESS) {
                         player.sendMessage(locale.get(player, "wallet_bank.deposit-success", "§a已將 {amount} 存入島嶼銀行。")
-                                .replace("{amount}", plugin.getVaultHook().format(amount)));
+                                .replace("{amount}", plugin.getEconomyHook().format(amount)));
                     } else {
                         // 銀行端存款失敗，把剛剛扣掉的錢退回玩家錢包，不讓玩家平白損失。
-                        EconomyResponse refundResponse = plugin.getVaultHook().depositPlayer(player, amount);
+                        EconomyTransactionResult refundResponse = plugin.getEconomyHook().depositPlayer(player, amount);
                         String bankReason = bankReason(bankResponse);
 
                         if (vaultSucceeded(refundResponse)) {
                             player.sendMessage(locale.get(player, "wallet_bank.deposit-failed", "§c存款失敗（{reason}），金額已退回錢包。")
                                     .replace("{reason}", bankReason));
                         } else {
-                            String walletReason = vaultReason(player, refundResponse);
+                            String walletReason = economyReason(player, refundResponse);
                             player.sendMessage(locale.get(player, "wallet_bank.deposit-refund-failed",
                                             "§4存款失敗（{bank_reason}），而且 {amount} 無法退回錢包（{wallet_reason}）。請立即聯絡管理員。")
                                     .replace("{bank_reason}", bankReason)
                                     .replace("{wallet_reason}", walletReason)
-                                    .replace("{amount}", plugin.getVaultHook().format(amount)));
+                                    .replace("{amount}", plugin.getEconomyHook().format(amount)));
                             logUnrecoveredTransfer("wallet refund after failed bank deposit", player, island,
                                     amount, bankReason, walletReason);
                         }
@@ -231,14 +231,14 @@ public class WalletBankForm extends BaseForm {
                 .thenAccept(bankResponse -> Bukkit.getScheduler().runTask(plugin, () -> {
 
                     if (bankResponse == BankResponse.SUCCESS) {
-                        EconomyResponse walletResponse = plugin.getVaultHook().depositPlayer(player, amount);
+                        EconomyTransactionResult walletResponse = plugin.getEconomyHook().depositPlayer(player, amount);
 
                         if (vaultSucceeded(walletResponse)) {
                             player.sendMessage(locale.get(player, "wallet_bank.withdraw-success", "§a已從島嶼銀行提出 {amount} 到錢包。")
-                                    .replace("{amount}", plugin.getVaultHook().format(amount)));
+                                    .replace("{amount}", plugin.getEconomyHook().format(amount)));
                         } else {
                             refundFailedWalletCredit(player, island, bankManager, user, amountMoney, amount,
-                                    vaultReason(player, walletResponse));
+                                    economyReason(player, walletResponse));
                         }
                     } else {
                         player.sendMessage(locale.get(player, "wallet_bank.withdraw-failed", "§c提款失敗（{reason}）。")
@@ -255,7 +255,7 @@ public class WalletBankForm extends BaseForm {
                 .deposit(user, island, amountMoney, TxType.DEPOSIT)
                 .whenComplete((refundResponse, throwable) -> Bukkit.getScheduler().runTask(plugin, () -> {
                     var locale = plugin.getLocaleService();
-                    String amountText = plugin.getVaultHook().format(amount);
+                    String amountText = plugin.getEconomyHook().format(amount);
 
                     if (throwable == null && refundResponse == BankResponse.SUCCESS) {
                         player.sendMessage(locale.get(player, "wallet_bank.wallet-credit-failed-refunded",
@@ -278,15 +278,15 @@ public class WalletBankForm extends BaseForm {
                 }));
     }
 
-    private boolean vaultSucceeded(EconomyResponse response) {
-        return response != null && response.transactionSuccess();
+    private boolean vaultSucceeded(EconomyTransactionResult response) {
+        return response != null && response.success();
     }
 
-    private String vaultReason(Player player, EconomyResponse response) {
-        if (response == null || response.errorMessage == null || response.errorMessage.isBlank()) {
+    private String economyReason(Player player, EconomyTransactionResult response) {
+        if (response == null || response.errorMessage() == null || response.errorMessage().isBlank()) {
             return plugin.getLocaleService().get(player, "wallet_bank.unknown-error", "未知錯誤");
         }
-        return response.errorMessage;
+        return response.errorMessage();
     }
 
     private String bankReason(BankResponse response) {

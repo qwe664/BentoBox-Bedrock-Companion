@@ -26,7 +26,7 @@ public class IslandMenuForm extends BaseForm {
                 && plugin.getConfigService().isFeatureEnabled("challenges");
         boolean visitAvailable = plugin.getVisitHook().isAvailable()
                 && plugin.getConfigService().isFeatureEnabled("visit");
-        boolean walletBankAvailable = plugin.getVaultHook().isAvailable()
+        boolean walletBankAvailable = plugin.getEconomyHook().isAvailable()
                 && plugin.getBankHook().isAvailable()
                 && plugin.getConfigService().isFeatureEnabled("wallet-bank");
 

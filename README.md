@@ -14,20 +14,20 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - Geyser compatibility
 - Native Bedrock Form framework
 - Island Information (owner, members, size, creation date)
-- Island Settings (protection flags via native forms)
+- Island Settings (13 setting toggles with BentoBox permission and rank checks)
 - Team Management (native form: invite/kick/promote/transfer ownership)
-- Island Flags (91 protection flags, categorized menu)
+- Island Flags (96 localized protection flags across 9 categorized menus)
 - Warps (browse & manage island warp points)
 - Challenges support
 - Visit Menu (browse & visit other players' islands)
-- Bank integration (island balance display)
-- Vault integration (personal wallet display, wallet ↔ island bank transfer)
+- Bank integration (island balance display; safely disabled while its manager is unavailable)
+- Optional Vault economy integration (personal wallet display and checked wallet ↔ island bank transfers)
 - Admin Tools (island lookup/teleport, config reload)
 - LuckPerms integration (displays player's primary group)
 - PlaceholderAPI support (%bbc_*% variables)
 - Configuration file (customizable messages & feature toggles)
 - Developer/Debug tools (environment info, reflection explorer)
-- Multi-language support (`en-US`, `zh-TW`) — every form's UI text is localized. (The 91 protection flags' own names/descriptions in `menu/ProtectionCategories.java` are still Traditional Chinese only, same as challenge/warp content configured by the server admin.)
+- Multi-language support (`en-US`, `zh-TW`) for every form and all 96 protection flag names/descriptions
 
 ### Planned
 
@@ -53,8 +53,8 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 | Component | Version |
 |-----------|---------|
 | Java | 25+ |
-| Paper / Purpur | Latest |
-| BentoBox | 3.22.2+ |
+| Paper / Purpur | 26.2 |
+| BentoBox | 3.22.2+ (tested against 3.22.2) |
 | Floodgate | Required |
 | Geyser | Required |
 | LuckPerms | Optional |
@@ -63,6 +63,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 | Visit | Optional |
 | Bank | Optional |
 | Vault | Optional |
+| Vault economy provider (for example EssentialsX Economy) | Optional; required for wallet features |
 | PlaceholderAPI | Optional |
 
 ---
@@ -73,9 +74,10 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 2. Install Geyser.
 3. Install Floodgate.
 4. (Optional) Install LuckPerms for player group display.
-5. Place the BentoBox Bedrock Companion plugin into the `plugins` folder.
-6. Restart the server.
-7. (Optional) Edit `plugins/BentoBoxBedrockCompanion/config.yml` to customize messages and toggle features, then use "Admin Tools → Reload plugin settings" in-game or restart to apply.
+5. (Optional) Install Bank for island balances. To enable wallet transfers, also install Vault and a Vault-compatible economy provider such as EssentialsX Economy.
+6. Place the BentoBox Bedrock Companion plugin into the `plugins` folder.
+7. Restart the server.
+8. (Optional) Edit `plugins/BentoBoxBedrockCompanion/config.yml` to customize messages and toggle features, then use "Admin Tools → Reload plugin settings" in-game or restart to apply.
 
 ---
 
@@ -133,6 +135,15 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 - [x] Multi-language support (`en-US`, `zh-TW`) — all forms localized
 
+### v0.13.0 ✅
+
+- [x] Enforce BentoBox setting permissions and the island's `CHANGE_SETTINGS` rank
+- [x] Revalidate island identity, permissions, ranks, cooldowns, and original values when a form is submitted
+- [x] Preserve current protection ranks in dropdowns and expose the setting-management rank in Admin Tools
+- [x] Validate economy amounts and transaction results, including compensating failed transfers
+- [x] Keep Vault truly optional and tolerate an unavailable Bank manager
+- [x] Open intercepted settings commands for the selected game mode's world
+
 ### v1.0
 
 - [ ] Documentation
@@ -152,7 +163,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — core island management, Warps, Challenges, Visit menu, PlaceholderAPI, configuration file, Vault integration, and multi-language support (`en-US`, `zh-TW`) all complete as of v0.12.0-Beta. Working toward documentation and a stable v1.0 release.
+🚧 Active Development — v0.13.0-Beta hardens island-setting authorization, multi-game-mode routing, and optional economy integrations. Documentation and stable-release work continue toward v1.0.
 
 ---
 

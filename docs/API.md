@@ -41,7 +41,22 @@ Required. Purpose:
 
 - Island information, protection flags, and settings (`service/BentoBoxService.java`)
 - Team management (invite/kick/promote/transfer ownership)
-- Island permissions (91 rank-based protection flags)
+- Island permissions (96 rank-based protection flags across 9 categories)
+
+Settings forms follow the same authorization layers as BentoBox 3.22.2:
+
+- Opening settings requires `<game-mode-prefix>island.settings`.
+- Editing a flag requires `<game-mode-prefix>settings.<flag-id>` or
+  `<game-mode-prefix>settings.*`.
+- Regular players must also pass the island's live `CHANGE_SETTINGS` rank.
+- OPs and `<game-mode-prefix>admin.settings` holders receive BentoBox's
+  administrative exception.
+
+`SettingsAccess` centralizes these checks. Both settings forms re-resolve the
+island by ID and repeat authorization and original-value checks at submission
+time before making any changes. Intercepted cross-game-mode settings commands
+carry the selected `World` through `GameModeChoice` so island lookup does not
+fall back to the player's current world.
 
 ## BentoBox Addons (optional, soft-depend)
 
@@ -50,7 +65,8 @@ since the server may not have it installed:
 
 - **Warps** (`hook/WarpsHook.java`) — browse & manage island warp points
 - **Challenges** (`hook/ChallengesHook.java`) — challenge menus & admin import
-- **Bank** (`hook/BankHook.java`) — island balance display
+- **Bank** (`hook/BankHook.java`) — island balance display and transfers; the
+  hook remains unavailable until `BankManager` has initialized
 - **Visit** (`hook/VisitHook.java`) — browse & visit other players' islands
 
 Note: the Bukkit plugin name for these addons (e.g. `BentoBox-Bank`) differs
@@ -63,9 +79,15 @@ through `getAddonByName(...)`, not `Bukkit.getPluginManager().getPlugin(...)`.
 
 Optional (soft-depend). Purpose:
 
-- Personal wallet display and wallet ↔ island bank transfer (`hook/VaultHook.java`)
+- Personal wallet display and wallet ↔ island bank transfer
 - Requires an economy plugin registered with Vault (e.g. EssentialsX Economy)
   on the server — Vault itself is just the interface.
+- `EconomyHook` is the API-free boundary used by forms and placeholders.
+  `VaultHook` is loaded reflectively only after Vault is enabled;
+  `UnavailableEconomyHook` keeps all other BBC features usable without Vault.
+- Every debit, credit, and refund result is checked. Partial failures trigger a
+  compensating transaction where possible and an error log if both operations
+  fail.
 
 ---
 
@@ -84,7 +106,7 @@ Optional (soft-depend). Purpose:
 
 Optional (soft-depend). Purpose:
 
-- Exposes 7 `%bbc_*%` placeholders (`placeholder/BBCExpansion.java`)
+- Exposes 8 `%bbc_*%` placeholders (`placeholder/BBCExpansion.java`)
 
 ---
 

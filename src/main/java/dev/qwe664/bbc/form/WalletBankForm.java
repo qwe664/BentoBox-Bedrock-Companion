@@ -2,6 +2,7 @@ package dev.qwe664.bbc.form;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import dev.qwe664.bbc.hook.EconomyTransactionResult;
+import dev.qwe664.bbc.util.MoneyAmountValidator;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.CustomForm;
@@ -134,7 +135,12 @@ public class WalletBankForm extends BaseForm {
                 return;
             }
 
-            if (amount <= 0) {
+            if (!MoneyAmountValidator.isFinite(amount)) {
+                player.sendMessage(locale.get(player, "wallet_bank.invalid-amount", "§c請輸入有效的數字金額。"));
+                return;
+            }
+
+            if (!MoneyAmountValidator.isPositive(amount)) {
                 player.sendMessage(locale.get(player, "wallet_bank.amount-must-be-positive", "§c金額必須大於 0。"));
                 return;
             }

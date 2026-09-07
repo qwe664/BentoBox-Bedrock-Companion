@@ -15,6 +15,10 @@ common:
   bedrock-only: '§eOnly Bedrock players can use the Bedrock UI right now.'
   back-to-island-menu: ⬅ Back to Island Menu
   no-gamemode: '§cCould not determine your current gamemode.'
+  done: ✅ Done
+  read-only: Read only
+  enabled: Enabled
+  disabled: Disabled
 
 main_menu:
   title: BentoBox

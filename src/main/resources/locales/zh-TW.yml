@@ -18,6 +18,10 @@ common:
   bedrock-only: '§e目前只有基岩版玩家可以使用 Bedrock UI。'
   back-to-island-menu: ⬅ 返回島嶼選單
   no-gamemode: '§c查不到目前玩法，無法執行操作。'
+  done: ✅ 完成
+  read-only: 唯讀
+  enabled: 開啟
+  disabled: 關閉
 
 main_menu:
   title: BentoBox

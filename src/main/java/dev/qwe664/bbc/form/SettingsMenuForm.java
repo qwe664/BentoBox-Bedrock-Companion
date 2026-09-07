@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import dev.qwe664.bbc.service.SettingsAccess;
 import world.bentobox.bentobox.api.events.flags.FlagSettingChangeEvent;
 import org.geysermc.cumulus.form.CustomForm;
+import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.database.objects.Island;
@@ -112,12 +113,31 @@ public class SettingsMenuForm extends BaseForm {
 
         boolean[] editable = new boolean[TOGGLE_FLAGS.length];
         int[] original = new int[TOGGLE_FLAGS.length];
+        boolean hasEditable = false;
+        StringBuilder readOnlyContent = new StringBuilder();
+        String readOnlyText = locale.get(player, "common.read-only", "唯讀");
+        String enabledText = locale.get(player, "common.enabled", "開啟");
+        String disabledText = locale.get(player, "common.disabled", "關閉");
         for (int i = 0; i < TOGGLE_FLAGS.length; i++) {
             original[i] = island.getFlag(TOGGLE_FLAGS[i]);
             editable[i] = SettingsAccess.canEdit(player, island, TOGGLE_FLAGS[i]);
+            hasEditable |= editable[i];
             String label = locale.get(player, "settings_menu." + TOGGLE_KEYS[i], TOGGLE_FALLBACKS[i]);
             if (editable[i]) builder.toggle(label, island.isAllowed(TOGGLE_FLAGS[i]));
-            else builder.label(label + " [唯讀]：" + island.isAllowed(TOGGLE_FLAGS[i]));
+            else builder.label(label + " [" + readOnlyText + "]："
+                    + (island.isAllowed(TOGGLE_FLAGS[i]) ? enabledText : disabledText));
+            readOnlyContent.append(label).append("：")
+                    .append(island.isAllowed(TOGGLE_FLAGS[i]) ? enabledText : disabledText)
+                    .append('\n');
+        }
+
+        if (!hasEditable) {
+            var readOnlyForm = SimpleForm.builder()
+                    .title(locale.get(player, "settings_menu.title", "島嶼設定管理"))
+                    .content(readOnlyContent.toString())
+                    .button(locale.get(player, "common.done", "✅ 完成"));
+            api.sendForm(player.getUniqueId(), readOnlyForm);
+            return;
         }
 
         builder.validResultHandler(response -> Bukkit.getScheduler().runTask(plugin, () -> {

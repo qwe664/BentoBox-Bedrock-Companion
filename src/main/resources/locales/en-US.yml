@@ -92,9 +92,12 @@ wallet_bank:
   unknown-error: unknown error
   deposit-success: '§a{amount} has been deposited into the island bank.'
   deposit-failed: '§cDeposit failed ({reason}), the amount has been refunded to your wallet.'
+  deposit-refund-failed: '§4Deposit failed ({bank_reason}), and {amount} could not be refunded to your wallet ({wallet_reason}). Contact an administrator immediately.'
   insufficient-bank: '§cThe island bank balance is insufficient.'
   withdraw-success: '§a{amount} has been withdrawn from the island bank to your wallet.'
   withdraw-failed: '§cWithdrawal failed ({reason}).'
+  wallet-credit-failed-refunded: '§cWallet credit failed ({reason}); {amount} has been returned to the island bank.'
+  wallet-credit-refund-failed: '§4The island bank was debited, but both wallet credit ({wallet_reason}) and bank refund ({bank_reason}) failed. Amount: {amount}. Contact an administrator immediately.'
 
 team_member_action:
   current-rank: 'Current rank: §7'

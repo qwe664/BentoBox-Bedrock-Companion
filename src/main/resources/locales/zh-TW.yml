@@ -95,9 +95,12 @@ wallet_bank:
   unknown-error: 未知錯誤
   deposit-success: '§a已將 {amount} 存入島嶼銀行。'
   deposit-failed: '§c存款失敗（{reason}），金額已退回錢包。'
+  deposit-refund-failed: '§4存款失敗（{bank_reason}），而且 {amount} 無法退回錢包（{wallet_reason}）。請立即聯絡管理員。'
   insufficient-bank: '§c島嶼銀行餘額不足。'
   withdraw-success: '§a已從島嶼銀行提出 {amount} 到錢包。'
   withdraw-failed: '§c提款失敗（{reason}）。'
+  wallet-credit-failed-refunded: '§c錢包入帳失敗（{reason}），{amount} 已退回島嶼銀行。'
+  wallet-credit-refund-failed: '§4島嶼銀行已扣款，但錢包入帳（{wallet_reason}）與銀行退款（{bank_reason}）都失敗。金額：{amount}，請立即聯絡管理員。'
 
 team_member_action:
   current-rank: 目前職級：§7

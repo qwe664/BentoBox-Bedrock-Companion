@@ -1,6 +1,7 @@
 package dev.qwe664.bbc.form;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import dev.qwe664.bbc.menu.ProtectionCategories;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.floodgate.api.FloodgateApi;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class IslandMenuForm extends BaseForm {
 
-    private static final int FIXED_BUTTON_COUNT = 5;
+    private static final int FIXED_BUTTON_COUNT = 6;
 
     public IslandMenuForm(BentoBoxBedrockCompanion plugin) {
         super(plugin);
@@ -39,6 +40,7 @@ public class IslandMenuForm extends BaseForm {
                 .button(locale.get(player, "island_menu.go-home", "🏠 傳送到島嶼"))
                 .button(locale.get(player, "island_menu.team", "👥 隊伍"))
                 .button(locale.get(player, "island_menu.settings", "⚙ 島嶼設定"))
+                .button(locale.get(player, "island_menu.settings-access-rank", "🔐 設定修改職級"))
                 .button(locale.get(player, "island_menu.protection", "🛡 保護設定"))
                 .button(locale.get(player, "island_menu.info", "📊 島嶼資訊"));
 
@@ -102,9 +104,11 @@ public class IslandMenuForm extends BaseForm {
 
                 case 2 -> plugin.getFormManager().openSettingsMenu(player);
 
-                case 3 -> plugin.getFormManager().openProtectionMenu(player);
+                case 3 -> new ProtectionCategoryForm(plugin, ProtectionCategories.SETTINGS_ACCESS).open(player);
 
-                case 4 -> plugin.getFormManager().openIslandInfo(player);
+                case 4 -> plugin.getFormManager().openProtectionMenu(player);
+
+                case 5 -> plugin.getFormManager().openIslandInfo(player);
 
                 default -> {
                 }

@@ -37,6 +37,7 @@ island_menu:
   go-home: 🏠 傳送到島嶼
   team: 👥 隊伍
   settings: ⚙ 島嶼設定
+  settings-access-rank: 🔐 設定修改職級
   protection: 🛡 保護設定
   info: 📊 島嶼資訊
   warps: 🚩 傳送點
@@ -280,6 +281,7 @@ debug_menu:
   reflection-empty-target: '§c請輸入類別名稱或 Alias。'
 
 protection_categories:
+  SETTINGS_ACCESS: 設定修改職級
   BUILDING: 建築與破壞
   STORAGE: 容器與儲存
   WORKSTATION: 工作站與製作

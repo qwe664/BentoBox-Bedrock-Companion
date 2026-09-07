@@ -34,6 +34,7 @@ island_menu:
   go-home: 🏠 Teleport to Island
   team: 👥 Team
   settings: ⚙ Island Settings
+  settings-access-rank: 🔐 Settings Access Rank
   protection: 🛡 Protection Settings
   info: 📊 Island Info
   warps: 🚩 Warps
@@ -277,6 +278,7 @@ debug_menu:
   reflection-empty-target: '§cPlease enter a class name or alias.'
 
 protection_categories:
+  SETTINGS_ACCESS: Settings Access Rank
   BUILDING: Building & Breaking
   STORAGE: Storage & Containers
   WORKSTATION: Workstations & Crafting

@@ -58,6 +58,20 @@ time before making any changes. Intercepted cross-game-mode settings commands
 carry the selected `World` through `GameModeChoice` so island lookup does not
 fall back to the player's current world.
 
+## BentoBox readiness
+
+`listener/BentoBoxReadyListener.java` listens for BentoBox 3.22.2's official
+`BentoBoxReadyEvent`. At that point `AddonsManager#allLoaded()` has run, so BBC:
+
+- confirms that the BentoBox main plugin is enabled;
+- logs every registered addon's name, version, and `Addon.State`;
+- compares the number of `ENABLED` addons with the total; and
+- performs the separate `BankManager` readiness check needed by Bank features.
+
+Any addon that has not reached `ENABLED` is logged as a warning. This check uses
+the BentoBox lifecycle event because Bukkit's `ServerLoadEvent` occurs before
+BentoBox finishes enabling addons on the tested server.
+
 ## BentoBox Addons (optional, soft-depend)
 
 Each addon is optional and guarded with an `isAvailable()` check before use,

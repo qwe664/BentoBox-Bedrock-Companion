@@ -54,6 +54,13 @@
 - [x] Reject non-finite money amounts
 - [x] Use the selected game-mode world for intercepted settings commands
 
+## Phase 5.2 — v0.13.3 startup health check ✅
+
+- [x] Wait for `BentoBoxReadyEvent` before the final integration check
+- [x] Verify the BentoBox main plugin and all registered addon states
+- [x] Log addon names, versions, enabled totals, and failed states
+- [x] Confirm Bank addon and `BankManager` readiness separately
+
 ## Phase 6 — Release v1.0
 
 - [ ] Documentation pass (README, CONTRIBUTING, docs/API.md up to date)

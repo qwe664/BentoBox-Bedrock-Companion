@@ -13,6 +13,7 @@ import dev.qwe664.bbc.placeholder.BBCExpansion;
 import dev.qwe664.bbc.listener.PlayerJoinListener;
 import dev.qwe664.bbc.listener.CommandListener; // <-- 1. 記得引入剛剛寫好的攔截器
 import dev.qwe664.bbc.listener.MenuItemListener;
+import dev.qwe664.bbc.listener.BentoBoxReadyListener;
 import dev.qwe664.bbc.manager.FormManager;
 import dev.qwe664.bbc.menu.MenuRegistry;
 import dev.qwe664.bbc.service.BentoBoxService;
@@ -84,6 +85,13 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
                 this
         );
 
+        // BentoBox 的附加元件會在 Bukkit ServerLoadEvent 之後才完成啟用。
+        // Bank 的最終狀態因此交給 BentoBoxReadyEvent 判斷，避免過早誤報。
+        getServer().getPluginManager().registerEvents(
+                new BentoBoxReadyListener(this),
+                this
+        );
+
         if (getCommand("bbc") != null) {
             getCommand("bbc").setExecutor(new BBCCommand(this));
         }
@@ -110,12 +118,6 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
             getLogger().info("已偵測到 Visit 附加模組，拜訪島嶼功能已啟用。");
         } else {
             getLogger().info("未偵測到 Visit 附加模組，拜訪島嶼功能將不會顯示（不影響其他功能）。");
-        }
-
-        if (bankHook.isAvailable()) {
-            getLogger().info("已偵測到 Bank 附加模組，島嶼餘額變數已啟用。");
-        } else {
-            getLogger().info("未偵測到 Bank 附加模組，%bbc_island_money% 變數固定回傳 0（不影響其他功能）。");
         }
 
         if (economyHook.isAvailable()) {

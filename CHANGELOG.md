@@ -12,6 +12,18 @@ the current version).
 - Documentation pass.
 - Stable `v1.0.0` release.
 
+## [0.13.3-beta] — BentoBox startup health check
+
+- `fix:` defer the final Bank integration status check until
+  `BentoBoxReadyEvent`, after BentoBox has enabled all addons and initialized
+  their managers. Logs distinguish a missing Bank addon from a detected addon
+  whose `BankManager` is still unavailable.
+- `feat:` after BentoBox reports ready, verify that its main plugin is enabled,
+  log the version and state of every registered addon, and report an enabled
+  addon count with a warning when any addon has not reached `ENABLED`.
+- Validation: the test server reported BentoBox enabled, all 9 registered
+  addons at `ENABLED`, and an initialized `BankManager`.
+
 ## [0.13.0-Beta] — Settings and economy hardening
 
 - `fix:` enforce the game-mode settings permission, per-flag permissions, and each island's live `CHANGE_SETTINGS` rank; OPs and the game-mode admin-settings permission retain BentoBox's administrative exception.

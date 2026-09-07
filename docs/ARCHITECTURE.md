@@ -35,6 +35,12 @@ Mirror BentoBox's command, per-flag, `CHANGE_SETTINGS`, OP, and admin permission
 rules. Forms re-check these rules and the island by ID at submission time, then
 validate the whole batch before changing any flags.
 
+### BentoBoxReadyListener
+Run the final dependency health check from BentoBox's `BentoBoxReadyEvent`,
+after `AddonsManager` has finished enabling addons. It verifies the main plugin,
+logs every addon's version and state, reports the enabled count, and checks that
+Bank has produced a usable `BankManager`.
+
 ### Optional hooks
 Resolve Warps, Challenges, Visit, Bank, LuckPerms, PlaceholderAPI, and economy
 features only when their providers are available. `EconomyHook` prevents core
@@ -68,3 +74,4 @@ Inventory and player events.
 - Prefer official APIs over reflection.
 - Treat form input as stale by submission time and revalidate mutable state.
 - Validate both sides of multi-system money transfers and compensate partial failures.
+- Use the owning platform's ready event for final integration checks.

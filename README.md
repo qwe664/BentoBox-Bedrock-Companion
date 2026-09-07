@@ -27,6 +27,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - PlaceholderAPI support (%bbc_*% variables)
 - Configuration file (customizable messages & feature toggles)
 - Developer/Debug tools (environment info, reflection explorer)
+- BentoBox startup health check (main plugin, every addon state, and Bank manager readiness)
 - Multi-language support (`en-US`, `zh-TW`) for every form and all 96 protection flag names/descriptions
 
 ### Planned
@@ -144,6 +145,12 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - [x] Keep Vault truly optional and tolerate an unavailable Bank manager
 - [x] Open intercepted settings commands for the selected game mode's world
 
+### v0.13.3 ✅
+
+- [x] Wait for BentoBox's official ready event before checking Bank
+- [x] Verify the BentoBox main plugin and every registered addon's final state
+- [x] Report addon versions, enabled totals, failures, and BankManager readiness
+
 ### v1.0
 
 - [ ] Documentation
@@ -163,7 +170,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — v0.13.0-Beta hardens island-setting authorization, multi-game-mode routing, and optional economy integrations. Documentation and stable-release work continue toward v1.0.
+🚧 Active Development — v0.13.3-beta adds a post-startup BentoBox health check on top of the v0.13.0 settings, routing, and economy hardening. Documentation and stable-release work continue toward v1.0.
 
 ---
 

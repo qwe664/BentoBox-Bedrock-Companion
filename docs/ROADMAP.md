@@ -82,6 +82,14 @@ more detail per milestone.
 - [x] Reject non-finite money amounts
 - [x] Route intercepted settings commands to the selected game-mode world
 
+## v0.13.3 ✅ BentoBox startup health check
+
+- [x] Move the final Bank check to `BentoBoxReadyEvent`
+- [x] Verify the BentoBox main plugin after addon initialization
+- [x] Log every registered addon's name, version, and final state
+- [x] Report enabled/total counts and warn for non-`ENABLED` addons
+- [x] Confirm `BankManager` readiness separately from the Bank addon state
+
 ## v1.0.0 — Stable Release
 
 ### Goals

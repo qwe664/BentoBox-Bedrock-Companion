@@ -34,7 +34,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ### Planned
 
-- Stable release
+- Continued compatibility updates and maintenance
 
 ---
 
@@ -94,6 +94,8 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 Missing optional addons do not prevent BBC from starting. Their related menu
 items are hidden, while the remaining features continue to work. `Level` is
 not required by BBC itself; it is required when ChunkBlock is installed.
+The optional-integration fallbacks have been verified individually for Warps,
+Challenges, Visit, Bank, Vault, PlaceholderAPI, and LuckPerms.
 
 ---
 
@@ -172,15 +174,13 @@ not required by BBC itself; it is required when ChunkBlock is installed.
 - [x] Track addon enable and disable events at runtime
 - [x] Hide addon-backed features when their addon is disabled
 
-### v0.13.5 ✅ Final beta before v1.0
+### v1.0.0 ✅ Stable release
 
 - [x] Complete the documentation pass
 - [x] Document game-mode addon dependencies and installation layout
-- [x] Verify the release metadata and final beta version
-
-### v1.0
-
-- [ ] Stable release
+- [x] Verify optional-addon and optional-plugin fallback behavior
+- [x] Remove the prerelease suffix and verify the stable build metadata
+- [x] Prepare the first stable release
 
 ---
 
@@ -196,7 +196,7 @@ not required by BBC itself; it is required when ChunkBlock is installed.
 
 ## Status
 
-🚧 Final beta — v0.13.5-beta is the final planned beta before the v1.0 stable release. Stable-release work continues toward v1.0.
+✅ Stable — v1.0.0 is the current stable release.
 
 ---
 

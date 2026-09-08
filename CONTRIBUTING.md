@@ -30,6 +30,13 @@ dependency prevents ChunkBlock from being registered as a game mode. Also
 verify the Bedrock forms from a neutral world and from each enabled game-mode
 world.
 
+For optional-integration changes, test both the complete installation and the
+relevant missing dependency. Warps, Challenges, Visit, and Bank controls must
+disappear when their addon is unavailable. Without Vault, economy controls
+must remain hidden; without PlaceholderAPI, `%bbc_*%` values are unavailable;
+without LuckPerms, the group label must use its safe fallback. None of these
+cases may prevent the plugin's unrelated features from starting.
+
 ## Project Goals
 
 - Improve the Bedrock Edition experience.

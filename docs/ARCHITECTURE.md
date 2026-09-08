@@ -52,6 +52,11 @@ features only when their providers are available. `EconomyHook` prevents core
 classes from linking directly to Vault; `VaultHook` is loaded reflectively and
 `UnavailableEconomyHook` supplies the disabled behavior.
 
+Forms query hook availability when they are built, so controls backed by a
+missing or disabled addon disappear without affecting unrelated controls.
+Placeholder and permission-group integrations also use safe unavailable
+behavior when PlaceholderAPI or LuckPerms is absent.
+
 ### Commands
 Plugin commands.
 
@@ -80,3 +85,4 @@ Inventory and player events.
 - Treat form input as stale by submission time and revalidate mutable state.
 - Validate both sides of multi-system money transfers and compensate partial failures.
 - Use the owning platform's ready event for final integration checks.
+- Keep optional integrations isolated and verify their missing-dependency paths.

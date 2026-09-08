@@ -9,8 +9,24 @@ the current version).
 ## [Unreleased] — working toward v1.0
 
 ### Planned
-- Documentation pass.
 - Stable `v1.0.0` release.
+
+## [0.13.5-beta] — Final beta before v1.0
+
+### Changed
+- Complete the documentation pass for installation, API integrations, game
+  modes, optional addons, and the ChunkBlock → Level dependency.
+- Mark this as the final planned beta before the v1.0 stable release.
+
+## [0.13.4-beta] — BentoBox addon lifecycle integration
+
+### Changed
+- Let BentoBox manage optional addon loading instead of declaring its addons as
+  Bukkit soft dependencies, and track addon enable/disable events at runtime.
+- Check optional addon presence through the BentoBox core API before resolving
+  addon-specific classes, so BBC can start when feature addon JARs are absent.
+- Report Warps, Challenges, and Visit integration status only after
+  `BentoBoxReadyEvent`, avoiding false missing-addon messages during startup.
 
 ## [0.13.3-beta] — BentoBox startup health check
 

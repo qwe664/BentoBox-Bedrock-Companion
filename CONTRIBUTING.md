@@ -9,6 +9,8 @@ Thank you for your interest in contributing to BentoBox Bedrock Companion!
 - BentoBox 3.22.2+
 - Geyser
 - Floodgate
+- Optional integration test addons: AOneBlock, ChunkBlock, Level, Warps,
+  Challenges, Visit, and Bank
 
 Gradle downloads dependencies from the configured Maven repositories on the
 first build. Build and run the test suite with:
@@ -21,6 +23,12 @@ The current suite contains pure-logic permission and amount tests plus a class
 isolation test that verifies the plugin's non-Vault startup path. Changes to
 Bukkit, Floodgate, BentoBox forms, or economy transactions still require a
 separate test server check.
+
+For game-mode and addon lifecycle changes, verify the server log after a full
+restart. In particular, ChunkBlock requires Level, and a missing hard
+dependency prevents ChunkBlock from being registered as a game mode. Also
+verify the Bedrock forms from a neutral world and from each enabled game-mode
+world.
 
 ## Project Goals
 

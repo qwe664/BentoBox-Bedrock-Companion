@@ -5,7 +5,7 @@ import world.bentobox.visit.VisitAddon;
 import world.bentobox.visit.managers.VisitAddonManager;
 
 /**
- * Visit 是軟依賴（softdepend），伺服器不一定有裝，
+ * Visit 是選用的 BentoBox 附加模組，伺服器不一定有裝，
  * 所有呼叫前都要先檢查 isAvailable()，避免在沒裝的伺服器上崩潰。
  *
  * 跟 Warps、Challenges、Bank 一樣的命名坑：Bukkit 層級的外掛名稱是
@@ -20,7 +20,11 @@ public class VisitHook {
      * 判斷 Visit 附加模組是否已安裝且啟用。
      */
     public boolean isAvailable() {
-        return getVisitAddon() != null;
+        return BentoBox.getInstance()
+                .getAddonsManager()
+                .getAddonByName("Visit")
+                .filter(addon -> addon.isEnabled())
+                .isPresent();
     }
 
     /**
@@ -28,6 +32,10 @@ public class VisitHook {
      * 找不到就回傳 null，呼叫端要自己配合 isAvailable() 做判斷。
      */
     public VisitAddon getVisitAddon() {
+        if (!isAvailable()) {
+            return null;
+        }
+
         return BentoBox.getInstance()
                 .getAddonsManager()
                 .getAddonByName("Visit")

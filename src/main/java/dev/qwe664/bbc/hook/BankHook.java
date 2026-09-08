@@ -7,7 +7,7 @@ import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.database.objects.Island;
 
 /**
- * Bank 是軟依賴（softdepend），伺服器不一定有裝，所有呼叫前都要先檢查
+ * Bank 是選用的 BentoBox 附加模組，伺服器不一定有裝，所有呼叫前都要先檢查
  * isAvailable()，避免在沒裝的伺服器上崩潰。
  *
  * 跟 WarpsHook、ChallengesHook 同樣的教訓：Bukkit 層級的外掛名稱是
@@ -23,7 +23,16 @@ import world.bentobox.bentobox.database.objects.Island;
 public class BankHook {
 
     public boolean isAvailable() {
-        return getBankManager() != null;
+        return isAddonEnabled() && getBankManager() != null;
+    }
+
+    /** 只使用 BentoBox 核心 API 判斷 Bank，缺少 Bank JAR 時也能安全呼叫。 */
+    public boolean isAddonEnabled() {
+        return BentoBox.getInstance()
+                .getAddonsManager()
+                .getAddonByName("Bank")
+                .filter(addon -> addon.isEnabled())
+                .isPresent();
     }
 
     /**
@@ -31,6 +40,10 @@ public class BankHook {
      * 找不到就回傳 null，呼叫端要自己配合 isAvailable() 做判斷。
      */
     public Bank getBankAddon() {
+        if (!isAddonEnabled()) {
+            return null;
+        }
+
         return BentoBox.getInstance()
                 .getAddonsManager()
                 .getAddonByName("Bank")
@@ -52,9 +65,13 @@ public class BankHook {
      */
     public double getIslandBalance(Island island) {
 
+        if (!isAddonEnabled() || island == null) {
+            return 0.0;
+        }
+
         BankManager bankManager = getBankManager();
 
-        if (bankManager == null || island == null) {
+        if (bankManager == null) {
             return 0.0;
         }
 

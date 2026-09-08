@@ -114,6 +114,10 @@ When an optional addon is absent or disabled, its Bedrock menu entries are
 hidden and the rest of BBC remains available. Bank additionally requires a
 ready `BankManager` before island balances and transfers are enabled.
 
+The v1.0.0 test matrix verified each optional addon independently: removing
+Warps, Challenges, Visit, or Bank hid only its corresponding controls, while
+the other installed addons remained available.
+
 ---
 
 # Vault
@@ -129,6 +133,8 @@ Optional (soft-depend). Purpose:
 - Every debit, credit, and refund result is checked. Partial failures trigger a
   compensating transaction where possible and an error log if both operations
   fail.
+- Without Vault, wallet and bank controls are hidden and economy placeholders
+  return their safe zero value.
 
 ---
 
@@ -140,6 +146,8 @@ Optional (soft-depend). Purpose:
 - Permission checks themselves go through Bukkit's `Player#hasPermission`,
   which already reflects LuckPerms grants — this integration is only for
   reading the primary group label.
+- Without LuckPerms, the group placeholder uses the localized unavailable
+  fallback and the remaining features continue normally.
 
 ---
 
@@ -148,6 +156,8 @@ Optional (soft-depend). Purpose:
 Optional (soft-depend). Purpose:
 
 - Exposes 8 `%bbc_*%` placeholders (`placeholder/BBCExpansion.java`)
+- Without PlaceholderAPI, BBC remains enabled but `%bbc_*%` placeholders cannot
+  be registered or parsed by scoreboard plugins.
 
 ---
 

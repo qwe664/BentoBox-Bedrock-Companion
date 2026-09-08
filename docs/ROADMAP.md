@@ -97,21 +97,18 @@ more detail per milestone.
 - [x] Track addon enable/disable events at runtime
 - [x] Treat disabled addons as unavailable in integration hooks
 
-## v0.13.5 ✅ Final beta before v1.0
+## v1.0.0 ✅ Stable release
 
 - [x] Complete the documentation pass
 - [x] Document game-mode addon dependencies and installation layout
-- [x] Verify release metadata for the final beta
+- [x] Verify missing-addon behavior for Warps, Challenges, Visit, and Bank
+- [x] Verify missing-plugin behavior for Vault, PlaceholderAPI, and LuckPerms
+- [x] Remove the prerelease suffix and verify stable release metadata
+- [x] Prepare the first stable release
 
-## v1.0.0 — Stable Release
-
-### Goals
+### Delivered
 
 - Native Bedrock Forms for every BentoBox interaction Bedrock players need
 - No changes to the Java Edition experience
 - Multi-language support finished across all forms
 - Documentation complete
-
-### Remaining
-
-- [ ] Stable release

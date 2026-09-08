@@ -2,21 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
-This project has not cut a stable `1.0.0` release yet; versions below are the
-`-Beta` tags used during active `develop` work (see `gradle.properties` for
-the current version).
+Version `1.0.0` is the first stable release. Earlier `-Beta` entries retain
+their historical published version names. See `gradle.properties` for the
+current version.
 
-## [Unreleased] — working toward v1.0
+## [Unreleased]
 
 ### Planned
-- Stable `v1.0.0` release.
+- Compatibility updates and maintenance.
 
-## [0.13.5-beta] — Final beta before v1.0
+## [1.0.0] — First stable release
 
 ### Changed
 - Complete the documentation pass for installation, API integrations, game
   modes, optional addons, and the ChunkBlock → Level dependency.
-- Mark this as the final planned beta before the v1.0 stable release.
+- Promote the fully tested prerelease build to the stable `1.0.0` version.
+
+### Validation
+- Verify normal startup with all nine BentoBox addons enabled and an initialized
+  Bank manager.
+- Verify that removing Warps, Challenges, Visit, or Bank hides only its related
+  menu entry while all remaining integrations continue working.
+- Verify startup without Vault, PlaceholderAPI, or LuckPerms. Economy controls
+  are hidden without Vault, placeholders are unavailable without PlaceholderAPI,
+  and the permission-group label falls back safely without LuckPerms.
+- Verify island-bank deposits and withdrawals with Vault and an economy provider.
+- Pass all 27 automated tests and confirm the generated JAR reports version
+  `1.0.0`.
 
 ## [0.13.4-beta] — BentoBox addon lifecycle integration
 

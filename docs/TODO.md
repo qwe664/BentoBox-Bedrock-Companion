@@ -68,10 +68,12 @@
 - [x] Track addon enable/disable events at runtime
 - [x] Treat disabled addons as unavailable in integration hooks
 
-## Phase 6 — Release v1.0
+## Phase 6 — Release v1.0.0 ✅
 
-- [x] Final beta documentation pass (README, CONTRIBUTING, docs/API.md up to date)
-- [ ] Release v1.0
+- [x] Stable-release documentation pass (README, CONTRIBUTING, docs/API.md up to date)
+- [x] Test missing Warps, Challenges, Visit, and Bank addons independently
+- [x] Test missing Vault, PlaceholderAPI, and LuckPerms independently
+- [x] Promote the final beta to v1.0.0 stable
 
 ## Testing
 

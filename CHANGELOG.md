@@ -9,8 +9,14 @@ the current version).
 ## [Unreleased] — working toward v1.0
 
 ### Planned
-- Documentation pass.
 - Stable `v1.0.0` release.
+
+## [0.13.5-beta] — Final beta before v1.0
+
+### Changed
+- Complete the documentation pass for installation, API integrations, game
+  modes, optional addons, and the ChunkBlock → Level dependency.
+- Mark this as the final planned beta before the v1.0 stable release.
 
 ## [0.13.4-beta] — BentoBox addon lifecycle integration
 

@@ -97,6 +97,12 @@ more detail per milestone.
 - [x] Track addon enable/disable events at runtime
 - [x] Treat disabled addons as unavailable in integration hooks
 
+## v0.13.5 ✅ Final beta before v1.0
+
+- [x] Complete the documentation pass
+- [x] Document game-mode addon dependencies and installation layout
+- [x] Verify release metadata for the final beta
+
 ## v1.0.0 — Stable Release
 
 ### Goals
@@ -108,5 +114,4 @@ more detail per milestone.
 
 ### Remaining
 
-- [ ] Documentation pass
 - [ ] Stable release

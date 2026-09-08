@@ -76,6 +76,24 @@ BentoBox finishes enabling addons on the tested server.
 `AddonDisableEvent` so reload-time lifecycle changes are visible after the
 initial readiness check. BBC does not load or enable addons itself.
 
+## BentoBox game-mode addons
+
+BentoBox game modes are discovered dynamically through `AddonsManager`. BBC
+does not assume a single game mode and uses each enabled game's registered
+player command and world when opening forms from a lobby or another neutral
+world.
+
+- **AOneBlock** — supported as an optional game mode.
+- **ChunkBlock** — supported as an optional game mode.
+- **Level** — a hard dependency of ChunkBlock; it supplies the island-level
+  currency used to unlock ChunkBlock territory. It is not required by BBC or
+  AOneBlock.
+
+Install game-mode addons under `plugins/BentoBox/addons/`. A JAR being present
+does not mean that the addon is available: BentoBox must load it successfully.
+For example, ChunkBlock is not registered as a game mode when its Level
+dependency is missing.
+
 ## BentoBox Addons (optional, managed by BentoBox)
 
 Each addon is optional and guarded with an `isAvailable()` check before use,
@@ -91,6 +109,10 @@ since the server may not have it installed or enabled. They are discovered via
 Note: the Bukkit plugin name for these addons (e.g. `BentoBox-Bank`) differs
 from the BentoBox Addon system name (e.g. `Bank`) — the hooks always resolve
 through `getAddonByName(...)`, not `Bukkit.getPluginManager().getPlugin(...)`.
+
+When an optional addon is absent or disabled, its Bedrock menu entries are
+hidden and the rest of BBC remains available. Bank additionally requires a
+ready `BankManager` before island balances and transfers are enabled.
 
 ---
 

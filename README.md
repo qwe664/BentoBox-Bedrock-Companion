@@ -28,11 +28,12 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - Configuration file (customizable messages & feature toggles)
 - Developer/Debug tools (environment info, reflection explorer)
 - BentoBox startup health check (main plugin, every addon state, and Bank manager readiness)
+- Dynamic game-mode selection for enabled BentoBox game modes (tested with AOneBlock and ChunkBlock)
+- Runtime tracking for BentoBox addon enable/disable events
 - Multi-language support (`en-US`, `zh-TW`) for every form and all 96 protection flag names/descriptions
 
 ### Planned
 
-- Documentation
 - Stable release
 
 ---
@@ -58,6 +59,9 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 | BentoBox | 3.22.2+ (tested against 3.22.2) |
 | Floodgate | Required |
 | Geyser | Required |
+| AOneBlock | Optional game mode |
+| ChunkBlock | Optional game mode; requires the Level addon |
+| Level | Optional; required by ChunkBlock |
 | LuckPerms | Optional |
 | Warps | Optional |
 | Challenges | Optional |
@@ -71,14 +75,25 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Installation
 
-1. Install BentoBox.
-2. Install Geyser.
-3. Install Floodgate.
-4. (Optional) Install LuckPerms for player group display.
-5. (Optional) Install Bank for island balances. To enable wallet transfers, also install Vault and a Vault-compatible economy provider such as EssentialsX Economy.
-6. Place the BentoBox Bedrock Companion plugin into the `plugins` folder.
-7. Restart the server.
-8. (Optional) Edit `plugins/BentoBoxBedrockCompanion/config.yml` to customize messages and toggle features, then use "Admin Tools → Reload plugin settings" in-game or restart to apply.
+1. Install BentoBox, then start the server once so BentoBox creates its folders.
+2. Install Geyser and Floodgate.
+3. (Optional) Install AOneBlock or ChunkBlock in `plugins/BentoBox/addons/`.
+   ChunkBlock requires the `Level` addon in the same directory.
+4. (Optional) Install Warps, Challenges, Visit, or Bank in
+   `plugins/BentoBox/addons/` for their corresponding Bedrock features.
+5. (Optional) Install LuckPerms for player group display.
+6. (Optional) Install Vault and a Vault-compatible economy provider such as
+   EssentialsX Economy. Bank, Vault, and an economy provider are all needed
+   for wallet ↔ island bank transfers.
+7. Place the BentoBox Bedrock Companion plugin into the `plugins` folder.
+8. Restart the server and check the startup log for BentoBox and addon states.
+9. (Optional) Edit `plugins/BentoBoxBedrockCompanion/config.yml` to customize
+   messages and feature toggles, then use "Admin Tools → Reload plugin
+   settings" in-game or restart to apply.
+
+Missing optional addons do not prevent BBC from starting. Their related menu
+items are hidden, while the remaining features continue to work. `Level` is
+not required by BBC itself; it is required when ChunkBlock is installed.
 
 ---
 
@@ -157,9 +172,14 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - [x] Track addon enable and disable events at runtime
 - [x] Hide addon-backed features when their addon is disabled
 
+### v0.13.5 ✅ Final beta before v1.0
+
+- [x] Complete the documentation pass
+- [x] Document game-mode addon dependencies and installation layout
+- [x] Verify the release metadata and final beta version
+
 ### v1.0
 
-- [ ] Documentation
 - [ ] Stable release
 
 ---
@@ -176,7 +196,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — v0.13.4-beta delegates optional addon loading to BentoBox and tracks addon lifecycle changes at runtime. Documentation and stable-release work continue toward v1.0.
+🚧 Final beta — v0.13.5-beta is the final planned beta before the v1.0 stable release. Stable-release work continues toward v1.0.
 
 ---
 

@@ -70,7 +70,7 @@
 
 ## Phase 6 — Release v1.0
 
-- [ ] Documentation pass (README, CONTRIBUTING, docs/API.md up to date)
+- [x] Final beta documentation pass (README, CONTRIBUTING, docs/API.md up to date)
 - [ ] Release v1.0
 
 ## Testing

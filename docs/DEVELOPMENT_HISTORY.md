@@ -5,6 +5,10 @@ Companion from project initialization through the first stable release.
 
 ## Overview
 
+- Earliest known project setup: July 28, 2026 at approximately 16:23–16:24
+  (Asia/Taipei), when the GitHub repository creation form was being prepared.
+- GitHub repository creation: July 28, 2026 at 16:36:31 (Asia/Taipei),
+  corresponding to `created_at: 2026-07-28T08:36:31Z`.
 - First commit: July 28, 2026 at 16:36:31 (Asia/Taipei)
 - First commit subject: `Initial commit`
 - First stable release: `v1.0.0`
@@ -33,6 +37,25 @@ Git records contain the following author identities:
 The two qwe664 identities represent the same maintainer and account for 228
 commits combined.
 
+## Repository Origin
+
+The project was already being planned and configured before the first GitHub
+commit. A screenshot from July 28, 2026 at approximately 16:23–16:24 shows
+the GitHub repository creation form for `BentoBox-Bedrock-Companion` with its
+initial description and private visibility selected.
+
+GitHub reports the repository creation time as
+`2026-07-28T08:36:31Z`, which is July 28, 2026 at 16:36:31 in Asia/Taipei.
+This exactly matches the first local Git commit, `ad37314e`, whose subject is
+`Initial commit` and whose only file is `.gitignore`.
+
+The timestamps therefore distinguish three stages:
+
+1. Approximately 16:23–16:24 — project and repository setup began.
+2. 16:36:31 — the GitHub repository was created and the initial commit was
+   generated.
+3. 19:07:04 — the first functional plugin class was committed in `137ba46`.
+
 ## Daily Timeline
 
 Dates without commits are omitted. Small experimental, formatting, and
@@ -41,10 +64,14 @@ feature or milestone.
 
 ### July 28, 2026 — Project foundation (35 commits)
 
-- Created the repository and initial project structure.
+- Began setting up the GitHub repository at approximately 16:23–16:24.
+- Created the GitHub repository and initial `.gitignore` commit at 16:36:31.
+- Added the initial README and began documenting the project direction,
+  architecture, TODO list, roadmap, and API.
 - Added Gradle Kotlin DSL, Java configuration, the Paper, BentoBox, and
   Floodgate dependencies, and the Gradle Wrapper.
-- Added `plugin.yml` and the main plugin lifecycle class.
+- Added `plugin.yml` and the main plugin lifecycle class, the first functional
+  plugin code.
 - Created `FloodgateHook`, `FormManager`, and the player join listener.
 - Added the first native Bedrock form infrastructure.
 - Added the GitHub Actions build workflow.

@@ -11,10 +11,6 @@ depend:
   - floodgate
 softdepend:
   - LuckPerms
-  - Warps
-  - BentoBox-Challenges
-  - BentoBox-Bank
-  - BentoBox-Visit
   - PlaceholderAPI
   - Vault
 commands:

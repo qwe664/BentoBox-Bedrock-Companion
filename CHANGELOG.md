@@ -12,6 +12,16 @@ the current version).
 - Documentation pass.
 - Stable `v1.0.0` release.
 
+## [0.13.4-beta] — BentoBox addon lifecycle integration
+
+### Changed
+- Let BentoBox manage optional addon loading instead of declaring its addons as
+  Bukkit soft dependencies, and track addon enable/disable events at runtime.
+- Check optional addon presence through the BentoBox core API before resolving
+  addon-specific classes, so BBC can start when feature addon JARs are absent.
+- Report Warps, Challenges, and Visit integration status only after
+  `BentoBoxReadyEvent`, avoiding false missing-addon messages during startup.
+
 ## [0.13.3-beta] — BentoBox startup health check
 
 - `fix:` defer the final Bank integration status check until

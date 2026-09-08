@@ -5,7 +5,7 @@ import world.bentobox.challenges.ChallengesAddon;
 import world.bentobox.challenges.managers.ChallengesManager;
 
 /**
- * Challenges 是軟依賴（softdepend），伺服器不一定有裝，
+ * Challenges 是選用的 BentoBox 附加模組，伺服器不一定有裝，
  * 所有呼叫前都要先檢查 isAvailable()，避免在沒裝的伺服器上崩潰。
  *
  * 跟 WarpsHook 同樣的教訓：Bukkit 層級的外掛名稱是 "BentoBox-Challenges"
@@ -16,7 +16,11 @@ import world.bentobox.challenges.managers.ChallengesManager;
 public class ChallengesHook {
 
     public boolean isAvailable() {
-        return getChallengesAddon() != null;
+        return BentoBox.getInstance()
+                .getAddonsManager()
+                .getAddonByName("Challenges")
+                .filter(addon -> addon.isEnabled())
+                .isPresent();
     }
 
     /**
@@ -24,6 +28,10 @@ public class ChallengesHook {
      * 找不到就回傳 null，呼叫端要自己配合 isAvailable() 做判斷。
      */
     public ChallengesAddon getChallengesAddon() {
+        if (!isAvailable()) {
+            return null;
+        }
+
         return BentoBox.getInstance()
                 .getAddonsManager()
                 .getAddonByName("Challenges")

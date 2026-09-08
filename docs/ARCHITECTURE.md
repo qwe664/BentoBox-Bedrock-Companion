@@ -41,6 +41,11 @@ after `AddonsManager` has finished enabling addons. It verifies the main plugin,
 logs every addon's version and state, reports the enabled count, and checks that
 Bank has produced a usable `BankManager`.
 
+### BentoBoxAddonListener
+Track `AddonEnableEvent` and `AddonDisableEvent` after startup. BentoBox remains
+responsible for loading its addons; BBC only logs lifecycle changes and its
+hooks query the current enabled state before exposing addon-backed features.
+
 ### Optional hooks
 Resolve Warps, Challenges, Visit, Bank, LuckPerms, PlaceholderAPI, and economy
 features only when their providers are available. `EconomyHook` prevents core

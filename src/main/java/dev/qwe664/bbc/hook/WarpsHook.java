@@ -5,7 +5,7 @@ import world.bentobox.warps.Warp;
 import world.bentobox.warps.managers.WarpSignsManager;
 
 /**
- * Warps 是軟依賴（softdepend），伺服器不一定有裝，
+ * Warps 是選用的 BentoBox 附加模組，伺服器不一定有裝，
  * 所有呼叫前都要先檢查 isAvailable()，避免在沒裝的伺服器上崩潰。
  */
 public class WarpsHook {
@@ -19,7 +19,11 @@ public class WarpsHook {
      * 只靠 getWarpAddon() 去查 BentoBox 的 Addon 清單就夠了。
      */
     public boolean isAvailable() {
-        return getWarpAddon() != null;
+        return BentoBox.getInstance()
+                .getAddonsManager()
+                .getAddonByName("Warps")
+                .filter(addon -> addon.isEnabled())
+                .isPresent();
     }
 
     /**
@@ -27,6 +31,10 @@ public class WarpsHook {
      * 找不到就回傳 null，呼叫端要自己配合 isAvailable() 做判斷。
      */
     public Warp getWarpAddon() {
+        if (!isAvailable()) {
+            return null;
+        }
+
         return BentoBox.getInstance()
                 .getAddonsManager()
                 .getAddonByName("Warps")

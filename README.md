@@ -151,6 +151,12 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - [x] Verify the BentoBox main plugin and every registered addon's final state
 - [x] Report addon versions, enabled totals, failures, and BankManager readiness
 
+### v0.13.4 ✅
+
+- [x] Let BentoBox manage optional addon loading
+- [x] Track addon enable and disable events at runtime
+- [x] Hide addon-backed features when their addon is disabled
+
 ### v1.0
 
 - [ ] Documentation
@@ -170,7 +176,7 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 
 ## Status
 
-🚧 Active Development — v0.13.3-beta adds a post-startup BentoBox health check on top of the v0.13.0 settings, routing, and economy hardening. Documentation and stable-release work continue toward v1.0.
+🚧 Active Development — v0.13.4-beta delegates optional addon loading to BentoBox and tracks addon lifecycle changes at runtime. Documentation and stable-release work continue toward v1.0.
 
 ---
 

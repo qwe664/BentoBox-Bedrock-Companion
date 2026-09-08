@@ -72,10 +72,15 @@ Any addon that has not reached `ENABLED` is logged as a warning. This check uses
 the BentoBox lifecycle event because Bukkit's `ServerLoadEvent` occurs before
 BentoBox finishes enabling addons on the tested server.
 
-## BentoBox Addons (optional, soft-depend)
+`listener/BentoBoxAddonListener.java` also listens for `AddonEnableEvent` and
+`AddonDisableEvent` so reload-time lifecycle changes are visible after the
+initial readiness check. BBC does not load or enable addons itself.
+
+## BentoBox Addons (optional, managed by BentoBox)
 
 Each addon is optional and guarded with an `isAvailable()` check before use,
-since the server may not have it installed:
+since the server may not have it installed or enabled. They are discovered via
+`AddonsManager` and are not declared as Bukkit soft dependencies:
 
 - **Warps** (`hook/WarpsHook.java`) — browse & manage island warp points
 - **Challenges** (`hook/ChallengesHook.java`) — challenge menus & admin import

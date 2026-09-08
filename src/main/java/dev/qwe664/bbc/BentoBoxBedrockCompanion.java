@@ -13,6 +13,7 @@ import dev.qwe664.bbc.placeholder.BBCExpansion;
 import dev.qwe664.bbc.listener.PlayerJoinListener;
 import dev.qwe664.bbc.listener.CommandListener; // <-- 1. 記得引入剛剛寫好的攔截器
 import dev.qwe664.bbc.listener.MenuItemListener;
+import dev.qwe664.bbc.listener.BentoBoxAddonListener;
 import dev.qwe664.bbc.listener.BentoBoxReadyListener;
 import dev.qwe664.bbc.manager.FormManager;
 import dev.qwe664.bbc.menu.MenuRegistry;
@@ -92,6 +93,13 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
                 this
         );
 
+        // 啟動完成後若管理員重新載入、啟用或停用 BentoBox 附加元件，
+        // 立即記錄狀態變化；實際功能可用性仍由各 hook 即時查詢。
+        getServer().getPluginManager().registerEvents(
+                new BentoBoxAddonListener(this),
+                this
+        );
+
         if (getCommand("bbc") != null) {
             getCommand("bbc").setExecutor(new BBCCommand(this));
         }
@@ -100,24 +108,6 @@ public final class BentoBoxBedrockCompanion extends JavaPlugin {
             getLogger().info("已偵測到 LuckPerms，權限組資訊功能已啟用。");
         } else {
             getLogger().info("未偵測到 LuckPerms，權限組資訊功能將不會顯示（不影響其他功能）。");
-        }
-
-        if (warpsHook.isAvailable()) {
-            getLogger().info("已偵測到 Warps 附加模組，傳送點功能已啟用。");
-        } else {
-            getLogger().info("未偵測到 Warps 附加模組，傳送點功能將不會顯示（不影響其他功能）。");
-        }
-
-        if (challengesHook.isAvailable()) {
-            getLogger().info("已偵測到 Challenges 附加模組，挑戰功能已啟用。");
-        } else {
-            getLogger().info("未偵測到 Challenges 附加模組，挑戰功能將不會顯示（不影響其他功能）。");
-        }
-
-        if (visitHook.isAvailable()) {
-            getLogger().info("已偵測到 Visit 附加模組，拜訪島嶼功能已啟用。");
-        } else {
-            getLogger().info("未偵測到 Visit 附加模組，拜訪島嶼功能將不會顯示（不影響其他功能）。");
         }
 
         if (economyHook.isAvailable()) {

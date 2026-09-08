@@ -90,6 +90,13 @@ more detail per milestone.
 - [x] Report enabled/total counts and warn for non-`ENABLED` addons
 - [x] Confirm `BankManager` readiness separately from the Bank addon state
 
+## v0.13.4 ✅ BentoBox addon lifecycle integration
+
+- [x] Let BentoBox manage optional addon loading
+- [x] Remove BentoBox addons from Bukkit `softdepend`
+- [x] Track addon enable/disable events at runtime
+- [x] Treat disabled addons as unavailable in integration hooks
+
 ## v1.0.0 — Stable Release
 
 ### Goals

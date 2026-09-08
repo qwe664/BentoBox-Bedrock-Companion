@@ -61,6 +61,13 @@
 - [x] Log addon names, versions, enabled totals, and failed states
 - [x] Confirm Bank addon and `BankManager` readiness separately
 
+## Phase 5.3 — v0.13.4 addon lifecycle integration ✅
+
+- [x] Let BentoBox manage optional addon loading
+- [x] Remove BentoBox addons from Bukkit `softdepend`
+- [x] Track addon enable/disable events at runtime
+- [x] Treat disabled addons as unavailable in integration hooks
+
 ## Phase 6 — Release v1.0
 
 - [ ] Documentation pass (README, CONTRIBUTING, docs/API.md up to date)

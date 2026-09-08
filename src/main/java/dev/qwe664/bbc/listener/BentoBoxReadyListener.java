@@ -22,10 +22,11 @@ public class BentoBoxReadyListener implements Listener {
     @EventHandler
     public void onBentoBoxReady(BentoBoxReadyEvent event) {
         auditBentoBoxAddons();
+        reportOptionalAddonFeatures();
 
         var bankHook = plugin.getBankHook();
 
-        if (bankHook.getBankAddon() == null) {
+        if (!bankHook.isAddonEnabled()) {
             plugin.getLogger().info("未偵測到 Bank 附加模組，%bbc_island_money% 變數固定回傳 0（不影響其他功能）。");
             return;
         }
@@ -36,6 +37,27 @@ public class BentoBoxReadyListener implements Listener {
         }
 
         plugin.getLogger().info("已偵測到 Bank 附加模組且 BankManager 已初始化，島嶼銀行功能已啟用。");
+    }
+
+    /** 等 BentoBox 完成啟用流程後，才報告選用 addon 對應的功能狀態。 */
+    private void reportOptionalAddonFeatures() {
+        if (plugin.getWarpsHook().isAvailable()) {
+            plugin.getLogger().info("已偵測到 Warps 附加模組，傳送點功能已啟用。");
+        } else {
+            plugin.getLogger().info("未偵測到 Warps 附加模組，傳送點功能將不會顯示（不影響其他功能）。");
+        }
+
+        if (plugin.getChallengesHook().isAvailable()) {
+            plugin.getLogger().info("已偵測到 Challenges 附加模組，挑戰功能已啟用。");
+        } else {
+            plugin.getLogger().info("未偵測到 Challenges 附加模組，挑戰功能將不會顯示（不影響其他功能）。");
+        }
+
+        if (plugin.getVisitHook().isAvailable()) {
+            plugin.getLogger().info("已偵測到 Visit 附加模組，拜訪島嶼功能已啟用。");
+        } else {
+            plugin.getLogger().info("未偵測到 Visit 附加模組，拜訪島嶼功能將不會顯示（不影響其他功能）。");
+        }
     }
 
     /** 檢查 BentoBox 主插件與每一個由 AddonsManager 管理的附加元件。 */

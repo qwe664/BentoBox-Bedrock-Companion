@@ -19,6 +19,83 @@ common:
   read-only: Read only
   enabled: Enabled
   disabled: Disabled
+  settings-update-denied: '§cSettings were not updated because your permission changed, the island is no longer available, another setting changed, or a cooldown is active. Reopen the form and try again.'
+
+command:
+  no-permission: '§c[BBC] You do not have permission to use this command.'
+  player-only: '§e[BBC] This command can only be used by a player.'
+  item-received: '§a[BBC] Menu item received.'
+  menu-player-only: '§e[BBC] The main menu can only be opened by a player.'
+  available: '§7Available commands:'
+  choose-game-mode: '§e[BBC] You are not in an island world. Choose a game mode:'
+
+help:
+  general: §eGeneral
+  bedrock-description: '§7Bedrock: Open the BBC native form menu'
+  java-description: '§7Java: Forward directly to the BentoBox island command'
+  help-description: '§7Show this help'
+  item-description: '§7Receive a replacement menu item (right-click to open the main menu)'
+  developer: §eDeveloper
+  debug-description: '§7Show the debug subcommand list'
+  plugins-description: '§7View plugin loading status'
+  methods-command: '§a/bbc debug methods <alias|class-name>'
+  methods-description: '§7Explore methods with reflection (add declared to show only methods declared by the class)'
+  more-features: '§8Additional features may be added in future versions.'
+
+debug_command:
+  usage: '§cUsage:'
+  methods-usage: '§e/bbc debug methods <alias or fully qualified class name>'
+  declared-usage: '§e/bbc debug methods declared <alias or fully qualified class name>'
+  examples: '§7Examples:'
+  alias-required: '§cEnter an alias or fully qualified class name.'
+  reflection-output: '§a[BBC] Reflection information was written to the server console.'
+  not-implemented: '§e[BBC] This debug function is not implemented.'
+  command-list-title: '§6===== BBC Debug ====='
+  available-subcommands: '§eAvailable subcommands:'
+  plugins-description: '§7View plugin loading status'
+  methods-description: '§7Explore methods with reflection'
+  aliases: '§7Aliases: flag, user'
+  declared-description: '§7Show only public methods declared by the class'
+  api-description: '§7Explore the public API: BentoBox version, enabled game modes, and addons'
+  island-description: '§7Explore the Island API for your current island'
+  flags-description: '§7List all registered protection flags'
+  version-description: '§7View BBC version information'
+  plugin-status-title: '§6===== BBC Plugin Status ====='
+  not-installed: Not Installed
+  api-title: '§6===== BentoBox API ====='
+  core-version-label: '§eCore version: '
+  enabled-game-modes: '§eEnabled game modes:'
+  enabled-addons: '§eEnabled addons:'
+  player-only: '§cThis command must be run by a player because it uses the current world.'
+  island-title: '§6===== Island API ====='
+  no-island: '§cThere is no island data for your current world.'
+  owner-label: '§eOwner: '
+  member-count-label: '§eMembers: '
+  world-label: '§eWorld: '
+  center-label: '§eCenter: '
+  protection-range-label: '§eProtection range: '
+  island-range-label: '§eIsland range: '
+  blocks-suffix: ' blocks'
+  has-team-label: '§eHas team: '
+  yes-value: 'Yes'
+  no-value: 'No'
+  flags-title: '§6===== Protection Flags ====='
+  registered-flags: '§e{count} registered flags'
+  version-title: '§6===== BBC Version ====='
+  bbc-version-label: '§eBentoBox Bedrock Companion: '
+  bentobox-version-label: '§eBentoBox: '
+  server-label: '§eServer: '
+  minecraft-label: '§eMinecraft: '
+
+placeholder:
+  unavailable: None
+
+rank_labels:
+  owner: Owner
+  sub-owner: Sub-Owner
+  member: Member
+  trusted: Trusted
+  coop: Co-op
 
 main_menu:
   title: BentoBox

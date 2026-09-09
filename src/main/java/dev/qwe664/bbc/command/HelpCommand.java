@@ -24,18 +24,18 @@ public class HelpCommand implements BaseCommand {
         sender.sendMessage(ChatColor.GOLD + "========== BBC ==========");
         sender.sendMessage("");
 
-        sender.sendMessage(ChatColor.YELLOW + "General");
+        sender.sendMessage(text(sender, "help.general", ChatColor.YELLOW + "一般指令"));
         sender.sendMessage(ChatColor.GREEN + "/bbc");
-        sender.sendMessage(ChatColor.GRAY + "基岩版：開啟 BBC 表單主選單");
-        sender.sendMessage(ChatColor.GRAY + "Java 版：直接轉發到 /is");
+        sender.sendMessage(text(sender, "help.bedrock-description", ChatColor.GRAY + "基岩版：開啟 BBC 表單主選單"));
+        sender.sendMessage(text(sender, "help.java-description", ChatColor.GRAY + "Java 版：直接轉發到 /is"));
         sender.sendMessage("");
 
         sender.sendMessage(ChatColor.GREEN + "/bbc help");
-        sender.sendMessage(ChatColor.GRAY + "顯示此說明");
+        sender.sendMessage(text(sender, "help.help-description", ChatColor.GRAY + "顯示此說明"));
         sender.sendMessage("");
 
         sender.sendMessage(ChatColor.GREEN + "/bbc item");
-        sender.sendMessage(ChatColor.GRAY + "補領選單物品（右鍵可開啟主選單）");
+        sender.sendMessage(text(sender, "help.item-description", ChatColor.GRAY + "補領選單物品（右鍵可開啟主選單）"));
         sender.sendMessage("");
 
         // 只有具備開發者權限的人才看得到後面這段，
@@ -43,21 +43,27 @@ public class HelpCommand implements BaseCommand {
         if (sender instanceof Player player
                 && plugin.getPermissionService().hasDeveloperPermission(player)) {
 
-            sender.sendMessage(ChatColor.YELLOW + "Developer");
+            sender.sendMessage(text(sender, "help.developer", ChatColor.YELLOW + "開發者指令"));
             sender.sendMessage(ChatColor.GREEN + "/bbc debug");
-            sender.sendMessage(ChatColor.GRAY + "顯示 Debug 子指令清單");
+            sender.sendMessage(text(sender, "help.debug-description", ChatColor.GRAY + "顯示 Debug 子指令清單"));
             sender.sendMessage("");
 
             sender.sendMessage(ChatColor.GREEN + "/bbc debug plugins");
-            sender.sendMessage(ChatColor.GRAY + "查看插件載入狀態");
+            sender.sendMessage(text(sender, "help.plugins-description", ChatColor.GRAY + "查看插件載入狀態"));
             sender.sendMessage("");
 
-            sender.sendMessage(ChatColor.GREEN + "/bbc debug methods <alias|類別名稱>");
-            sender.sendMessage(ChatColor.GRAY + "Reflection 方法探索（可加 declared 只看自身宣告的方法）");
+            sender.sendMessage(text(sender, "help.methods-command",
+                    ChatColor.GREEN + "/bbc debug methods <alias|類別名稱>"));
+            sender.sendMessage(text(sender, "help.methods-description",
+                    ChatColor.GRAY + "Reflection 方法探索（可加 declared 只看自身宣告的方法）"));
             sender.sendMessage("");
         }
 
-        sender.sendMessage(ChatColor.DARK_GRAY + "更多功能將於後續版本加入。");
+        sender.sendMessage(text(sender, "help.more-features", ChatColor.DARK_GRAY + "更多功能將於後續版本加入。"));
         sender.sendMessage(ChatColor.GOLD + "=========================");
+    }
+
+    private String text(CommandSender sender, String key, String fallback) {
+        return plugin.getLocaleService().get(sender, key, fallback);
     }
 }

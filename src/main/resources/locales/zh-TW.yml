@@ -22,6 +22,83 @@ common:
   read-only: 唯讀
   enabled: 開啟
   disabled: 關閉
+  settings-update-denied: '§c設定未更新：權限不足、島嶼已失效、設定已變動或仍在冷卻中。請重新開啟表單。'
+
+command:
+  no-permission: '§c[BBC] 你沒有權限使用這個指令。'
+  player-only: '§e[BBC] 這個指令僅限玩家使用。'
+  item-received: '§a[BBC] 已給予選單物品。'
+  menu-player-only: '§e[BBC] 主選單僅限玩家使用。'
+  available: '§7可使用：'
+  choose-game-mode: '§e[BBC] 你目前不在任何空島世界裡，請選擇要前往的玩法：'
+
+help:
+  general: §e一般指令
+  bedrock-description: '§7基岩版：開啟 BBC 表單主選單'
+  java-description: '§7Java 版：直接轉發到 BentoBox 島嶼指令'
+  help-description: '§7顯示此說明'
+  item-description: '§7補領選單物品（右鍵可開啟主選單）'
+  developer: §e開發者指令
+  debug-description: '§7顯示 Debug 子指令清單'
+  plugins-description: '§7查看插件載入狀態'
+  methods-command: '§a/bbc debug methods <alias|類別名稱>'
+  methods-description: '§7Reflection 方法探索（可加 declared 只看自身宣告的方法）'
+  more-features: '§8後續版本可能繼續加入其他功能。'
+
+debug_command:
+  usage: '§c用法：'
+  methods-usage: '§e/bbc debug methods <Alias 或完整類別名稱>'
+  declared-usage: '§e/bbc debug methods declared <Alias 或完整類別名稱>'
+  examples: '§7例如：'
+  alias-required: '§c請輸入 Alias 或完整類別名稱。'
+  reflection-output: '§a[BBC] 已將反射資訊輸出至主控台。'
+  not-implemented: '§e[BBC] 此 Debug 功能尚未實作。'
+  command-list-title: '§6===== BBC Debug ====='
+  available-subcommands: '§e可用子指令：'
+  plugins-description: '§7查看插件載入狀態'
+  methods-description: '§7Reflection 方法探索'
+  aliases: '§7Alias：flag、user'
+  declared-description: '§7只顯示類別自行宣告的 Public 方法'
+  api-description: '§7Public API 探索：BentoBox 版本、已啟用玩法、附加模組清單'
+  island-description: '§7Island API 探索：查看自己目前所在島嶼的詳細資料'
+  flags-description: '§7Protection Flag 探索：列出所有已註冊的保護旗標'
+  version-description: '§7BBC 版本資訊'
+  plugin-status-title: '§6===== BBC 插件狀態 ====='
+  not-installed: 未安裝
+  api-title: '§6===== BentoBox API ====='
+  core-version-label: '§e核心版本：'
+  enabled-game-modes: '§e已啟用玩法：'
+  enabled-addons: '§e已啟用附加模組：'
+  player-only: '§c此指令只能由玩家執行（需要知道你目前所在的世界）。'
+  island-title: '§6===== Island API ====='
+  no-island: '§c你目前所在的世界沒有島嶼資料。'
+  owner-label: '§e島主：'
+  member-count-label: '§e成員數：'
+  world-label: '§e世界：'
+  center-label: '§e中心座標：'
+  protection-range-label: '§e保護範圍：'
+  island-range-label: '§e島嶼範圍：'
+  blocks-suffix: ' 格'
+  has-team-label: '§e是否有隊伍：'
+  yes-value: 是
+  no-value: 否
+  flags-title: '§6===== Protection Flags ====='
+  registered-flags: '§e共 {count} 個已註冊旗標'
+  version-title: '§6===== BBC Version ====='
+  bbc-version-label: '§eBentoBox Bedrock Companion：'
+  bentobox-version-label: '§eBentoBox：'
+  server-label: '§e伺服器：'
+  minecraft-label: '§eMinecraft：'
+
+placeholder:
+  unavailable: 無
+
+rank_labels:
+  owner: 隊長
+  sub-owner: 副隊長
+  member: 成員
+  trusted: 受信任
+  coop: 合作
 
 main_menu:
   title: BentoBox

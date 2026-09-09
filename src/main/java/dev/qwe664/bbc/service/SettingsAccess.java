@@ -1,5 +1,6 @@
 package dev.qwe664.bbc.service;
 
+import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.entity.Player;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.flags.Flag;
@@ -29,7 +30,8 @@ public final class SettingsAccess {
                         || player.hasPermission(prefix + "settings.*"));
     }
 
-    public static void deny(Player player) {
-        player.sendMessage("§c設定未更新：權限不足、島嶼已失效、設定已變動或仍在冷卻中。請重新開啟表單。");
+    public static void deny(BentoBoxBedrockCompanion plugin, Player player) {
+        player.sendMessage(plugin.getLocaleService().get(player, "common.settings-update-denied",
+                "§c設定未更新：權限不足、島嶼已失效、設定已變動或仍在冷卻中。請重新開啟表單。"));
     }
 }

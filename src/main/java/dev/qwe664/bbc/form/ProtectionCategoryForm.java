@@ -88,7 +88,7 @@ public class ProtectionCategoryForm {
         }
 
         if (!SettingsAccess.canOpen(player, island)) {
-            SettingsAccess.deny(player);
+            SettingsAccess.deny(plugin, player);
             return;
         }
         var locale = plugin.getLocaleService();
@@ -161,7 +161,7 @@ public class ProtectionCategoryForm {
             Island current = plugin.getBentoBoxService().getIslandsManager()
                     .getIslandById(island.getUniqueId()).orElse(null);
             if (current == null || !SettingsAccess.canOpen(player, current)) {
-                SettingsAccess.deny(player);
+                SettingsAccess.deny(plugin, player);
                 return;
             }
             int[] desired = original.clone();
@@ -171,7 +171,7 @@ public class ProtectionCategoryForm {
                 if (desired[i] == original[i]) continue;
                 if (!SettingsAccess.canEdit(player, current, flags[i])
                         || current.getFlag(flags[i]) != original[i]) {
-                    SettingsAccess.deny(player);
+                    SettingsAccess.deny(plugin, player);
                     return;
                 }
             }

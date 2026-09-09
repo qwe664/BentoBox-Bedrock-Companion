@@ -75,10 +75,18 @@
 - [x] Test missing Vault, PlaceholderAPI, and LuckPerms independently
 - [x] Promote the final beta to v1.0.0 stable
 
+## Phase 6.1 — v1.0.1 localization maintenance 🚧
+
+- [x] Localize `/bbc`, help, and debug command output
+- [x] Localize unavailable placeholder values and rank fallbacks
+- [x] Resolve player command text from the BentoBox locale
+- [x] Add locale parity, empty-value, CJK, and replacement-token tests
+
 ## Testing
 
 - [x] JUnit 5 test infrastructure (`build.gradle.kts`, `src/test/`)
-- [x] 27 tests covering `ProgressBarUtil`, `ColorUtil`, `ReflectionAliases`,
-      `SettingsPermissionPolicy`, `MoneyAmountValidator`, and optional Vault class isolation
+- [x] Tests covering `ProgressBarUtil`, `ColorUtil`, `ReflectionAliases`,
+      `SettingsPermissionPolicy`, `MoneyAmountValidator`, optional Vault class
+      isolation, and locale-file consistency
 - [ ] Unit tests for Bukkit-dependent classes (would need MockBukkit — `MenuItem`, hooks, services)
 - [ ] Automated integration tests for Floodgate forms and Bank/Vault failure compensation

@@ -26,6 +26,12 @@ Detect Bedrock players.
 ### FormManager
 Create and manage Bedrock Forms.
 
+### LocaleService
+Resolve `zh-TW` or `en-US` from each player's BentoBox language preference and
+serve the same translations to forms, commands, placeholders, and rank
+fallbacks. Server-console commands use `zh-TW`. Existing locale files receive
+new bundled keys without losing administrator customizations.
+
 ### BentoBoxService
 Resolve game modes, worlds, islands, and BentoBox data. Cross-game-mode form
 requests carry the selected world instead of inferring it from player location.

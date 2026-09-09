@@ -77,11 +77,13 @@ public class BBCExpansion extends PlaceholderExpansion {
             return "";
         }
 
+        String unavailable = plugin.getLocaleService().get(player, "placeholder.unavailable", "無");
+
         return switch (params.toLowerCase()) {
 
             case "luckperms_group" -> {
                 String group = plugin.getLuckPermsService().getPrimaryGroup(player);
-                yield group == null ? "無" : group;
+                yield group == null ? unavailable : group;
             }
 
             case "player_name" -> player.getName();
@@ -90,21 +92,22 @@ public class BBCExpansion extends PlaceholderExpansion {
 
             case "gamemode" -> plugin.getBentoBoxService()
                     .getCurrentGameModeName(player)
-                    .orElse(plugin.getConfigService().getMessage("lobby-name", "大廳"));
+                    .orElse(plugin.getLocaleService().get(player, "main_menu.lobby-name",
+                            plugin.getConfigService().getMessage("lobby-name", "大廳")));
 
             case "island_name" -> {
                 Island island = getIsland(player);
                 if (island == null) {
-                    yield "無";
+                    yield unavailable;
                 }
                 String name = island.getName();
-                yield (name == null || name.isEmpty()) ? "無" : name;
+                yield (name == null || name.isEmpty()) ? unavailable : name;
             }
 
             case "island_rank" -> {
                 Island island = getIsland(player);
                 yield island == null
-                        ? "無"
+                        ? unavailable
                         : TeamMenuForm.rankLabel(plugin, player, island.getRank(player.getUniqueId()));
             }
 

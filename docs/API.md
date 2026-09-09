@@ -14,6 +14,17 @@ Required. Purpose:
 - Events (`listener/`)
 - Scheduler
 
+## Localization
+
+`LocaleService` maps each player's BentoBox `User#getLocale()` preference to
+the bundled `zh-TW` or `en-US` locale. Forms, commands, placeholder fallbacks,
+and rank labels use the same service. Commands issued by the server console use
+`zh-TW`, since no player locale is available.
+
+On startup, missing keys are copied from the bundled locale into existing
+server locale files without overwriting administrator customizations. A missing
+translation falls back to `zh-TW` and then to the call site's safety string.
+
 ---
 
 # Floodgate API

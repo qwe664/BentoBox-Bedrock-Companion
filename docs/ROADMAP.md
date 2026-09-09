@@ -106,9 +106,16 @@ more detail per milestone.
 - [x] Remove the prerelease suffix and verify stable release metadata
 - [x] Prepare the first stable release
 
+## v1.0.1 🚧 Localization maintenance
+
+- [x] Localize remaining command output and permission failures
+- [x] Localize PlaceholderAPI, lobby, and team-rank fallback values
+- [x] Support player-aware command locales and a deterministic console locale
+- [x] Add automated locale-file consistency checks
+
 ### Delivered
 
 - Native Bedrock Forms for every BentoBox interaction Bedrock players need
 - No changes to the Java Edition experience
-- Multi-language support finished across all forms
+- Multi-language support finished across forms, commands, and placeholders
 - Documentation complete

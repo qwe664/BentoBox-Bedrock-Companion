@@ -291,3 +291,13 @@ documentation, the `develop` to `main` release PR, and the `v1.0.0` release.
 
 After `v1.0.0`, the project moved from feature development into compatibility
 maintenance, bug fixes, and future feature work.
+
+## September 9, 2026 — v1.0.1 localization maintenance
+
+- Advanced the development version from `1.0.0` to `1.0.1`.
+- Extended localization from Bedrock forms to the remaining `/bbc`, help, and
+  debug command output.
+- Localized PlaceholderAPI unavailable values, lobby and team-rank fallbacks,
+  and settings-update rejection messages.
+- Added automated checks for locale key parity, empty values, English-file CJK
+  text, and replacement-token parity.

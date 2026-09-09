@@ -30,7 +30,8 @@ This project integrates with the BentoBox API instead of modifying BentoBox itse
 - BentoBox startup health check (main plugin, every addon state, and Bank manager readiness)
 - Dynamic game-mode selection for enabled BentoBox game modes (tested with AOneBlock and ChunkBlock)
 - Runtime tracking for BentoBox addon enable/disable events
-- Multi-language support (`en-US`, `zh-TW`) for every form and all 96 protection flag names/descriptions
+- Multi-language support (`en-US`, `zh-TW`) for forms, commands, placeholders,
+  rank fallbacks, and all 96 protection flag names/descriptions
 
 ### Planned
 
@@ -182,6 +183,12 @@ Challenges, Visit, Bank, Vault, PlaceholderAPI, and LuckPerms.
 - [x] Remove the prerelease suffix and verify the stable build metadata
 - [x] Prepare the first stable release
 
+### v1.0.1 🚧 Maintenance
+
+- [x] Localize the remaining player-facing command and placeholder fallbacks
+- [x] Use the player's BentoBox locale for command output
+- [x] Add automated locale parity and placeholder-token checks
+
 ---
 
 ## Development Principles
@@ -196,7 +203,8 @@ Challenges, Visit, Bank, Vault, PlaceholderAPI, and LuckPerms.
 
 ## Status
 
-✅ Stable — v1.0.0 is the current stable release.
+✅ Stable — v1.0.0 is the current published release. Development has advanced
+to v1.0.1.
 
 ---
 

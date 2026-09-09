@@ -111,7 +111,7 @@ public class SettingsMenuForm extends BaseForm {
         }
 
         if (!SettingsAccess.canOpen(player, island)) {
-            SettingsAccess.deny(player);
+            SettingsAccess.deny(plugin, player);
             return;
         }
         var locale = plugin.getLocaleService();
@@ -153,7 +153,7 @@ public class SettingsMenuForm extends BaseForm {
             Island current = plugin.getBentoBoxService().getIslandsManager()
                     .getIslandById(island.getUniqueId()).orElse(null);
             if (current == null || !SettingsAccess.canOpen(player, current)) {
-                SettingsAccess.deny(player);
+                SettingsAccess.deny(plugin, player);
                 return;
             }
             int[] desired = original.clone();
@@ -163,7 +163,7 @@ public class SettingsMenuForm extends BaseForm {
                 if (desired[i] == original[i]) continue;
                 if (!SettingsAccess.canEdit(player, current, TOGGLE_FLAGS[i])
                         || current.getFlag(TOGGLE_FLAGS[i]) != original[i] || (!player.isOp() && current.isCooldown(TOGGLE_FLAGS[i]))) {
-                    SettingsAccess.deny(player);
+                    SettingsAccess.deny(plugin, player);
                     return;
                 }
             }

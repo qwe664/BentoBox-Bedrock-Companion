@@ -2,6 +2,7 @@ package dev.qwe664.bbc.service;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import world.bentobox.bentobox.api.user.User;
 
@@ -148,6 +149,22 @@ public class LocaleService {
     public String get(Player player, String key, String fallback) {
 
         String code = resolveLocaleCode(player);
+
+        return getByCode(code, key, fallback);
+    }
+
+    /**
+     * 指令可能由玩家或主控台執行。玩家沿用 BentoBox 語言偏好，沒有玩家
+     * 語系可判斷的主控台則使用預設 zh-TW。
+     */
+    public String get(CommandSender sender, String key, String fallback) {
+        if (sender instanceof Player player) {
+            return get(player, key, fallback);
+        }
+        return getByCode(DEFAULT_LOCALE, key, fallback);
+    }
+
+    private String getByCode(String code, String key, String fallback) {
 
         YamlConfiguration primary = locales.get(code);
         String value = primary == null ? null : primary.getString(key);

@@ -8,8 +8,17 @@ current version.
 
 ## [Unreleased]
 
-### Planned
-- Compatibility updates and maintenance.
+### Changed
+- Advance the development version to `1.0.1`.
+- Localize `/bbc`, `/bbc help`, and `/bbc debug` output according to each
+  player's BentoBox language preference; console output uses `zh-TW`.
+- Localize PlaceholderAPI unavailable values, lobby names, team-rank fallbacks,
+  and settings-update rejection messages.
+
+### Validation
+- Add automated checks that `en-US.yml` and `zh-TW.yml` have identical,
+  non-empty keys and matching replacement tokens, and that the English locale
+  does not contain CJK text.
 
 ## [1.0.0] — First stable release
 

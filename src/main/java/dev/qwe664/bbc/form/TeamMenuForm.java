@@ -202,13 +202,20 @@ public class TeamMenuForm extends BaseForm {
                 return translated;
             }
         }
+        var locale = plugin.getLocaleService();
         return switch (rank) {
-            case RanksManager.OWNER_RANK -> plugin.getConfigService().getMessage("ranks.owner", "隊長");
-            case RanksManager.SUB_OWNER_RANK -> plugin.getConfigService().getMessage("ranks.sub-owner", "副隊長");
-            case RanksManager.MEMBER_RANK -> plugin.getConfigService().getMessage("ranks.member", "成員");
-            case RanksManager.TRUSTED_RANK -> plugin.getConfigService().getMessage("ranks.trusted", "受信任");
-            case RanksManager.COOP_RANK -> plugin.getConfigService().getMessage("ranks.coop", "合作");
-            default -> plugin.getConfigService().getMessage("ranks.member", "成員");
+            case RanksManager.OWNER_RANK -> locale.get(viewer, "rank_labels.owner",
+                    plugin.getConfigService().getMessage("ranks.owner", "隊長"));
+            case RanksManager.SUB_OWNER_RANK -> locale.get(viewer, "rank_labels.sub-owner",
+                    plugin.getConfigService().getMessage("ranks.sub-owner", "副隊長"));
+            case RanksManager.MEMBER_RANK -> locale.get(viewer, "rank_labels.member",
+                    plugin.getConfigService().getMessage("ranks.member", "成員"));
+            case RanksManager.TRUSTED_RANK -> locale.get(viewer, "rank_labels.trusted",
+                    plugin.getConfigService().getMessage("ranks.trusted", "受信任"));
+            case RanksManager.COOP_RANK -> locale.get(viewer, "rank_labels.coop",
+                    plugin.getConfigService().getMessage("ranks.coop", "合作"));
+            default -> locale.get(viewer, "rank_labels.member",
+                    plugin.getConfigService().getMessage("ranks.member", "成員"));
         };
     }
 }

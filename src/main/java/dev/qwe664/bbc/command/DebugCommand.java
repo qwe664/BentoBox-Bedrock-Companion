@@ -3,7 +3,6 @@ package dev.qwe664.bbc.command;
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import dev.qwe664.bbc.util.ReflectionUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -17,6 +16,8 @@ import world.bentobox.bentobox.managers.FlagsManager;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+
+import static dev.qwe664.bbc.util.LegacyText.send;
 
 public class DebugCommand {
 
@@ -44,16 +45,16 @@ public class DebugCommand {
         if (args[1].equalsIgnoreCase("methods")) {
 
             if (args.length < 3) {
-                sender.sendMessage(text(sender, "debug_command.usage", ChatColor.RED + "用法："));
-                sender.sendMessage(text(sender, "debug_command.methods-usage",
-                        ChatColor.YELLOW + "/bbc debug methods <Alias 或完整類別名稱>"));
-                sender.sendMessage(text(sender, "debug_command.declared-usage",
-                        ChatColor.YELLOW + "/bbc debug methods declared <Alias 或完整類別名稱>"));
-                sender.sendMessage(text(sender, "debug_command.examples", ChatColor.GRAY + "例如："));
-                sender.sendMessage(ChatColor.GRAY + "/bbc debug methods flag");
-                sender.sendMessage(ChatColor.GRAY + "/bbc debug methods declared flag");
-                sender.sendMessage(ChatColor.GRAY + "/bbc debug methods user");
-                sender.sendMessage(ChatColor.GRAY + "/bbc debug methods declared user");
+                send(sender, text(sender, "debug_command.usage", "§c用法："));
+                send(sender, text(sender, "debug_command.methods-usage",
+                        "§e/bbc debug methods <Alias 或完整類別名稱>"));
+                send(sender, text(sender, "debug_command.declared-usage",
+                        "§e/bbc debug methods declared <Alias 或完整類別名稱>"));
+                send(sender, text(sender, "debug_command.examples", "§7例如："));
+                send(sender, "§7/bbc debug methods flag");
+                send(sender, "§7/bbc debug methods declared flag");
+                send(sender, "§7/bbc debug methods user");
+                send(sender, "§7/bbc debug methods declared user");
                 return true;
             }
 
@@ -65,8 +66,8 @@ public class DebugCommand {
                 declaredOnly = true;
 
                 if (args.length < 4) {
-                    sender.sendMessage(text(sender, "debug_command.alias-required",
-                            ChatColor.RED + "請輸入 Alias 或完整類別名稱。"));
+                    send(sender, text(sender, "debug_command.alias-required",
+                            "§c請輸入 Alias 或完整類別名稱。"));
                     return true;
                 }
 
@@ -85,8 +86,8 @@ public class DebugCommand {
                 ReflectionUtil.printPublicMethods(className);
             }
 
-            sender.sendMessage(text(sender, "debug_command.reflection-output",
-                    ChatColor.GREEN + "[BBC] 已將反射資訊輸出至主控台。"));
+            send(sender, text(sender, "debug_command.reflection-output",
+                    "§a[BBC] 已將反射資訊輸出至主控台。"));
 
             return true;
         }
@@ -116,52 +117,52 @@ public class DebugCommand {
         }
 
         // 尚未實作的子指令
-        sender.sendMessage(text(sender, "debug_command.not-implemented",
-                ChatColor.YELLOW + "[BBC] 此 Debug 功能尚未實作。"));
+        send(sender, text(sender, "debug_command.not-implemented",
+                "§e[BBC] 此 Debug 功能尚未實作。"));
         return true;
     }
 
     private void showCommandList(CommandSender sender) {
 
-        sender.sendMessage(text(sender, "debug_command.command-list-title",
-                ChatColor.GOLD + "===== BBC Debug ====="));
-        sender.sendMessage(text(sender, "debug_command.available-subcommands",
-                ChatColor.YELLOW + "可用子指令："));
-        sender.sendMessage("");
+        send(sender, text(sender, "debug_command.command-list-title",
+                "§6===== BBC Debug ====="));
+        send(sender, text(sender, "debug_command.available-subcommands",
+                "§e可用子指令："));
+        send(sender, "");
 
-        sender.sendMessage(ChatColor.GREEN + "/bbc debug plugins");
-        sender.sendMessage(text(sender, "debug_command.plugins-description", ChatColor.GRAY + "查看插件載入狀態"));
-        sender.sendMessage("");
+        send(sender, "§a/bbc debug plugins");
+        send(sender, text(sender, "debug_command.plugins-description", "§7查看插件載入狀態"));
+        send(sender, "");
 
-        sender.sendMessage(ChatColor.GREEN + "/bbc debug methods");
-        sender.sendMessage(text(sender, "debug_command.methods-description", ChatColor.GRAY + "Reflection 方法探索"));
-        sender.sendMessage(text(sender, "debug_command.aliases", ChatColor.GRAY + "Alias：flag、user"));
-        sender.sendMessage("");
+        send(sender, "§a/bbc debug methods");
+        send(sender, text(sender, "debug_command.methods-description", "§7Reflection 方法探索"));
+        send(sender, text(sender, "debug_command.aliases", "§7Alias：flag、user"));
+        send(sender, "");
 
-        sender.sendMessage(ChatColor.GREEN + "/bbc debug methods declared");
-        sender.sendMessage(text(sender, "debug_command.declared-description",
-                ChatColor.GRAY + "只顯示類別自行宣告的 Public 方法"));
-        sender.sendMessage("");
+        send(sender, "§a/bbc debug methods declared");
+        send(sender, text(sender, "debug_command.declared-description",
+                "§7只顯示類別自行宣告的 Public 方法"));
+        send(sender, "");
 
-        sender.sendMessage(ChatColor.GREEN + "/bbc debug api");
-        sender.sendMessage(text(sender, "debug_command.api-description",
-                ChatColor.GRAY + "Public API 探索：BentoBox 版本、已啟用玩法、附加模組清單"));
-        sender.sendMessage("");
+        send(sender, "§a/bbc debug api");
+        send(sender, text(sender, "debug_command.api-description",
+                "§7Public API 探索：BentoBox 版本、已啟用玩法、附加模組清單"));
+        send(sender, "");
 
-        sender.sendMessage(ChatColor.GREEN + "/bbc debug island");
-        sender.sendMessage(text(sender, "debug_command.island-description",
-                ChatColor.GRAY + "Island API 探索：查看自己目前所在島嶼的詳細資料"));
-        sender.sendMessage("");
+        send(sender, "§a/bbc debug island");
+        send(sender, text(sender, "debug_command.island-description",
+                "§7Island API 探索：查看自己目前所在島嶼的詳細資料"));
+        send(sender, "");
 
-        sender.sendMessage(ChatColor.GREEN + "/bbc debug flags");
-        sender.sendMessage(text(sender, "debug_command.flags-description",
-                ChatColor.GRAY + "Protection Flag 探索：列出所有已註冊的保護旗標"));
-        sender.sendMessage("");
+        send(sender, "§a/bbc debug flags");
+        send(sender, text(sender, "debug_command.flags-description",
+                "§7Protection Flag 探索：列出所有已註冊的保護旗標"));
+        send(sender, "");
 
-        sender.sendMessage(ChatColor.GREEN + "/bbc debug version");
-        sender.sendMessage(text(sender, "debug_command.version-description", ChatColor.GRAY + "BBC 版本資訊"));
+        send(sender, "§a/bbc debug version");
+        send(sender, text(sender, "debug_command.version-description", "§7BBC 版本資訊"));
 
-        sender.sendMessage(ChatColor.GOLD + "=====================");
+        send(sender, "§6=====================");
     }
 
     /**
@@ -170,34 +171,34 @@ public class DebugCommand {
      */
     public void showPluginStatus(CommandSender sender) {
 
-        sender.sendMessage(text(sender, "debug_command.plugin-status-title",
-                ChatColor.GOLD + "===== BBC 插件狀態 ====="));
+        send(sender, text(sender, "debug_command.plugin-status-title",
+                "§6===== BBC 插件狀態 ====="));
 
-        sender.sendMessage(status(sender, "BBC", plugin));
+        send(sender, status(sender, "BBC", plugin));
 
-        sender.sendMessage(status(sender, "BentoBox",
+        send(sender, status(sender, "BentoBox",
                 Bukkit.getPluginManager().getPlugin("BentoBox")));
 
-        sender.sendMessage(status(sender, "Floodgate",
+        send(sender, status(sender, "Floodgate",
                 Bukkit.getPluginManager().getPlugin("floodgate")));
 
-        sender.sendMessage(status(sender, "Geyser",
+        send(sender, status(sender, "Geyser",
                 Bukkit.getPluginManager().getPlugin("Geyser-Spigot")));
 
-        sender.sendMessage(status(sender, "PlaceholderAPI",
+        send(sender, status(sender, "PlaceholderAPI",
                 Bukkit.getPluginManager().getPlugin("PlaceholderAPI")));
 
-        sender.sendMessage(ChatColor.GOLD + "=============================");
+        send(sender, "§6=============================");
     }
 
     private String status(CommandSender sender, String name, Plugin plugin) {
 
         if (plugin == null) {
-            return ChatColor.RED + "✘ " + name + ": "
+            return "§c✘ " + name + ": "
                     + text(sender, "debug_command.not-installed", "未安裝");
         }
 
-        return ChatColor.GREEN + "✔ " + name + ": "
+        return "§a✔ " + name + ": "
                 + plugin.getPluginMeta().getVersion();
     }
 
@@ -212,31 +213,31 @@ public class DebugCommand {
 
         var bentoBox = plugin.getBentoBoxService().getBentoBox();
 
-        sender.sendMessage(text(sender, "debug_command.api-title", ChatColor.GOLD + "===== BentoBox API ====="));
+        send(sender, text(sender, "debug_command.api-title", "§6===== BentoBox API ====="));
 
-        sender.sendMessage(text(sender, "debug_command.core-version-label", ChatColor.YELLOW + "核心版本：")
-                + ChatColor.WHITE + bentoBox.getPluginMeta().getVersion());
+        send(sender, text(sender, "debug_command.core-version-label", "§e核心版本：")
+                + "§f" + bentoBox.getPluginMeta().getVersion());
 
-        sender.sendMessage("");
-        sender.sendMessage(text(sender, "debug_command.enabled-game-modes", ChatColor.YELLOW + "已啟用玩法："));
+        send(sender, "");
+        send(sender, text(sender, "debug_command.enabled-game-modes", "§e已啟用玩法："));
 
         plugin.getBentoBoxService().getAvailableGameModes().forEach(choice ->
-                sender.sendMessage(ChatColor.GREEN + "  - " + choice.name()
-                        + ChatColor.GRAY + " (/" + choice.label() + ")"));
+                send(sender, "§a  - " + choice.name()
+                        + "§7 (/" + choice.label() + ")"));
 
-        sender.sendMessage("");
-        sender.sendMessage(text(sender, "debug_command.enabled-addons", ChatColor.YELLOW + "已啟用附加模組："));
+        send(sender, "");
+        send(sender, text(sender, "debug_command.enabled-addons", "§e已啟用附加模組："));
 
         AddonsManager addonsManager = bentoBox.getAddonsManager();
         List<Addon> enabledAddons = addonsManager.getEnabledAddons();
 
         enabledAddons.stream()
                 .sorted(Comparator.comparing(addon -> addon.getDescription().getName()))
-                .forEach(addon -> sender.sendMessage(ChatColor.GREEN + "  - "
+                .forEach(addon -> send(sender, "§a  - "
                         + addon.getDescription().getName()
-                        + ChatColor.GRAY + " v" + addon.getDescription().getVersion()));
+                        + "§7 v" + addon.getDescription().getVersion()));
 
-        sender.sendMessage(ChatColor.GOLD + "=========================");
+        send(sender, "§6=========================");
     }
 
     /**
@@ -248,20 +249,20 @@ public class DebugCommand {
     public void showIslandInfo(CommandSender sender) {
 
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(text(sender, "debug_command.player-only",
-                    ChatColor.RED + "此指令只能由玩家執行（需要知道你目前所在的世界）。"));
+            send(sender, text(sender, "debug_command.player-only",
+                    "§c此指令只能由玩家執行（需要知道你目前所在的世界）。"));
             return;
         }
 
         Island island = plugin.getBentoBoxService().getIslandsManager()
                 .getIsland(player.getWorld(), player.getUniqueId());
 
-        sender.sendMessage(text(sender, "debug_command.island-title", ChatColor.GOLD + "===== Island API ====="));
+        send(sender, text(sender, "debug_command.island-title", "§6===== Island API ====="));
 
         if (island == null) {
-            sender.sendMessage(text(sender, "debug_command.no-island",
-                    ChatColor.RED + "你目前所在的世界沒有島嶼資料。"));
-            sender.sendMessage(ChatColor.GOLD + "=======================");
+            send(sender, text(sender, "debug_command.no-island",
+                    "§c你目前所在的世界沒有島嶼資料。"));
+            send(sender, "§6=======================");
             return;
         }
 
@@ -270,24 +271,24 @@ public class DebugCommand {
                 ? text(sender, "placeholder.unavailable", "（無）")
                 : plugin.getBentoBoxService().getPlayersManager().getName(ownerUuid);
 
-        sender.sendMessage(text(sender, "debug_command.owner-label", ChatColor.YELLOW + "島主：") + ChatColor.WHITE + ownerName);
-        sender.sendMessage(text(sender, "debug_command.member-count-label", ChatColor.YELLOW + "成員數：") + ChatColor.WHITE + island.getMemberSet().size());
-        sender.sendMessage(text(sender, "debug_command.world-label", ChatColor.YELLOW + "世界：") + ChatColor.WHITE + island.getWorld().getName());
-        sender.sendMessage(text(sender, "debug_command.center-label", ChatColor.YELLOW + "中心座標：") + ChatColor.WHITE
+        send(sender, text(sender, "debug_command.owner-label", "§e島主：") + "§f" + ownerName);
+        send(sender, text(sender, "debug_command.member-count-label", "§e成員數：") + "§f" + island.getMemberSet().size());
+        send(sender, text(sender, "debug_command.world-label", "§e世界：") + "§f" + island.getWorld().getName());
+        send(sender, text(sender, "debug_command.center-label", "§e中心座標：") + "§f"
                 + island.getCenter().getBlockX() + ", "
                 + island.getCenter().getBlockY() + ", "
                 + island.getCenter().getBlockZ());
         String blocksSuffix = text(sender, "debug_command.blocks-suffix", " 格");
-        sender.sendMessage(text(sender, "debug_command.protection-range-label", ChatColor.YELLOW + "保護範圍：") + ChatColor.WHITE
+        send(sender, text(sender, "debug_command.protection-range-label", "§e保護範圍：") + "§f"
                 + island.getProtectionRange() + blocksSuffix);
-        sender.sendMessage(text(sender, "debug_command.island-range-label", ChatColor.YELLOW + "島嶼範圍：") + ChatColor.WHITE
+        send(sender, text(sender, "debug_command.island-range-label", "§e島嶼範圍：") + "§f"
                 + island.getRange() + blocksSuffix);
-        sender.sendMessage(text(sender, "debug_command.has-team-label", ChatColor.YELLOW + "是否有隊伍：") + ChatColor.WHITE
+        send(sender, text(sender, "debug_command.has-team-label", "§e是否有隊伍：") + "§f"
                 + (island.hasTeam()
                 ? text(sender, "debug_command.yes-value", "是")
                 : text(sender, "debug_command.no-value", "否")));
 
-        sender.sendMessage(ChatColor.GOLD + "=======================");
+        send(sender, "§6=======================");
     }
 
     /**
@@ -302,18 +303,18 @@ public class DebugCommand {
         FlagsManager flagsManager = plugin.getBentoBoxService().getBentoBox().getFlagsManager();
         List<Flag> flags = flagsManager.getFlags();
 
-        sender.sendMessage(text(sender, "debug_command.flags-title",
-                ChatColor.GOLD + "===== Protection Flags ====="));
-        sender.sendMessage(text(sender, "debug_command.registered-flags",
-                ChatColor.YELLOW + "共 {count} 個已註冊旗標").replace("{count}", String.valueOf(flags.size())));
-        sender.sendMessage("");
+        send(sender, text(sender, "debug_command.flags-title",
+                "§6===== Protection Flags ====="));
+        send(sender, text(sender, "debug_command.registered-flags",
+                "§e共 {count} 個已註冊旗標").replace("{count}", String.valueOf(flags.size())));
+        send(sender, "");
 
         flags.stream()
                 .sorted(Comparator.comparing(Flag::getID))
-                .forEach(flag -> sender.sendMessage(ChatColor.GREEN + "  - "
-                        + flag.getID() + ChatColor.GRAY + " (" + flag.getType() + ")"));
+                .forEach(flag -> send(sender, "§a  - "
+                        + flag.getID() + "§7 (" + flag.getType() + ")"));
 
-        sender.sendMessage(ChatColor.GOLD + "============================");
+        send(sender, "§6============================");
     }
 
     /**
@@ -321,16 +322,16 @@ public class DebugCommand {
      */
     public void showVersionInfo(CommandSender sender) {
 
-        sender.sendMessage(text(sender, "debug_command.version-title", ChatColor.GOLD + "===== BBC Version ====="));
-        sender.sendMessage(text(sender, "debug_command.bbc-version-label", ChatColor.YELLOW + "BentoBox Bedrock Companion：")
-                + ChatColor.WHITE + plugin.getPluginMeta().getVersion());
-        sender.sendMessage(text(sender, "debug_command.bentobox-version-label", ChatColor.YELLOW + "BentoBox：")
-                + ChatColor.WHITE + plugin.getBentoBoxService().getBentoBox().getPluginMeta().getVersion());
-        sender.sendMessage(text(sender, "debug_command.server-label", ChatColor.YELLOW + "伺服器：")
-                + ChatColor.WHITE + Bukkit.getName() + " " + Bukkit.getVersion());
-        sender.sendMessage(text(sender, "debug_command.minecraft-label", ChatColor.YELLOW + "Minecraft：")
-                + ChatColor.WHITE + Bukkit.getMinecraftVersion());
-        sender.sendMessage(ChatColor.GOLD + "========================");
+        send(sender, text(sender, "debug_command.version-title", "§6===== BBC Version ====="));
+        send(sender, text(sender, "debug_command.bbc-version-label", "§eBentoBox Bedrock Companion：")
+                + "§f" + plugin.getPluginMeta().getVersion());
+        send(sender, text(sender, "debug_command.bentobox-version-label", "§eBentoBox：")
+                + "§f" + plugin.getBentoBoxService().getBentoBox().getPluginMeta().getVersion());
+        send(sender, text(sender, "debug_command.server-label", "§e伺服器：")
+                + "§f" + Bukkit.getName() + " " + Bukkit.getVersion());
+        send(sender, text(sender, "debug_command.minecraft-label", "§eMinecraft：")
+                + "§f" + Bukkit.getMinecraftVersion());
+        send(sender, "§6========================");
     }
 
     private String text(CommandSender sender, String key, String fallback) {

@@ -86,13 +86,18 @@
 
 - [x] Prepare resource processing for Gradle 10 and configuration cache
 - [x] Replace deprecated Bukkit/Paper plugin metadata and item-name APIs
-- [ ] Plan migration from legacy `ChatColor` output to Adventure components
+
+## Phase 6.3 — v1.0.3 Adventure text migration 🚧
+
+- [x] Send localized command and console output through Adventure components
+- [x] Preserve Cumulus form strings while removing the Bukkit `ChatColor` dependency
+- [x] Add compatibility tests and eliminate Java deprecation warnings
 
 ## Testing
 
 - [x] JUnit 5 test infrastructure (`build.gradle.kts`, `src/test/`)
 - [x] Tests covering `ProgressBarUtil`, `ColorUtil`, `ReflectionAliases`,
       `SettingsPermissionPolicy`, `MoneyAmountValidator`, optional Vault class
-      isolation, and locale-file consistency
+      isolation, Adventure legacy-text bridging, and locale-file consistency
 - [ ] Unit tests for Bukkit-dependent classes (would need MockBukkit — `MenuItem`, hooks, services)
 - [ ] Automated integration tests for Floodgate forms and Bank/Vault failure compensation

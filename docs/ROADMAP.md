@@ -113,6 +113,12 @@ more detail per milestone.
 - [x] Support player-aware command locales and a deterministic console locale
 - [x] Add automated locale-file consistency checks
 
+## v1.0.2 🚧 Compatibility maintenance
+
+- [x] Prepare resource processing for Gradle 10 and configuration cache
+- [ ] Replace deprecated Bukkit/Paper plugin metadata and item-name APIs
+- [ ] Plan migration from legacy `ChatColor` output to Adventure components
+
 ### Delivered
 
 - Native Bedrock Forms for every BentoBox interaction Bedrock players need

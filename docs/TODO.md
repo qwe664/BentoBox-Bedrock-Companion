@@ -82,6 +82,12 @@
 - [x] Resolve player command text from the BentoBox locale
 - [x] Add locale parity, empty-value, CJK, and replacement-token tests
 
+## Phase 6.2 — v1.0.2 compatibility maintenance 🚧
+
+- [x] Prepare resource processing for Gradle 10 and configuration cache
+- [ ] Replace deprecated Bukkit/Paper plugin metadata and item-name APIs
+- [ ] Plan migration from legacy `ChatColor` output to Adventure components
+
 ## Testing
 
 - [x] JUnit 5 test infrastructure (`build.gradle.kts`, `src/test/`)

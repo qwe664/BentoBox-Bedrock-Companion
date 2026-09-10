@@ -301,3 +301,10 @@ maintenance, bug fixes, and future feature work.
   and settings-update rejection messages.
 - Added automated checks for locale key parity, empty values, English-file CJK
   text, and replacement-token parity.
+
+## September 10, 2026 — v1.0.2 compatibility maintenance
+
+- Advanced the development version from `1.0.1` to `1.0.2`.
+- Updated resource processing to avoid Gradle 10's execution-time
+  `Task.project` incompatibility.
+- Verified a clean build with Gradle's configuration cache stored and reused.

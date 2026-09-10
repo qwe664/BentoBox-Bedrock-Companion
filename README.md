@@ -189,6 +189,12 @@ Challenges, Visit, Bank, Vault, PlaceholderAPI, and LuckPerms.
 - [x] Use the player's BentoBox locale for command output
 - [x] Add automated locale parity and placeholder-token checks
 
+### v1.0.2 🚧 Compatibility maintenance
+
+- [x] Prepare resource processing for Gradle 10 and configuration cache
+- [ ] Replace deprecated Bukkit/Paper plugin metadata and item-name APIs
+- [ ] Plan migration from legacy `ChatColor` output to Adventure components
+
 ---
 
 ## Development Principles
@@ -204,7 +210,7 @@ Challenges, Visit, Bank, Vault, PlaceholderAPI, and LuckPerms.
 ## Status
 
 ✅ Stable — v1.0.0 is the current published release. Development has advanced
-to v1.0.1.
+to v1.0.2.
 
 ---
 

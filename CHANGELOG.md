@@ -10,6 +10,10 @@ current version.
 
 ### Changed
 - Advance the development version to `1.0.1`.
+- Advance the development version from `1.0.1` to `1.0.2` for compatibility
+  maintenance.
+- Prepare plugin metadata resource expansion for Gradle 10 and Gradle's
+  configuration cache.
 - Localize `/bbc`, `/bbc help`, and `/bbc debug` output according to each
   player's BentoBox language preference; console output uses `zh-TW`.
 - Localize PlaceholderAPI unavailable values, lobby names, team-rank fallbacks,

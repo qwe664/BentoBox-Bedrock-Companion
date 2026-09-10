@@ -14,6 +14,8 @@ current version.
   maintenance.
 - Prepare plugin metadata resource expansion for Gradle 10 and Gradle's
   configuration cache.
+- Replace deprecated Bukkit/Paper plugin metadata and item-name calls with
+  `PluginMeta` and Adventure component APIs.
 - Localize `/bbc`, `/bbc help`, and `/bbc debug` output according to each
   player's BentoBox language preference; console output uses `zh-TW`.
 - Localize PlaceholderAPI unavailable values, lobby names, team-rank fallbacks,

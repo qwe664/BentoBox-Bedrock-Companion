@@ -192,7 +192,7 @@ Challenges, Visit, Bank, Vault, PlaceholderAPI, and LuckPerms.
 ### v1.0.2 🚧 Compatibility maintenance
 
 - [x] Prepare resource processing for Gradle 10 and configuration cache
-- [ ] Replace deprecated Bukkit/Paper plugin metadata and item-name APIs
+- [x] Replace deprecated Bukkit/Paper plugin metadata and item-name APIs
 - [ ] Plan migration from legacy `ChatColor` output to Adventure components
 
 ---

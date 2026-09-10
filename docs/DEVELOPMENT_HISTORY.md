@@ -308,3 +308,5 @@ maintenance, bug fixes, and future feature work.
 - Updated resource processing to avoid Gradle 10's execution-time
   `Task.project` incompatibility.
 - Verified a clean build with Gradle's configuration cache stored and reused.
+- Replaced deprecated Paper plugin metadata and item custom-name calls with
+  their current `PluginMeta` and Adventure component APIs.

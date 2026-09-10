@@ -44,7 +44,7 @@ public final class EnvironmentPrinter {
                 .forEach(p -> logger.info(
                         String.format("%-20s %s",
                                 p.getName(),
-                                p.getDescription().getVersion())
+                                p.getPluginMeta().getVersion())
                 ));
 
         logger.info("==================================================");

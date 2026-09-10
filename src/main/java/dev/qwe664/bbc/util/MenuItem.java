@@ -1,6 +1,8 @@
 package dev.qwe664.bbc.util;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +22,7 @@ import org.bukkit.persistence.PersistentDataType;
 public final class MenuItem {
 
     private static final Material MATERIAL = Material.COMPASS;
-    private static final String DISPLAY_NAME = "\u00a76\u2726 \u4e3b\u9078\u55ae";
+    private static final Component DISPLAY_NAME = Component.text("\u2726 \u4e3b\u9078\u55ae", NamedTextColor.GOLD);
 
     private MenuItem() {
     }
@@ -37,7 +39,7 @@ public final class MenuItem {
         ItemStack item = new ItemStack(MATERIAL);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(DISPLAY_NAME);
+        meta.customName(DISPLAY_NAME);
         meta.getPersistentDataContainer().set(
                 key(plugin),
                 PersistentDataType.BYTE,

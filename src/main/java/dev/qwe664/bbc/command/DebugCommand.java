@@ -198,7 +198,7 @@ public class DebugCommand {
         }
 
         return ChatColor.GREEN + "✔ " + name + ": "
-                + plugin.getDescription().getVersion();
+                + plugin.getPluginMeta().getVersion();
     }
 
     /**
@@ -215,7 +215,7 @@ public class DebugCommand {
         sender.sendMessage(text(sender, "debug_command.api-title", ChatColor.GOLD + "===== BentoBox API ====="));
 
         sender.sendMessage(text(sender, "debug_command.core-version-label", ChatColor.YELLOW + "核心版本：")
-                + ChatColor.WHITE + bentoBox.getDescription().getVersion());
+                + ChatColor.WHITE + bentoBox.getPluginMeta().getVersion());
 
         sender.sendMessage("");
         sender.sendMessage(text(sender, "debug_command.enabled-game-modes", ChatColor.YELLOW + "已啟用玩法："));
@@ -323,9 +323,9 @@ public class DebugCommand {
 
         sender.sendMessage(text(sender, "debug_command.version-title", ChatColor.GOLD + "===== BBC Version ====="));
         sender.sendMessage(text(sender, "debug_command.bbc-version-label", ChatColor.YELLOW + "BentoBox Bedrock Companion：")
-                + ChatColor.WHITE + plugin.getDescription().getVersion());
+                + ChatColor.WHITE + plugin.getPluginMeta().getVersion());
         sender.sendMessage(text(sender, "debug_command.bentobox-version-label", ChatColor.YELLOW + "BentoBox：")
-                + ChatColor.WHITE + plugin.getBentoBoxService().getBentoBox().getDescription().getVersion());
+                + ChatColor.WHITE + plugin.getBentoBoxService().getBentoBox().getPluginMeta().getVersion());
         sender.sendMessage(text(sender, "debug_command.server-label", ChatColor.YELLOW + "伺服器：")
                 + ChatColor.WHITE + Bukkit.getName() + " " + Bukkit.getVersion());
         sender.sendMessage(text(sender, "debug_command.minecraft-label", ChatColor.YELLOW + "Minecraft：")

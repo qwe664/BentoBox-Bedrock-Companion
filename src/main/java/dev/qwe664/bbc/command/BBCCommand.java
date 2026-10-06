@@ -2,11 +2,12 @@ package dev.qwe664.bbc.command;
 
 import dev.qwe664.bbc.BentoBoxBedrockCompanion;
 import dev.qwe664.bbc.util.MenuItem;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static dev.qwe664.bbc.util.LegacyText.send;
 
 public class BBCCommand implements CommandExecutor {
 
@@ -33,8 +34,8 @@ public class BBCCommand implements CommandExecutor {
             if (!(sender instanceof Player player) || plugin.getPermissionService().hasDeveloperPermission(player)) {
                 return debugCommand.execute(sender, args);
             }
-            sender.sendMessage(plugin.getLocaleService().get(sender, "command.no-permission",
-                    ChatColor.RED + "[BBC] 你沒有權限使用這個指令。"));
+            send(sender, plugin.getLocaleService().get(sender, "command.no-permission",
+                    "§c[BBC] 你沒有權限使用這個指令。"));
             return true;
         }
 
@@ -42,24 +43,24 @@ public class BBCCommand implements CommandExecutor {
         // （PlayerJoinListener 只在「加入伺服器」那一刻補發，已經在線的人不會觸發）。
         if (args.length > 0 && args[0].equalsIgnoreCase("item")) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage(plugin.getLocaleService().get(sender, "command.player-only",
-                        ChatColor.YELLOW + "[BBC] 這個指令僅限玩家使用。"));
+                send(sender, plugin.getLocaleService().get(sender, "command.player-only",
+                        "§e[BBC] 這個指令僅限玩家使用。"));
                 return true;
             }
             player.getInventory().addItem(MenuItem.create(plugin));
-            player.sendMessage(plugin.getLocaleService().get(player, "command.item-received",
-                    ChatColor.GREEN + "[BBC] 已給予選單物品。"));
+            send(player, plugin.getLocaleService().get(player, "command.item-received",
+                    "§a[BBC] 已給予選單物品。"));
             return true;
         }
 
         // /bbc
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(plugin.getLocaleService().get(sender, "command.menu-player-only",
-                    ChatColor.YELLOW + "[BBC] 主選單僅限玩家使用。"));
-            sender.sendMessage(plugin.getLocaleService().get(sender, "command.available",
-                    ChatColor.GRAY + "可使用："));
-            sender.sendMessage(ChatColor.GRAY + "  /bbc help");
-            sender.sendMessage(ChatColor.GRAY + "  /bbc debug");
+            send(sender, plugin.getLocaleService().get(sender, "command.menu-player-only",
+                    "§e[BBC] 主選單僅限玩家使用。"));
+            send(sender, plugin.getLocaleService().get(sender, "command.available",
+                    "§7可使用："));
+            send(sender, "§7  /bbc help");
+            send(sender, "§7  /bbc debug");
             return true;
         }
 
@@ -75,10 +76,10 @@ public class BBCCommand implements CommandExecutor {
                     () -> {
                         // 站在主城這類不屬於任何玩法的世界，光看目前世界猜不出要去哪個玩法，
                         // 基岩版表單只有 Floodgate 玩家能開，Java 玩家這裡改用聊天訊息列出選項。
-                        player.sendMessage(plugin.getLocaleService().get(player, "command.choose-game-mode",
-                                ChatColor.YELLOW + "[BBC] 你目前不在任何空島世界裡，請選擇要前往的玩法："));
+                        send(player, plugin.getLocaleService().get(player, "command.choose-game-mode",
+                                "§e[BBC] 你目前不在任何空島世界裡，請選擇要前往的玩法："));
                         plugin.getBentoBoxService().getAvailableGameModes().forEach(choice ->
-                                player.sendMessage(ChatColor.GRAY + "  /" + choice.label() + " §7(" + choice.name() + ")"));
+                                send(player, "§7  /" + choice.label() + " §7(" + choice.name() + ")"));
                     }
             );
         }

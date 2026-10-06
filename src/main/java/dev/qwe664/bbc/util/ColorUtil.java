@@ -1,7 +1,5 @@
 package dev.qwe664.bbc.util;
 
-import org.bukkit.ChatColor;
-
 /**
  * 把 Bukkit 傳統的 '&' 顏色代碼（如 &2、&f&l）轉成真正生效的
  * 顏色控制字元（§），供 Bedrock 表單（Cumulus）顯示用。
@@ -15,6 +13,8 @@ import org.bukkit.ChatColor;
  */
 public final class ColorUtil {
 
+    private static final String LEGACY_CODES = "0123456789AaBbCcDdEeFfKkLlMmNnOoRrXx";
+
     private ColorUtil() {
     }
 
@@ -25,6 +25,13 @@ public final class ColorUtil {
         if (text == null) {
             return "";
         }
-        return ChatColor.translateAlternateColorCodes('&', text);
+        char[] characters = text.toCharArray();
+        for (int i = 0; i < characters.length - 1; i++) {
+            if (characters[i] == '&' && LEGACY_CODES.indexOf(characters[i + 1]) >= 0) {
+                characters[i] = '\u00a7';
+                characters[i + 1] = Character.toLowerCase(characters[i + 1]);
+            }
+        }
+        return new String(characters);
     }
 }

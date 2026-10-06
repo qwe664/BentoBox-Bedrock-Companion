@@ -16,6 +16,12 @@ current version.
   configuration cache.
 - Replace deprecated Bukkit/Paper plugin metadata and item-name calls with
   `PluginMeta` and Adventure component APIs.
+- Advance the development version from `1.0.2` to `1.0.3` for the Adventure
+  text migration.
+- Send localized command and console text through Adventure components while
+  preserving legacy-form strings for Cumulus.
+- Remove the deprecated Bukkit `ChatColor` dependency from challenge color-code
+  translation without changing its string output.
 - Localize `/bbc`, `/bbc help`, and `/bbc debug` output according to each
   player's BentoBox language preference; console output uses `zh-TW`.
 - Localize PlaceholderAPI unavailable values, lobby names, team-rank fallbacks,
@@ -25,6 +31,7 @@ current version.
 - Add automated checks that `en-US.yml` and `zh-TW.yml` have identical,
   non-empty keys and matching replacement tokens, and that the English locale
   does not contain CJK text.
+- Add Adventure bridge and color-code compatibility tests.
 
 ## [1.0.0] — First stable release
 

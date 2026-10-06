@@ -117,7 +117,12 @@ more detail per milestone.
 
 - [x] Prepare resource processing for Gradle 10 and configuration cache
 - [x] Replace deprecated Bukkit/Paper plugin metadata and item-name APIs
-- [ ] Plan migration from legacy `ChatColor` output to Adventure components
+
+## v1.0.3 🚧 Adventure text migration
+
+- [x] Send localized command and console output through Adventure components
+- [x] Preserve Cumulus form strings while removing the Bukkit `ChatColor` dependency
+- [x] Add compatibility tests and eliminate Java deprecation warnings
 
 ### Delivered
 

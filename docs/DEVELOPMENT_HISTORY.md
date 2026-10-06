@@ -310,3 +310,12 @@ maintenance, bug fixes, and future feature work.
 - Verified a clean build with Gradle's configuration cache stored and reused.
 - Replaced deprecated Paper plugin metadata and item custom-name calls with
   their current `PluginMeta` and Adventure component APIs.
+
+## September 11, 2026 — v1.0.3 Adventure text migration
+
+- Advanced the development version from `1.0.2` to `1.0.3`.
+- Migrated localized command and console output from Bukkit `ChatColor` to an
+  Adventure component bridge while retaining string output for Cumulus forms.
+- Reimplemented ampersand color-code translation without deprecated Bukkit APIs
+  and added compatibility tests for the legacy form-string behavior.
+- Verified all 36 automated tests and eliminated all Java deprecation warnings.

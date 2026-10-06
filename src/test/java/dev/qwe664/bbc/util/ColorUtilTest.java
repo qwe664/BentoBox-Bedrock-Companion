@@ -30,4 +30,14 @@ class ColorUtilTest {
     void alreadyTranslatedSectionSignIsLeftAsIs() {
         assertEquals("§aAlready translated", ColorUtil.translate("§aAlready translated"));
     }
+
+    @Test
+    void invalidAmpersandCodeIsLeftAsIs() {
+        assertEquals("&zNot a color", ColorUtil.translate("&zNot a color"));
+    }
+
+    @Test
+    void uppercaseCodeIsNormalizedLikeBukkitDid() {
+        assertEquals("§aGreen Text", ColorUtil.translate("&AGreen Text"));
+    }
 }
